@@ -7,8 +7,11 @@ The present project is an umbrella project for MAT-tools Framework. The followin
 | **Package**                                               | **Description**                                                                              |
 |-----------------------------------------------------------|----------------------------------------------------------------------------------------------|
 | [automatize](https://github.com/ttportela/automatize)     | Package for experimental evaluation of MAT classification and Web-interface for MAT analysis |
-| [mat-model](https://github.com/ttportela/mat-model)       | Dependency package for model classes and data structures for MAT.                            |
-| [mat-data](https://github.com/ttportela/mat-data)         | Preprocessing and dataset generation tools for MAT data                                      |
-| [mat-analysis](https://github.com/ttportela/mat-analysis) | MAT classification methods (movelet-based or otherwise).                                     |
-| [mat-view](https://github.com/ttportela/mat-view)         | Web-interface and library tools for MAT and movelets visualization                           |
-| [movelets](https://github.com/ttportela/movelets)         | MAT feature extraction methods (NEW methods based on movelets)                               |
+| [mat-model](https://github.com/mat-analysis/mat-model)       | Dependency package for model classes and data structures for MAT.                            |
+| [mat-data](https://github.com/mat-analysis/mat-data)         | Preprocessing and dataset generation tools for MAT data                                      |
+| [mat-classification](https://github.com/mat-analysis/mat-classification) | MAT classification methods (movelet-based or otherwise).                                     |
+| [mat-summarization](https://github.com/mat-analysis/mat-summarization) | MAT summarization methods.                                     |
+| [mat-clustering](https://github.com/mat-analysis/mat-clustering) | MAT clustering methods.                                     |
+| [mat-similarity](https://github.com/mat-analysis/mat-similarity) | MAT similarity methods.                                     |
+| [mat-view](https://github.com/mat-analysis/mat-view)         | Web-interface and library tools for MAT and movelets visualization                           |
+| [movelets](https://github.com/mat-analysis/movelets)         | MAT feature extraction methods (NEW methods based on movelets)                               |
