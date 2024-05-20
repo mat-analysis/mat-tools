@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Generator &#8212; mat-data 0.1rc1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=3f58b8d8"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Converter" href="converter.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-matdata.generator">
+<span id="generator"></span><h1>Generator<a class="headerlink" href="#module-matdata.generator" title="Link to this heading">¶</a></h1>
+<p><strong>Multiple Aspect Trajectory Tools Framework</strong></p>
+<p><em>MAT-data: Data Preprocessing for Multiple Aspect Trajectory Data Mining</em></p>
+<p>The present application offers a tool, to support the user in the classification task of multiple aspect trajectories,
+specifically for extracting and visualizing the movelets, the parts of the trajectory that better discriminate a class.
+It integrates into a unique platform the fragmented approaches available for multiple aspects trajectories and in
+general for multidimensional sequence classification into a unique web-based and python library system. Offers both
+movelets visualization and classification methods.</p>
+<p>Created on Dec, 2023
+Copyright (C) 2023, License GPL Version 3 or superior (see LICENSE file)</p>
+<p>&#64;author: Tarlis Portela</p>
+<hr class="docutils" />
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.generator.randomGenerator">
+<span class="sig-prename descclassname"><span class="pre">matdata.generator.</span></span><span class="sig-name descname"><span class="pre">randomGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileposfix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['csv']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/generator.html#randomGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.generator.randomGenerator" title="Link to this definition">¶</a></dt>
+<dd><p>Function to generate trajectories based on random data.</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>N<span class="classifier">int, optional</span></dt><dd><p>Number of trajectories (default 10)</p>
+</dd>
+<dt>M<span class="classifier">int, optional</span></dt><dd><p>Size of trajectories (default 50)</p>
+</dd>
+<dt>L<span class="classifier">int, optional</span></dt><dd><p>Number of attributes (default 10)</p>
+</dd>
+<dt>C<span class="classifier">int, optional</span></dt><dd><p>Number of classes (default 10)</p>
+</dd>
+<dt>random_seed<span class="classifier">int, optional</span></dt><dd><p>Random Seed (default 1)</p>
+</dd>
+<dt>attr_desc<span class="classifier">list of dict, optional</span></dt><dd><p>Data type intervals to generate attributes as a list of descriptive dicts.
+Default: None (uses default types)
+OR a list of instances of AttributeGenerator</p>
+</dd>
+<dt>save_to<span class="classifier">str or bool, optional</span></dt><dd><p>Destination folder to save, or False if not to save CSV files (default False)</p>
+</dd>
+<dt>fileprefix<span class="classifier">str, optional</span></dt><dd><p>Output filename prefix (default ‘sample’)</p>
+</dd>
+<dt>fileposfix<span class="classifier">str, optional</span></dt><dd><p>Output filename postfix (default ‘train’)</p>
+</dd>
+<dt>outformats<span class="classifier">list, optional</span></dt><dd><p>Output file formats for saving (default [‘csv’])</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns:<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The generated dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.generator.samplerGenerator">
+<span class="sig-prename descclassname"><span class="pre">matdata.generator.</span></span><span class="sig-name descname"><span class="pre">samplerGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileposfix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols_for_sampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['space',</span> <span class="pre">'time',</span> <span class="pre">'day',</span> <span class="pre">'rating',</span> <span class="pre">'price',</span> <span class="pre">'weather',</span> <span class="pre">'root_type',</span> <span class="pre">'type']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['csv']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/generator.html#samplerGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.generator.samplerGenerator" title="Link to this definition">¶</a></dt>
+<dd><p>Function to generate trajectories based on real data.</p>
+<section id="id1">
+<h2>Parameters:<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>N<span class="classifier">int, optional</span></dt><dd><p>Number of trajectories (default 10)</p>
+</dd>
+<dt>M<span class="classifier">int, optional</span></dt><dd><p>Size of trajectories, number of points (default 50)</p>
+</dd>
+<dt>C<span class="classifier">int, optional</span></dt><dd><p>Number of classes (default 1)</p>
+</dd>
+<dt>random_seed<span class="classifier">int, optional</span></dt><dd><p>Random seed (default 1)</p>
+</dd>
+<dt>cols_for_sampling<span class="classifier">list, optional</span></dt><dd><p>Columns to add in the generated dataset. 
+Default: [‘space’, ‘time’, ‘day’, ‘rating’, ‘price’, ‘weather’, ‘root_type’, ‘type’].</p>
+</dd>
+<dt>save_to<span class="classifier">str or bool, optional</span></dt><dd><p>Destination folder to save, or False if not to save CSV files (default False)</p>
+</dd>
+<dt>fileprefix<span class="classifier">str, optional</span></dt><dd><p>Output filename prefix (default ‘sample’)</p>
+</dd>
+<dt>fileposfix<span class="classifier">str, optional</span></dt><dd><p>Output filename postfix (default ‘train’)</p>
+</dd>
+<dt>base_data<span class="classifier">DataFrame, optional</span></dt><dd><p>DataFrame of trajectories to use as a base for sampling data.
+Default: None (uses example data)</p>
+</dd>
+<dt>outformats<span class="classifier">list, optional</span></dt><dd><p>Output file formats for saving (default [‘csv’])</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h2>Returns:<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The generated dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.generator.scalerRandomGenerator">
+<span class="sig-prename descclassname"><span class="pre">matdata.generator.</span></span><span class="sig-name descname"><span class="pre">scalerRandomGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[8,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scalability'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileposfix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_desc_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['csv']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/generator.html#scalerRandomGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.generator.scalerRandomGenerator" title="Link to this definition">¶</a></dt>
+<dd><p>Function to generate trajectory datasets based on random data.</p>
+<section id="id3">
+<h2>Parameters:<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>Ns<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the number of trajectories. 
+List of 2 values: starting number, number of elements (default [100, 10])</p>
+</dd>
+<dt>Ms<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the size of trajectories. 
+List of 2 values: starting number, number of elements (default [10, 10])</p>
+</dd>
+<dt>Ls<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the number of attributes (* doubles the columns). 
+List of 2 values: starting number, number of elements (default [8, 10])</p>
+</dd>
+<dt>Cs<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the number of classes. 
+List of 2 values: starting number, number of elements (default [2, 10])</p>
+</dd>
+<dt>random_seed<span class="classifier">int, optional</span></dt><dd><p>Random seed (default 1)</p>
+</dd>
+<dt>attr_desc<span class="classifier">list, optional</span></dt><dd><p>Data type intervals to generate attributes as a list of descriptive dicts.
+Default: None (uses default types)</p>
+</dd>
+<dt>save_to<span class="classifier">str or bool, optional</span></dt><dd><p>Destination folder to save, or False if not to save CSV files (default False)</p>
+</dd>
+<dt>fileprefix<span class="classifier">str, optional</span></dt><dd><p>Output filename prefix (default ‘sample’)</p>
+</dd>
+<dt>fileposfix<span class="classifier">str, optional</span></dt><dd><p>Output filename postfix (default ‘train’)</p>
+</dd>
+<dt>save_desc_files<span class="classifier">bool, optional</span></dt><dd><p>True if to save the .json description files, False otherwise (default True)</p>
+</dd>
+<dt>outformats<span class="classifier">list, optional</span></dt><dd><p>Output file formats for saving (default [‘csv’])</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h2>Returns:<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.generator.scalerSamplerGenerator">
+<span class="sig-prename descclassname"><span class="pre">matdata.generator.</span></span><span class="sig-name descname"><span class="pre">scalerSamplerGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[8,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scalability'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileposfix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols_for_sampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['space',</span> <span class="pre">'time',</span> <span class="pre">'day',</span> <span class="pre">'rating',</span> <span class="pre">'price',</span> <span class="pre">'weather',</span> <span class="pre">'root_type',</span> <span class="pre">'type']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_desc_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['csv']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/generator.html#scalerSamplerGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.generator.scalerSamplerGenerator" title="Link to this definition">¶</a></dt>
+<dd><p>Generates trajectory datasets based on real data.</p>
+<section id="id5">
+<h2>Parameters:<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>Ns<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the number of trajectories. 
+List of 2 values: starting number, number of elements (default [100, 10])</p>
+</dd>
+<dt>Ms<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the size of trajectories. 
+List of 2 values: starting number, number of elements (default [10, 10])</p>
+</dd>
+<dt>Ls<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the number of attributes (* doubles the columns). 
+List of 2 values: starting number, number of elements (default [8, 10])</p>
+</dd>
+<dt>Cs<span class="classifier">list of int, optional</span></dt><dd><p>Parameters to scale the number of classes. 
+List of 2 values: starting number, number of elements (default [2, 10])</p>
+</dd>
+<dt>random_seed<span class="classifier">int, optional</span></dt><dd><p>Random seed (default 1)</p>
+</dd>
+<dt>fileprefix<span class="classifier">str, optional</span></dt><dd><p>Output filename prefix (default ‘scalability’)</p>
+</dd>
+<dt>fileposfix<span class="classifier">str, optional</span></dt><dd><p>Output filename postfix (default ‘train’)</p>
+</dd>
+<dt>cols_for_sampling<span class="classifier">list or dict, optional</span></dt><dd><p>Columns to add in the generated dataset. 
+Default: [‘space’, ‘time’, ‘day’, ‘rating’, ‘price’, ‘weather’, ‘root_type’, ‘type’].
+If a dictionary is provided in the format: {‘aspectName’: ‘type’, ‘aspectName’: ‘type’},
+it is used when providing base_data and saving .MAT.</p>
+</dd>
+<dt>save_to<span class="classifier">str or bool, optional</span></dt><dd><p>Destination folder to save, or False if not to save CSV files (default False)</p>
+</dd>
+<dt>base_data<span class="classifier">DataFrame, optional</span></dt><dd><p>DataFrame of trajectories to use as a base for sampling data.
+Default: None (uses example data)</p>
+</dd>
+<dt>save_desc_files<span class="classifier">bool, optional</span></dt><dd><p>True if to save the .json description files, False otherwise (default True)</p>
+</dd>
+<dt>outformats<span class="classifier">list, optional</span></dt><dd><p>Output file formats for saving (default [‘csv’])</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h2>Returns:<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">mat-data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocess.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converter.html">Converter</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Generator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.generator.randomGenerator"><code class="docutils literal notranslate"><span class="pre">randomGenerator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.generator.samplerGenerator"><code class="docutils literal notranslate"><span class="pre">samplerGenerator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.generator.scalerRandomGenerator"><code class="docutils literal notranslate"><span class="pre">scalerRandomGenerator()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.generator.scalerSamplerGenerator"><code class="docutils literal notranslate"><span class="pre">scalerSamplerGenerator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="converter.html" title="previous chapter">Converter</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Tarlis Tortelli Portela.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/generator.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

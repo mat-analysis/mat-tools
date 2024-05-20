@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>matdata.generator &#8212; mat-data 0.1rc1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=3f58b8d8"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for matdata.generator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">**Multiple Aspect Trajectory Tools Framework**</span>
+
+<span class="sd">*MAT-data: Data Preprocessing for Multiple Aspect Trajectory Data Mining*</span>
+
+<span class="sd">The present application offers a tool, to support the user in the classification task of multiple aspect trajectories,</span>
+<span class="sd">specifically for extracting and visualizing the movelets, the parts of the trajectory that better discriminate a class.</span>
+<span class="sd">It integrates into a unique platform the fragmented approaches available for multiple aspects trajectories and in</span>
+<span class="sd">general for multidimensional sequence classification into a unique web-based and python library system. Offers both</span>
+<span class="sd">movelets visualization and classification methods.</span>
+
+<span class="sd">Created on Dec, 2023</span>
+<span class="sd">Copyright (C) 2023, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">@author: Tarlis Portela</span>
+
+<span class="sd">----</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="kn">from</span> <span class="nn">matdata.preprocess</span> <span class="kn">import</span> <span class="n">writeFile</span><span class="p">,</span> <span class="n">featuresJSON</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="scalerSamplerGenerator">
+<a class="viewcode-back" href="../../generator.html#matdata.generator.scalerSamplerGenerator">[docs]</a>
+<span class="k">def</span> <span class="nf">scalerSamplerGenerator</span><span class="p">(</span>
+    <span class="n">Ns</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="n">Ms</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span>  <span class="mi">10</span><span class="p">],</span>
+    <span class="n">Ls</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span>   <span class="mi">10</span><span class="p">],</span>
+    <span class="n">Cs</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span>  <span class="mi">10</span><span class="p">],</span>
+    <span class="n">random_seed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;scalability&#39;</span><span class="p">,</span>
+    <span class="n">fileposfix</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+    <span class="n">cols_for_sampling</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;space&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">,</span><span class="s1">&#39;day&#39;</span><span class="p">,</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span><span class="s1">&#39;price&#39;</span><span class="p">,</span><span class="s1">&#39;weather&#39;</span><span class="p">,</span><span class="s1">&#39;root_type&#39;</span><span class="p">,</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+    <span class="n">save_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">base_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save_desc_files</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">outformats</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;csv&#39;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates trajectory datasets based on real data.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    Ns : list of int, optional</span>
+<span class="sd">        Parameters to scale the number of trajectories. </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [100, 10])</span>
+<span class="sd">    Ms : list of int, optional</span>
+<span class="sd">        Parameters to scale the size of trajectories. </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [10, 10])</span>
+<span class="sd">    Ls : list of int, optional</span>
+<span class="sd">        Parameters to scale the number of attributes (* doubles the columns). </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [8, 10])</span>
+<span class="sd">    Cs : list of int, optional</span>
+<span class="sd">        Parameters to scale the number of classes. </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [2, 10])</span>
+<span class="sd">    random_seed : int, optional</span>
+<span class="sd">        Random seed (default 1)</span>
+<span class="sd">    fileprefix : str, optional</span>
+<span class="sd">        Output filename prefix (default &#39;scalability&#39;)</span>
+<span class="sd">    fileposfix : str, optional</span>
+<span class="sd">        Output filename postfix (default &#39;train&#39;)</span>
+<span class="sd">    cols_for_sampling : list or dict, optional</span>
+<span class="sd">        Columns to add in the generated dataset. </span>
+<span class="sd">        Default: [&#39;space&#39;, &#39;time&#39;, &#39;day&#39;, &#39;rating&#39;, &#39;price&#39;, &#39;weather&#39;, &#39;root_type&#39;, &#39;type&#39;].</span>
+<span class="sd">        If a dictionary is provided in the format: {&#39;aspectName&#39;: &#39;type&#39;, &#39;aspectName&#39;: &#39;type&#39;},</span>
+<span class="sd">        it is used when providing base_data and saving .MAT.</span>
+<span class="sd">    save_to : str or bool, optional</span>
+<span class="sd">        Destination folder to save, or False if not to save CSV files (default False)</span>
+<span class="sd">    base_data : DataFrame, optional</span>
+<span class="sd">        DataFrame of trajectories to use as a base for sampling data.</span>
+<span class="sd">        Default: None (uses example data)</span>
+<span class="sd">    save_desc_files : bool, optional</span>
+<span class="sd">        True if to save the .json description files, False otherwise (default True)</span>
+<span class="sd">    outformats : list, optional</span>
+<span class="sd">        Output file formats for saving (default [&#39;csv&#39;])</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">assert</span> <span class="n">Ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;N &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Ms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;L &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;N &gt;= C&#39;</span>
+    <span class="k">assert</span> <span class="n">save_to</span><span class="p">,</span> <span class="s1">&#39;save_to param must be set.&#39;</span>
+    
+    <span class="c1"># Random Seed</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
+    
+    <span class="n">df</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">,</span> <span class="n">desc_cols</span> <span class="o">=</span> <span class="n">getSamplingData</span><span class="p">(</span><span class="n">base_data</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">)</span>
+    
+    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">Ns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Ms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="n">Ns</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Ns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ns</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">Ms</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Ms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ms</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">La</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Ls</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">Cs</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Cs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="n">miN</span> <span class="o">=</span> <span class="n">getMiddleE</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+    <span class="n">miM</span> <span class="o">=</span> <span class="n">getMiddleE</span><span class="p">(</span><span class="n">Ms</span><span class="p">)</span>
+    <span class="n">miL</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols_for_sampling</span><span class="p">)</span> <span class="c1">#getMiddleE(La)</span>
+    <span class="n">miC</span> <span class="o">=</span> <span class="n">getMiddleE</span><span class="p">(</span><span class="n">Cs</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;N ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miN</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Ns</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;M ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miM</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Ms</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miL</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">La</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miC</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Cs</span><span class="p">)</span>
+    
+    <span class="c1"># 1 - Scale attributes (reshape columns), fixed trajectories, points, and classes:</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">cols_for_sampling</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">fileprefix</span> <span class="c1">#+ &#39;_L&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ls</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>        
+        <span class="c1">#if len(cols) == miL:</span>
+        <span class="c1">#    cols_for_sampling = cols</span>
+            
+        <span class="n">samplerGenerator</span><span class="p">(</span><span class="n">miN</span><span class="p">,</span> <span class="n">miM</span><span class="p">,</span> <span class="n">miC</span><span class="p">,</span> <span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">save_to</span> <span class="ow">and</span> <span class="n">save_desc_files</span><span class="p">:</span>
+            <span class="n">featuresJSON</span><span class="p">(</span><span class="n">desc_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_to</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fileprefix</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)),</span><span class="s1">&#39;attrs&#39;</span><span class="p">])</span><span class="o">+</span> <span class="s2">&quot;.json&quot;</span><span class="p">))</span>
+            <span class="n">featuresJSON</span><span class="p">(</span><span class="n">desc_cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_to</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fileprefix</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)),</span><span class="s1">&#39;attrs&#39;</span><span class="p">])</span><span class="o">+</span> <span class="s2">&quot;_hp.json&quot;</span><span class="p">))</span>
+        
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">df_</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">df_</span> <span class="o">=</span> <span class="n">df_</span><span class="o">.</span><span class="n">add_suffix</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            
+            <span class="n">cols</span> <span class="o">=</span> <span class="n">cols</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+            
+            
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">df_</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># 2 -  Scale trajectories, fixed points, attributes, and classes</span>
+    <span class="c1">#prefix = fileprefix + &#39;_N&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Ns</span><span class="p">:</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">miN</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">samplerGenerator</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">miM</span><span class="p">,</span><span class="n">miC</span><span class="p">,</span><span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">,</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span>
+    
+    <span class="c1"># 3 -  Scale points, fixed trajectories, attributes, and classes</span>
+    <span class="c1">#prefix = fileprefix + &#39;_M&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Ms</span><span class="p">:</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">miM</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">samplerGenerator</span><span class="p">(</span><span class="n">miN</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">miC</span><span class="p">,</span><span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">,</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span>
+    
+    <span class="c1"># 4 -  Scale classes, fixed trajectories, points, and attributes</span>
+    <span class="c1">#prefix = fileprefix + &#39;_C&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">miC</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">samplerGenerator</span><span class="p">(</span><span class="n">miN</span><span class="p">,</span><span class="n">miM</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">,</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="samplerGenerator">
+<a class="viewcode-back" href="../../generator.html#matdata.generator.samplerGenerator">[docs]</a>
+<span class="k">def</span> <span class="nf">samplerGenerator</span><span class="p">(</span>
+    <span class="n">N</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">M</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">random_seed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span>
+    <span class="n">fileposfix</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+    <span class="n">cols_for_sampling</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;space&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">,</span><span class="s1">&#39;day&#39;</span><span class="p">,</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span><span class="s1">&#39;price&#39;</span><span class="p">,</span><span class="s1">&#39;weather&#39;</span><span class="p">,</span><span class="s1">&#39;root_type&#39;</span><span class="p">,</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+    <span class="n">save_to</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">base_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">outformats</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;csv&#39;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function to generate trajectories based on real data.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    N : int, optional</span>
+<span class="sd">        Number of trajectories (default 10)</span>
+<span class="sd">    M : int, optional</span>
+<span class="sd">        Size of trajectories, number of points (default 50)</span>
+<span class="sd">    C : int, optional</span>
+<span class="sd">        Number of classes (default 1)</span>
+<span class="sd">    random_seed : int, optional</span>
+<span class="sd">        Random seed (default 1)</span>
+<span class="sd">    cols_for_sampling : list, optional</span>
+<span class="sd">        Columns to add in the generated dataset. </span>
+<span class="sd">        Default: [&#39;space&#39;, &#39;time&#39;, &#39;day&#39;, &#39;rating&#39;, &#39;price&#39;, &#39;weather&#39;, &#39;root_type&#39;, &#39;type&#39;].</span>
+<span class="sd">    save_to : str or bool, optional</span>
+<span class="sd">        Destination folder to save, or False if not to save CSV files (default False)</span>
+<span class="sd">    fileprefix : str, optional</span>
+<span class="sd">        Output filename prefix (default &#39;sample&#39;)</span>
+<span class="sd">    fileposfix : str, optional</span>
+<span class="sd">        Output filename postfix (default &#39;train&#39;)</span>
+<span class="sd">    base_data : DataFrame, optional</span>
+<span class="sd">        DataFrame of trajectories to use as a base for sampling data.</span>
+<span class="sd">        Default: None (uses example data)</span>
+<span class="sd">    outformats : list, optional</span>
+<span class="sd">        Output file formats for saving (default [&#39;csv&#39;])</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        The generated dataset.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">assert</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;N &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">C</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">N</span> <span class="o">&gt;=</span> <span class="n">C</span><span class="p">,</span> <span class="s1">&#39;N &gt;= C&#39;</span>
+    
+    <span class="c1"># Random Seed</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
+    
+    <span class="n">df</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">,</span> <span class="n">desc_cols</span> <span class="o">=</span> <span class="n">getSamplingData</span><span class="p">(</span><span class="n">base_data</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">)</span>
+    
+    <span class="c1">#cols_for_sampling = [&#39;lat_lon&#39;,&#39;time&#39;,&#39;day&#39;,&#39;price&#39;,&#39;weather&#39;,&#39;type&#39;]</span>
+    <span class="n">df_for_sampling</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols_for_sampling</span><span class="p">]</span>
+    
+    <span class="c1"># Number of Trajectories per class</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">/</span> <span class="n">C</span><span class="p">)</span>
+    
+    <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">j</span><span class="p">:</span> <span class="n">sample_set</span><span class="p">(</span><span class="n">df_for_sampling</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">j</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">C</span><span class="p">)))</span> <span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">:</span>
+        <span class="n">df_</span> <span class="o">=</span> <span class="n">sample_trajectory</span><span class="p">(</span><span class="n">df_for_sampling</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+        <span class="n">df_</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">new_df</span><span class="p">,</span> <span class="n">df_</span><span class="p">])</span>
+    
+    <span class="c1"># Orders by tid, day e time</span>
+    <span class="n">new_df</span> <span class="o">=</span> <span class="n">new_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span><span class="s1">&#39;day&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+    <span class="c1"># Reset indexes</span>
+    <span class="n">new_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Output file:</span>
+    <span class="k">if</span> <span class="n">save_to</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_to</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_to</span><span class="p">)</span>
+            
+        <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fileprefix</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="s1">&#39;trajectories&#39;</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">M</span><span class="p">),</span><span class="s1">&#39;points&#39;</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols_for_sampling</span><span class="p">)),</span><span class="s1">&#39;attrs&#39;</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">C</span><span class="p">),</span><span class="s1">&#39;labels&#39;</span><span class="p">,</span>
+                             <span class="n">fileposfix</span><span class="p">])</span>
+        
+        <span class="k">for</span> <span class="n">outType</span> <span class="ow">in</span> <span class="n">outformats</span><span class="p">:</span>
+            <span class="n">writeFile</span><span class="p">(</span><span class="n">save_to</span><span class="p">,</span> <span class="n">new_df</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">cols_for_sampling</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">desc_cols</span><span class="p">,</span> <span class="n">outType</span><span class="p">)</span>
+        <span class="c1">#filename += &#39;.csv&#39;</span>
+        <span class="c1">#new_df.to_csv( os.path.join(save_to, filename), index=False)</span>
+
+    <span class="k">return</span> <span class="n">new_df</span></div>
+
+
+<span class="k">def</span> <span class="nf">getSamplingData</span><span class="p">(</span><span class="n">base_data</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">base_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">base_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;assets&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;Foursquare_Sample.csv&#39;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">base_data</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lat_lon&quot;</span><span class="p">:</span> <span class="s2">&quot;space&quot;</span><span class="p">})</span>
+    
+        <span class="n">cats</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span> <span class="s1">&#39;Friday&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunday&#39;</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">cats</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="n">desc_cols</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;space&#39;</span><span class="p">:</span><span class="s1">&#39;space2d&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">:</span><span class="s1">&#39;nominal&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">:</span><span class="s1">&#39;numeric&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span><span class="s1">&#39;numeric&#39;</span><span class="p">,</span> 
+                     <span class="s1">&#39;weather&#39;</span><span class="p">:</span><span class="s1">&#39;nominal&#39;</span><span class="p">,</span> <span class="s1">&#39;root_type&#39;</span><span class="p">:</span><span class="s1">&#39;nominal&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span><span class="s1">&#39;nominal&#39;</span><span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">base_data</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cols_for_sampling</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">desc_cols</span> <span class="o">=</span> <span class="n">cols_for_sampling</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">cols_for_sampling</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cols_for_sampling</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">desc_cols</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">cols_for_sampling</span><span class="p">,</span> <span class="n">desc_cols</span>
+
+<div class="viewcode-block" id="scalerRandomGenerator">
+<a class="viewcode-back" href="../../generator.html#matdata.generator.scalerRandomGenerator">[docs]</a>
+<span class="k">def</span> <span class="nf">scalerRandomGenerator</span><span class="p">(</span>
+    <span class="n">Ns</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="n">Ms</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span>  <span class="mi">10</span><span class="p">],</span>
+    <span class="n">Ls</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span>   <span class="mi">10</span><span class="p">],</span>
+    <span class="n">Cs</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span>  <span class="mi">10</span><span class="p">],</span>
+    <span class="n">random_seed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;scalability&#39;</span><span class="p">,</span>
+    <span class="n">fileposfix</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+    <span class="n">attr_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save_desc_files</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">outformats</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;csv&#39;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function to generate trajectory datasets based on random data.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    Ns : list of int, optional</span>
+<span class="sd">        Parameters to scale the number of trajectories. </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [100, 10])</span>
+<span class="sd">    Ms : list of int, optional</span>
+<span class="sd">        Parameters to scale the size of trajectories. </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [10, 10])</span>
+<span class="sd">    Ls : list of int, optional</span>
+<span class="sd">        Parameters to scale the number of attributes (* doubles the columns). </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [8, 10])</span>
+<span class="sd">    Cs : list of int, optional</span>
+<span class="sd">        Parameters to scale the number of classes. </span>
+<span class="sd">        List of 2 values: starting number, number of elements (default [2, 10])</span>
+<span class="sd">    random_seed : int, optional</span>
+<span class="sd">        Random seed (default 1)</span>
+<span class="sd">    attr_desc : list, optional</span>
+<span class="sd">        Data type intervals to generate attributes as a list of descriptive dicts.</span>
+<span class="sd">        Default: None (uses default types)</span>
+<span class="sd">    save_to : str or bool, optional</span>
+<span class="sd">        Destination folder to save, or False if not to save CSV files (default False)</span>
+<span class="sd">    fileprefix : str, optional</span>
+<span class="sd">        Output filename prefix (default &#39;sample&#39;)</span>
+<span class="sd">    fileposfix : str, optional</span>
+<span class="sd">        Output filename postfix (default &#39;train&#39;)</span>
+<span class="sd">    save_desc_files : bool, optional</span>
+<span class="sd">        True if to save the .json description files, False otherwise (default True)</span>
+<span class="sd">    outformats : list, optional</span>
+<span class="sd">        Output file formats for saving (default [&#39;csv&#39;])</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    None</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">assert</span> <span class="n">Ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;N &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Ms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;L &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">Ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;N &gt;= C&#39;</span>
+    <span class="k">assert</span> <span class="n">save_to</span><span class="p">,</span> <span class="s1">&#39;save_to param must be set.&#39;</span>
+    
+    <span class="c1"># Random Seed</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
+    
+    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">Ns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Ms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="n">Ns</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Ns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ns</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">Ms</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Ms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ms</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">La</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Ls</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">Cs</span> <span class="o">=</span> <span class="n">getScale</span><span class="p">(</span><span class="n">Cs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Cs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="n">miN</span> <span class="o">=</span> <span class="n">getMiddleE</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+    <span class="n">miM</span> <span class="o">=</span> <span class="n">getMiddleE</span><span class="p">(</span><span class="n">Ms</span><span class="p">)</span>
+    <span class="n">miL</span> <span class="o">=</span> <span class="n">Ls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#getMiddleE(La)</span>
+    <span class="n">miC</span> <span class="o">=</span> <span class="n">getMiddleE</span><span class="p">(</span><span class="n">Cs</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;N ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miN</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Ns</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;M ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miM</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Ms</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miL</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">La</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C ::&#39;</span><span class="p">,</span> <span class="s1">&#39;fix. value:&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">miC</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">scale:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">Cs</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">attr_desc</span><span class="p">:</span>
+        <span class="n">attr_desc</span> <span class="o">=</span> <span class="n">default_types</span><span class="p">()[:</span><span class="n">Ls</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    
+    <span class="n">generators</span> <span class="o">=</span> <span class="n">instantiate_generators</span><span class="p">(</span><span class="n">attr_desc</span><span class="p">)</span>
+    
+    <span class="c1"># 1 - Scale attributes (reshape columns), fixed trajectories, points, and classes:</span>
+    <span class="c1">#prefix = fileprefix #+ &#39;_L&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">La</span><span class="p">:</span>        
+        <span class="n">randomGenerator</span><span class="p">(</span><span class="n">miN</span><span class="p">,</span> <span class="n">miM</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">miC</span><span class="p">,</span> <span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">cycleGenerators</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">generators</span><span class="p">),</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">save_to</span> <span class="ow">and</span> <span class="n">save_desc_files</span><span class="p">:</span>
+            <span class="n">desc_cols</span> <span class="o">=</span> <span class="p">{</span><span class="n">g</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">descType</span><span class="p">()</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">cycleGenerators</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">generators</span><span class="p">)}</span>
+            
+            <span class="n">featuresJSON</span><span class="p">(</span><span class="n">desc_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_to</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fileprefix</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="s1">&#39;attrs&#39;</span><span class="p">])</span><span class="o">+</span> <span class="s2">&quot;.json&quot;</span><span class="p">))</span>
+            <span class="n">featuresJSON</span><span class="p">(</span><span class="n">desc_cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_to</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fileprefix</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="s1">&#39;attrs&#39;</span><span class="p">])</span><span class="o">+</span> <span class="s2">&quot;_hp.json&quot;</span><span class="p">))</span>
+    
+    <span class="c1"># 2 -  Scale trajectories, fixed points, attributes, and classes</span>
+    <span class="c1">#prefix = fileprefix + &#39;_N&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Ns</span><span class="p">:</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">miN</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">randomGenerator</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">miM</span><span class="p">,</span> <span class="n">miL</span><span class="p">,</span> <span class="n">miC</span><span class="p">,</span> <span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">generators</span><span class="p">,</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span>
+    
+    <span class="c1"># 3 -  Scale points, fixed trajectories, attributes, and classes</span>
+    <span class="c1">#prefix = fileprefix + &#39;_M&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Ms</span><span class="p">:</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">miM</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">randomGenerator</span><span class="p">(</span><span class="n">miN</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">miL</span><span class="p">,</span> <span class="n">miC</span><span class="p">,</span> <span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">generators</span><span class="p">,</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span>
+    
+    <span class="c1"># 4 -  Scale classes, fixed trajectories, points, and attributes</span>
+    <span class="c1">#prefix = fileprefix + &#39;_C&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">miC</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">randomGenerator</span><span class="p">(</span><span class="n">miN</span><span class="p">,</span> <span class="n">miM</span><span class="p">,</span> <span class="n">miL</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">random_seed</span><span class="p">,</span> <span class="n">fileprefix</span><span class="p">,</span> <span class="n">fileposfix</span><span class="p">,</span> <span class="n">generators</span><span class="p">,</span> <span class="n">save_to</span><span class="p">,</span> <span class="n">outformats</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="randomGenerator">
+<a class="viewcode-back" href="../../generator.html#matdata.generator.randomGenerator">[docs]</a>
+<span class="k">def</span> <span class="nf">randomGenerator</span><span class="p">(</span>
+    <span class="n">N</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">M</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">L</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">C</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">random_seed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span>
+    <span class="n">fileposfix</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+    <span class="n">attr_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save_to</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">outformats</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;csv&#39;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Function to generate trajectories based on random data.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    N : int, optional</span>
+<span class="sd">        Number of trajectories (default 10)</span>
+<span class="sd">    M : int, optional</span>
+<span class="sd">        Size of trajectories (default 50)</span>
+<span class="sd">    L : int, optional</span>
+<span class="sd">        Number of attributes (default 10)</span>
+<span class="sd">    C : int, optional</span>
+<span class="sd">        Number of classes (default 10)</span>
+<span class="sd">    random_seed : int, optional</span>
+<span class="sd">        Random Seed (default 1)</span>
+<span class="sd">    attr_desc : list of dict, optional</span>
+<span class="sd">        Data type intervals to generate attributes as a list of descriptive dicts.</span>
+<span class="sd">        Default: None (uses default types)</span>
+<span class="sd">        OR a list of instances of AttributeGenerator</span>
+<span class="sd">    save_to : str or bool, optional</span>
+<span class="sd">        Destination folder to save, or False if not to save CSV files (default False)</span>
+<span class="sd">    fileprefix : str, optional</span>
+<span class="sd">        Output filename prefix (default &#39;sample&#39;)</span>
+<span class="sd">    fileposfix : str, optional</span>
+<span class="sd">        Output filename postfix (default &#39;train&#39;)</span>
+<span class="sd">    outformats : list, optional</span>
+<span class="sd">        Output file formats for saving (default [&#39;csv&#39;])</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        The generated dataset.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">assert</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;N &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">L</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;L &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">C</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C &gt; 0&#39;</span>
+    <span class="k">assert</span> <span class="n">N</span> <span class="o">&gt;=</span> <span class="n">C</span><span class="p">,</span> <span class="s1">&#39;N &gt;= C&#39;</span>
+    
+    <span class="c1"># Random Seed</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">attr_desc</span><span class="p">:</span>
+        <span class="n">attr_desc</span> <span class="o">=</span> <span class="n">default_types</span><span class="p">()</span>
+        
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr_desc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">AttributeGenerator</span><span class="p">):</span>
+        <span class="n">generators</span> <span class="o">=</span> <span class="n">attr_desc</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">generators</span> <span class="o">=</span> <span class="n">instantiate_generators</span><span class="p">(</span><span class="n">attr_desc</span><span class="p">)</span>
+    
+    <span class="c1"># Number of Trajectories per class</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">/</span> <span class="n">C</span><span class="p">)</span>
+
+    <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">j</span><span class="p">:</span> <span class="n">random_set</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">j</span><span class="p">,</span> <span class="n">generators</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">C</span><span class="p">)))</span> <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">:</span>
+        <span class="n">df_</span> <span class="o">=</span> <span class="n">random_trajectory</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">generators</span><span class="p">)</span>
+        <span class="n">df_</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">new_df</span><span class="p">,</span> <span class="n">df_</span><span class="p">])</span>
+    
+    <span class="c1"># Orders by tid, day e time</span>
+    <span class="c1">#new_df = new_df.sort_values([&#39;tid&#39;,&#39;day&#39;,&#39;time&#39;])</span>
+    <span class="c1"># Reset indexes</span>
+    <span class="n">new_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Output file:</span>
+    <span class="k">if</span> <span class="n">save_to</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_to</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_to</span><span class="p">)</span>
+            
+        <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">fileprefix</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="s1">&#39;trajectories&#39;</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">M</span><span class="p">),</span><span class="s1">&#39;points&#39;</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">L</span><span class="p">),</span><span class="s1">&#39;attrs&#39;</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">C</span><span class="p">),</span><span class="s1">&#39;labels&#39;</span><span class="p">,</span>
+                             <span class="n">fileposfix</span><span class="p">])</span>
+        
+        <span class="n">desc_cols</span> <span class="o">=</span> <span class="p">{</span><span class="n">g</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">descType</span><span class="p">()</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">generators</span><span class="p">}</span>
+        
+        <span class="k">for</span> <span class="n">outType</span> <span class="ow">in</span> <span class="n">outformats</span><span class="p">:</span>
+            <span class="n">writeFile</span><span class="p">(</span><span class="n">save_to</span><span class="p">,</span> <span class="n">new_df</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_df</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">desc_cols</span><span class="p">,</span> <span class="n">outType</span><span class="p">)</span>
+        <span class="c1">#filename += &#39;.csv&#39;</span>
+        <span class="c1">#new_df.to_csv( os.path.join(save_to, filename), index=False)</span>
+
+    <span class="k">return</span> <span class="n">new_df</span></div>
+
+    
+<span class="c1">#    print(&#39;Not implemented.&#39;)</span>
+
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">default_types</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;space&#39;</span><span class="p">,</span>    <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;space&#39;</span><span class="p">,</span>    <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;grid_cell&#39;</span><span class="p">,</span>    <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1000.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1000.0</span><span class="p">)]},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span>     <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span>     <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>       <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1440</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;n1&#39;</span><span class="p">,</span>       <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;numeric&#39;</span><span class="p">,</span>  <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>       <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;n2&#39;</span><span class="p">,</span>       <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;numeric&#39;</span><span class="p">,</span>  <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>       <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;nominal&#39;</span><span class="p">,</span>  <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;nominal&#39;</span><span class="p">,</span>  <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>       <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span>      <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span>      <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>       <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span> 
+                                                                                     <span class="s1">&#39;Friday&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunday&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;weather&#39;</span><span class="p">,</span>  <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;weather&#39;</span><span class="p">,</span>  <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>     <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Clear&#39;</span><span class="p">,</span> <span class="s1">&#39;Clouds&#39;</span><span class="p">,</span> <span class="s1">&#39;Fog&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown&#39;</span><span class="p">,</span> <span class="s1">&#39;Rain&#39;</span><span class="p">,</span> <span class="s1">&#39;Snow&#39;</span><span class="p">]},</span>
+        <span class="c1">#{&#39;name&#39;: &#39;poi&#39;,      &#39;atype&#39;: &#39;poi&#39;,      &#39;method&#39;: &#39;serial&#39;,    &#39;n&#39;: 100,      &#39;dependency&#39;: &#39;space&#39;},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;atype&#39;</span><span class="p">:</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;random&#39;</span><span class="p">,</span>     <span class="s1">&#39;dependency&#39;</span><span class="p">:</span> <span class="s1">&#39;space&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;interval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Residence&#39;</span><span class="p">,</span> <span class="s1">&#39;Food&#39;</span><span class="p">,</span> <span class="s1">&#39;Travel &amp; Transport&#39;</span><span class="p">,</span> <span class="s1">&#39;Professional &amp; Other Places&#39;</span><span class="p">,</span> <span class="s1">&#39;Shop &amp; Service&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;Outdoors &amp; Recreation&#39;</span><span class="p">,</span> <span class="s1">&#39;College &amp; University&#39;</span><span class="p">,</span> <span class="s1">&#39;Arts &amp; Entertainment&#39;</span><span class="p">,</span> <span class="s1">&#39;Nightlife Spot&#39;</span><span class="p">,</span> <span class="s1">&#39;Event&#39;</span><span class="p">]},</span>
+    <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">instantiate_generators</span><span class="p">(</span><span class="n">attr_desc</span><span class="o">=</span><span class="n">default_types</span><span class="p">()):</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">AttributeGenerator</span><span class="p">(</span><span class="o">**</span><span class="n">g</span><span class="p">),</span> <span class="n">attr_desc</span><span class="p">))</span>    
+
+<span class="k">def</span> <span class="nf">getScale</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_ele</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">getScale</span><span class="p">(</span><span class="n">start</span><span class="o">+</span><span class="n">start</span><span class="p">,</span> <span class="n">n_ele</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">n_ele</span><span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="p">[])</span>
+
+<span class="k">def</span> <span class="nf">getMiddleE</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">sample_trajectory</span><span class="p">(</span> <span class="n">df</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">tid</span> <span class="p">):</span>
+    <span class="n">df_</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="n">df_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">tid</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df_</span>
+
+<span class="k">def</span> <span class="nf">sample_set</span><span class="p">(</span><span class="n">df_for_sampling</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span> 
+    <span class="c1"># Number of Trajectories per class</span>
+    <span class="c1">#n = int(N / C)</span>
+    <span class="c1"># Creates the set of N trajectories of size M</span>
+    <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">sample_trajectory</span><span class="p">(</span><span class="n">df_for_sampling</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">*</span><span class="n">N</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="p">))</span> <span class="p">)</span>
+    <span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+    <span class="c1"># Orders by tid, day e time</span>
+    <span class="n">new_df</span> <span class="o">=</span> <span class="n">new_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span><span class="s1">&#39;day&#39;</span><span class="p">,</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+    <span class="c1"># Reset indexes</span>
+    <span class="n">new_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_df</span>
+
+<span class="k">def</span> <span class="nf">cycleGenerators</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">generators</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">generators</span><span class="p">),</span> <span class="n">L</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">random_trajectory</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">generators</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">cycleGenerators</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">generators</span><span class="p">)</span>
+    <span class="n">df_</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">nextn</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">))),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">tid</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df_</span>
+
+<span class="k">def</span> <span class="nf">random_set</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">generators</span><span class="p">):</span>
+    <span class="c1"># Creates the set of N trajectories of size M</span>
+    <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">random_trajectory</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">*</span><span class="n">N</span><span class="p">,</span> <span class="n">generators</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="p">))</span> <span class="p">)</span>
+    <span class="n">new_df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+    <span class="c1"># Orders by tid, day e time</span>
+    <span class="c1">#new_df = new_df.sort_values([&#39;tid&#39;])</span>
+    <span class="c1"># Reset indexes</span>
+    <span class="n">new_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_df</span>
+
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="k">class</span> <span class="nc">AttributeGenerator</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;attr&#39;</span><span class="p">,</span> <span class="n">atype</span><span class="o">=</span><span class="s1">&#39;nominal&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dependency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">cellSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">adjacents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atype</span> <span class="o">=</span> <span class="n">atype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dependency</span> <span class="o">=</span> <span class="n">dependency</span>
+        
+        <span class="k">if</span> <span class="n">atype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;nominal&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="s1">&#39;poi&#39;</span><span class="p">,</span> <span class="s1">&#39;category&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generator</span> <span class="o">=</span> <span class="n">NominalGenerator</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">atype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;numeric&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generator</span> <span class="o">=</span> <span class="n">NumericGenerator</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">precision</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">atype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;space&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generator</span> <span class="o">=</span> <span class="n">SpatialGrid2D</span><span class="p">(</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cellSize</span><span class="p">,</span> <span class="n">adjacents</span><span class="p">,</span> <span class="n">precision</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">descType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">atype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;nominal&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="s1">&#39;poi&#39;</span><span class="p">,</span> <span class="s1">&#39;category&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="s1">&#39;nominal&#39;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">atype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;space&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="s1">&#39;space2d&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">atype</span>
+    
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">nextn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="o">.</span><span class="n">nextn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">NominalGenerator</span><span class="p">:</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">nominalInterval</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">getNominalCombs</span><span class="p">(</span><span class="n">ncomb</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">comb</span><span class="p">)</span> <span class="k">for</span> <span class="n">comb</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span><span class="o">+</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">)])(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">26</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">ncomb</span><span class="p">)]</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">ls</span> <span class="o">=</span> <span class="n">getNominalCombs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">ls</span> <span class="o">=</span> <span class="n">ls</span> <span class="o">+</span> <span class="n">getNominalCombs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ls</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nominalInterval</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">interval</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;random&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;sequential&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">+</span><span class="mi">1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;serial&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;NominalGenerator.method==serial&#39;</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">nextn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">(),</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+
+<span class="k">class</span> <span class="nc">NumericGenerator</span><span class="p">:</span>    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision</span>
+        <span class="c1">#self.pos = -1</span>
+    
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;random&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+            
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="o">==</span><span class="s1">&#39;serial&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;NumericGenerator.method==serial&#39;</span><span class="p">)</span>
+            <span class="c1">#return 0#self.interval[self.pos]</span>
+        
+    <span class="k">def</span> <span class="nf">nextn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">(),</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+
+<span class="k">class</span> <span class="nc">SpatialGrid2D</span><span class="p">:</span>
+    <span class="n">SPATIAL_ADJACENTS_2</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="p">),</span> 
+        <span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="p">),</span>
+        <span class="p">(</span>  <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span>            <span class="p">(</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="p">),</span> 
+        <span class="p">(</span>  <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="p">),</span>
+        <span class="p">(</span>  <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">SPATIAL_ADJACENTS_1</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span>
+        <span class="p">(</span>  <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span>            <span class="p">(</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span>
+        <span class="p">(</span>  <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="p">(</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span>
+    <span class="p">]</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">Y</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">cellSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">spatial_adjacents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dependency</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span>
+        
+        <span class="c1">#self.spatialThreshold = spatialThreshold # 0.00142</span>
+        <span class="c1">#self.cellSize = self.spatialThreshold * cellSizeFactor #0.7071</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span> <span class="o">=</span> <span class="n">cellSize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">spatial_adjacents</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SPATIAL_ADJACENTS</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SPATIAL_ADJACENTS_1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SPATIAL_ADJACENTS</span> <span class="o">=</span> <span class="n">spatial_adjacents</span>
+
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(((</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">))</span>
+        
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        
+        <span class="c1">#to include the edges:</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="p">(</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">))</span> <span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">))</span> <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">adjacents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ajc</span><span class="p">:</span> <span class="n">ajc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">ajc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">)</span> <span class="ow">and</span> 
+                                       <span class="n">ajc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">ajc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">),</span> 
+                           <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ajc</span><span class="p">:</span> <span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">ajc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">),</span> <span class="n">cell</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">ajc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">SPATIAL_ADJACENTS</span><span class="p">)))</span>
+    
+    <span class="k">def</span> <span class="nf">randomRoute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">startCell</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="p">[</span><span class="n">startCell</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">route</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">adjacents</span><span class="p">(</span><span class="n">route</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="n">route</span>
+    
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">),</span> \
+               <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">nextin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span> <span class="c1"># next in cell</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">),</span> \
+               <span class="nb">round</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cell</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cellSize</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">nextn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()),</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+    
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">mat-data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../preprocess.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../converter.html">Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../generator.html">Generator</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Tarlis Tortelli Portela.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Converter &#8212; mat-data 0.1rc1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=3f58b8d8"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Generator" href="generator.html" />
+    <link rel="prev" title="Pre-processing" href="preprocess.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-matdata.converter">
+<span id="converter"></span><h1>Converter<a class="headerlink" href="#module-matdata.converter" title="Link to this heading">¶</a></h1>
+<p><strong>Multiple Aspect Trajectory Tools Framework</strong></p>
+<p><em>MAT-data: Data Preprocessing for Multiple Aspect Trajectory Data Mining</em></p>
+<p>The present application offers a tool, to support the user in the classification task of multiple aspect trajectories,
+specifically for extracting and visualizing the movelets, the parts of the trajectory that better discriminate a class.
+It integrates into a unique platform the fragmented approaches available for multiple aspects trajectories and in
+general for multidimensional sequence classification into a unique web-based and python library system. Offers both
+movelets visualization and classification methods.</p>
+<p>Created on Dec, 2023
+Copyright (C) 2023, License GPL Version 3 or superior (see LICENSE file)</p>
+<p>&#64;author: Tarlis Portela</p>
+<hr class="docutils" />
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.any2ts">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">any2ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Converting</span> <span class="pre">TS'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#any2ts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.any2ts" title="Link to this definition">¶</a></dt>
+<dd><p>Converts data from various formats (CSV, Parquet, etc.) to a time series format.</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>data_path<span class="classifier">str</span></dt><dd><p>The directory path where the data files are located.</p>
+</dd>
+<dt>folder<span class="classifier">str</span></dt><dd><p>The folder containing the data file to be converted.</p>
+</dd>
+<dt>file<span class="classifier">str</span></dt><dd><p>The name of the data file to be converted.</p>
+</dd>
+<dt>cols<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names to be included in the time series data.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Converting TS’)</span></dt><dd><p>A label describing the operation, useful for logging or display purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns:<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the time series data, with trajectory identifier, class label, and specified columns.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.csv2df">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">csv2df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#csv2df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.csv2df" title="Link to this definition">¶</a></dt>
+<dd><p>Converts a CSV file from a given URL into a pandas DataFrame.</p>
+<section id="id1">
+<h2>Parameters:<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The URL pointing to the CSV file to be read.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>Unused, kept for standard.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>Unused, kept for standard.</p>
+</dd>
+<dt>missing<span class="classifier">str, optional (default=’?’)</span></dt><dd><p>The placeholder for missing values in the CSV file.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h2>Returns:<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the CSV file, with missing values
+handled as specified and columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.df2csv">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">df2csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Writing</span> <span class="pre">CSV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#df2csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.df2csv" title="Link to this definition">¶</a></dt>
+<dd><p>Writes a pandas DataFrame to a CSV file.</p>
+<section id="id3">
+<h2>Parameters:<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be written to the CSV file.</p>
+</dd>
+<dt>data_path<span class="classifier">str</span></dt><dd><p>The directory path where the Parquet file will be saved.</p>
+</dd>
+<dt>file<span class="classifier">str, optional (default=’train’)</span></dt><dd><p>The base name of the CSV file (without extension).</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>select_cols<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names to be included in the CSV file. If None, all columns are included.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Writing PARQUET’)</span></dt><dd><p>A label describing the operation, useful for logging or display purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h2>Returns:<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The input DataFrame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.df2mat">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">df2mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_dsattrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Converting</span> <span class="pre">MAT'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#df2mat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.df2mat" title="Link to this definition">¶</a></dt>
+<dd><p>Converts a pandas DataFrame to a Multiple Aspect Trajectory .mat file and saves it to the specified folder.</p>
+<section id="id5">
+<h2>Parameters:<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be converted to a .mat file.</p>
+</dd>
+<dt>folder<span class="classifier">str</span></dt><dd><p>The directory where the .mat file will be saved.</p>
+</dd>
+<dt>file<span class="classifier">str</span></dt><dd><p>The base name of the .mat file (without extension).</p>
+</dd>
+<dt>cols<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names from the DataFrame to include in the .mat file. If None, all columns are included.</p>
+</dd>
+<dt>mat_cols<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names representing the trajectory attibutes. If None, no columns are used.</p>
+</dd>
+<dt>desc_cols<span class="classifier">list of str, optional</span></dt><dd><p>A dict of column descriptors to be included as descriptive metadata.</p>
+</dd>
+<dt>label_columns<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names that can be treated as labels in the .mat file.</p>
+</dd>
+<dt>other_dsattrs<span class="classifier">dict, optional</span></dt><dd><p>A dictionary of additional dataset attributes to be included in the .mat file.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Converting MAT’)</span></dt><dd><p>A label describing the operation, useful for logging or display purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h2>Returns:<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.df2parquet">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">df2parquet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Writing</span> <span class="pre">Parquet'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#df2parquet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.df2parquet" title="Link to this definition">¶</a></dt>
+<dd><p>Writes a pandas DataFrame to a Parquet file.</p>
+<section id="id7">
+<h2>Parameters:<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be written to the Parquet file.</p>
+</dd>
+<dt>data_path<span class="classifier">str</span></dt><dd><p>The directory path where the Parquet file will be saved.</p>
+</dd>
+<dt>file<span class="classifier">str, optional (default=’train’)</span></dt><dd><p>The base name of the Parquet file (without extension).</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>select_cols<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names to be included in the Parquet file. If None, all columns are included.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Writing PARQUET’)</span></dt><dd><p>A label describing the operation, useful for logging or display purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h2>Returns:<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The input DataFrame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.df2zip">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">df2zip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Writing</span> <span class="pre">MAT'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#df2zip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.df2zip" title="Link to this definition">¶</a></dt>
+<dd><p>Writes a pandas DataFrame to a CSV file and compresses it into a ZIP archive.</p>
+<section id="id9">
+<h2>Parameters:<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be written to the CSV file and then compressed into a ZIP archive.</p>
+</dd>
+<dt>data_path<span class="classifier">str</span></dt><dd><p>The directory path where the ZIP archive will be saved.</p>
+</dd>
+<dt>file<span class="classifier">str</span></dt><dd><p>The base name of the CSV file (without extension) to be compressed into the ZIP archive.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>select_cols<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names to be included in the CSV file. If None, all columns are included.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Writing ZIP’)</span></dt><dd><p>A label describing the operation, useful for logging or display purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h2>Returns:<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The input DataFrame</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.mat2df">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">mat2df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#mat2df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.mat2df" title="Link to this definition">¶</a></dt>
+<dd><p>Converts a MATLAB .mat file from a given URL into a pandas DataFrame.</p>
+<section id="id11">
+<h2>Parameters:<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The URL pointing to the .mat file to be read.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the unique trajectory identifier.</p>
+</dd>
+<dt>missing<span class="classifier">str, optional (default=’?’)</span></dt><dd><p>The placeholder for missing values in the dataset.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h2>Returns:<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the .mat file, with missing values
+handled as specified and columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h2>Raises:<a class="headerlink" href="#raises" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Not Implemented.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.parquet2df">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">parquet2df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#parquet2df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.parquet2df" title="Link to this definition">¶</a></dt>
+<dd><p>Converts a Parquet file from a given URL into a pandas DataFrame.</p>
+<section id="id13">
+<h2>Parameters:<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The URL pointing to the Parquet file to be read.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>Unused, kept for standard.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>Unused, kept for standard.</p>
+</dd>
+<dt>missing<span class="classifier">str, optional (default=’?’)</span></dt><dd><p>The placeholder for missing values in the dataset.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h2>Returns:<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the Parquet file, with missing values
+handled as specified and columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.ts2df">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">ts2df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#ts2df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.ts2df" title="Link to this definition">¶</a></dt>
+<dd><p>Converts a time series file from a given URL into a pandas DataFrame.</p>
+<section id="id15">
+<h2>Parameters:<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The URL pointing to the time series file to be read.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the unique trajectory identifier.</p>
+</dd>
+<dt>missing<span class="classifier">str, optional (default=’?’)</span></dt><dd><p>The placeholder for missing values in the dataset.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h2>Returns:<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the time series file, with missing values
+handled as specified and columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.xes2df">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">xes2df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Converting</span> <span class="pre">XES'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_tid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#xes2df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.xes2df" title="Link to this definition">¶</a></dt>
+<dd><p>Converts an XES (eXtensible Event Stream) file from a given URL into a pandas DataFrame.</p>
+<section id="id17">
+<h2>Parameters:<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The URL pointing to the XES file to be read.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Converting XES’)</span></dt><dd><p>A label describing the operation, useful for logging or display purposes.</p>
+</dd>
+<dt>save<span class="classifier">bool, optional (default=False)</span></dt><dd><p>A flag indicating whether to save the DataFrame to a file after conversion.</p>
+</dd>
+<dt>start_tid<span class="classifier">int, optional (default=1)</span></dt><dd><p>The starting value for trajectory identifiers as <cite>tid_col</cite> values need to be generated.</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h2>Returns:<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the XES file, with columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.zip2arf">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">zip2arf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Reading</span> <span class="pre">CSV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#zip2arf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.zip2arf" title="Link to this definition">¶</a></dt>
+<dd><p>Extracts a CSV file from a ZIP archive and converts it into an ARFF (Attribute-Relation File Format) file.</p>
+<section id="id19">
+<h2>Parameters:<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>folder<span class="classifier">str</span></dt><dd><p>The directory path where the ZIP archive is located.</p>
+</dd>
+<dt>file<span class="classifier">str</span></dt><dd><p>The name of the ZIP archive file (with or without extension).</p>
+</dd>
+<dt>cols<span class="classifier">list of str</span></dt><dd><p>A list of column names to be included in the ARFF file.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>missing<span class="classifier">str, optional (default=’?’)</span></dt><dd><p>The placeholder for missing values in the CSV file.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Reading CSV’)</span></dt><dd><p>A label describing the operation, useful for logging or display purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h2>Returns:<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the extracted ZIP file, with missing values
+handled as specified and columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.zip2csv">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">zip2csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#zip2csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.zip2csv" title="Link to this definition">¶</a></dt>
+<dd><p>Extracts and compile Trajectory CSV files from a ZIP archive and converts it into a pandas DataFrame.</p>
+<section id="id21">
+<h2>Parameters:<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>folder<span class="classifier">str</span></dt><dd><p>The directory path where the ZIP archive is located, and destination to the CSV resulting file.</p>
+</dd>
+<dt>file<span class="classifier">str</span></dt><dd><p>The name of the ZIP archive file (with or without extension).</p>
+</dd>
+<dt>cols<span class="classifier">list of str</span></dt><dd><p>A list of column names to be included in the DataFrame.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the trajectory identifier.</p>
+</dd>
+<dt>missing<span class="classifier">str, optional (default=’?’)</span></dt><dd><p>The placeholder for missing values in the CSV file.</p>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h2>Returns:<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the extracted CSV file, with missing values
+handled as specified and columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.converter.zip2df">
+<span class="sig-prename descclassname"><span class="pre">matdata.converter.</span></span><span class="sig-name descname"><span class="pre">zip2df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Reading</span> <span class="pre">ZIP'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/converter.html#zip2df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.converter.zip2df" title="Link to this definition">¶</a></dt>
+<dd><p>Extracts and converts a CSV trajectory file from a ZIP archive located at a given URL into a pandas DataFrame.</p>
+<section id="id23">
+<h2>Parameters:<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The URL pointing to the ZIP archive containing the CSV file to be read.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional (default=’tid’)</span></dt><dd><p>The name of the column to be used as the unique trajectory identifier.</p>
+</dd>
+<dt>missing<span class="classifier">str, optional (default=’?’)</span></dt><dd><p>The placeholder for missing values in the CSV file.</p>
+</dd>
+<dt>opLabel<span class="classifier">str, optional (default=’Reading ZIP’)</span></dt><dd><p>A label describing the operation, for logging purposes.</p>
+</dd>
+</dl>
+</section>
+<section id="id24">
+<h2>Returns:<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>A DataFrame containing the data from the extracted CSV file, with missing values
+handled as specified and columns renamed if necessary.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">mat-data</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocess.html">Pre-processing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Converter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.any2ts"><code class="docutils literal notranslate"><span class="pre">any2ts()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.csv2df"><code class="docutils literal notranslate"><span class="pre">csv2df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.df2csv"><code class="docutils literal notranslate"><span class="pre">df2csv()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.df2mat"><code class="docutils literal notranslate"><span class="pre">df2mat()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.df2parquet"><code class="docutils literal notranslate"><span class="pre">df2parquet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.df2zip"><code class="docutils literal notranslate"><span class="pre">df2zip()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.mat2df"><code class="docutils literal notranslate"><span class="pre">mat2df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.parquet2df"><code class="docutils literal notranslate"><span class="pre">parquet2df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.ts2df"><code class="docutils literal notranslate"><span class="pre">ts2df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.xes2df"><code class="docutils literal notranslate"><span class="pre">xes2df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.zip2arf"><code class="docutils literal notranslate"><span class="pre">zip2arf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.zip2csv"><code class="docutils literal notranslate"><span class="pre">zip2csv()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.converter.zip2df"><code class="docutils literal notranslate"><span class="pre">zip2df()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">Generator</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="preprocess.html" title="previous chapter">Pre-processing</a></li>
+      <li>Next: <a href="generator.html" title="next chapter">Generator</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Tarlis Tortelli Portela.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/converter.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
