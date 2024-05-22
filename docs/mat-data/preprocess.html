@@ -214,7 +214,7 @@ If <cite>to_file</cite> is True, returns the DataFrame and saves the joined Data
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matdata.preprocess.kfold_trainTestSplit">
-<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">kfold_trainTestSplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ktrain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ktest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#kfold_trainTestSplit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.kfold_trainTestSplit" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">kfold_trainTestSplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ktrain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ktest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#kfold_trainTestSplit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.kfold_trainTestSplit" title="Link to this definition">¶</a></dt>
 <dd><p>Splits a DataFrame into k folds for k-fold cross-validation, optionally organizes columns, and saves them to files.</p>
 <section id="id11">
 <h2>Parameters:<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
@@ -229,7 +229,7 @@ If <cite>to_file</cite> is True, returns the DataFrame and saves the joined Data
 </dd>
 <dt>class_col<span class="classifier">str, optional (default=’label’)</span></dt><dd><p>The name of the column to be treated as the class/label column.</p>
 </dd>
-<dt>fileprefix<span class="classifier">str, optional (default=’’)</span></dt><dd><p>The prefix to be added to the file names when saving, for example: ‘<a href="#id23"><span class="problematic" id="id24">specific_</span></a>’ or ‘<a href="#id25"><span class="problematic" id="id26">generic_</span></a>’.</p>
+<dt>fileprefix<span class="classifier">str, optional (default=’’)</span></dt><dd><p>The prefix to be added to the file names when saving, for example: ‘<a href="#id29"><span class="problematic" id="id30">specific_</span></a>’ or ‘<a href="#id31"><span class="problematic" id="id32">generic_</span></a>’.</p>
 </dd>
 <dt>columns_order<span class="classifier">list of str, optional</span></dt><dd><p>A list of column names specifying the desired order of columns. If None, no reordering is performed.</p>
 </dd>
@@ -244,6 +244,8 @@ If <cite>to_file</cite> is True, returns the DataFrame and saves the joined Data
 <dt>outformats<span class="classifier">list of str, optional</span></dt><dd><p>A list of output formats for saving the datasets (e.g., [‘csv’, ‘zip’, ‘parquet’]).</p>
 </dd>
 <dt>verbose<span class="classifier">bool, optional (default=False)</span></dt><dd><p>A flag indicating whether to display progress messages.</p>
+</dd>
+<dt>sort<span class="classifier">bool, optional</span></dt><dd><p>If True, sort the data by <cite>class_col</cite> and <cite>tid_col</cite> (default True).</p>
 </dd>
 </dl>
 </section>
@@ -260,7 +262,7 @@ If <cite>to_file</cite> is True, returns the DataFrame and saves the joined Data
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matdata.preprocess.klabels_stratify">
-<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">klabels_stratify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organize_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#klabels_stratify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.klabels_stratify" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">klabels_stratify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organize_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#klabels_stratify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.klabels_stratify" title="Link to this definition">¶</a></dt>
 <dd><p>Stratifies a DataFrame by a specified number of class labels and splits it into training and testing sets,
 optionally organizes columns, and saves them to files.</p>
 <section id="id13">
@@ -287,6 +289,8 @@ optionally organizes columns, and saves them to files.</p>
 <dt>outformats<span class="classifier">list of str, optional</span></dt><dd><p>A list of output formats for saving the datasets (e.g., [‘csv’, ‘zip’, ‘parquet’]).</p>
 </dd>
 <dt>data_path<span class="classifier">str, optional (default=’.’)</span></dt><dd><p>The directory path where the output files will be saved.</p>
+</dd>
+<dt>sort<span class="classifier">bool, optional</span></dt><dd><p>If True, sort the data by <cite>class_col</cite> and <cite>tid_col</cite> (default True).</p>
 </dd>
 </dl>
 </section>
@@ -366,11 +370,57 @@ class label, and missing values handled as specified.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="matdata.preprocess.stratify">
-<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">stratify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organize_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#stratify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.stratify" title="Link to this definition">¶</a></dt>
-<dd><p>Stratifies a DataFrame by class label and splits it into training and testing sets, optionally organizes columns, and saves them to files.</p>
+<dt class="sig sig-object py" id="matdata.preprocess.sortByLabel">
+<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">sortByLabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#sortByLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.sortByLabel" title="Link to this definition">¶</a></dt>
+<dd><p>Sort a DataFrame by class label column and trajectory ID column.</p>
 <section id="id19">
 <h2>Parameters:<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be sorted.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing trajectory IDs (default ‘tid’).</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing class labels (default ‘label’).</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h2>Returns:<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The sorted DataFrame.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.preprocess.sortByTID">
+<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">sortByTID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#sortByTID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.sortByTID" title="Link to this definition">¶</a></dt>
+<dd><p>Sort a DataFrame by trajectory ID column.</p>
+<section id="id21">
+<h2>Parameters:<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt><a href="#id33"><span class="problematic" id="id34">df_</span></a><span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be sorted.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing trajectory IDs (default ‘tid’).</p>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h2>Returns:<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The sorted DataFrame.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.preprocess.stratify">
+<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">stratify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organize_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#stratify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.stratify" title="Link to this definition">¶</a></dt>
+<dd><p>Stratifies a DataFrame by class label and splits it into training and testing sets, optionally organizes columns, and saves them to files.</p>
+<section id="id23">
+<h2>Parameters:<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be stratified and split into training and testing sets.</p>
 </dd>
@@ -394,10 +444,12 @@ class label, and missing values handled as specified.</p>
 </dd>
 <dt>data_path<span class="classifier">str, optional (default=’.’)</span></dt><dd><p>The directory path where the output files will be saved.</p>
 </dd>
+<dt>sort<span class="classifier">bool, optional</span></dt><dd><p>If True, sort the data by <cite>class_col</cite> and <cite>tid_col</cite> (default True).</p>
+</dd>
 </dl>
 </section>
-<section id="id20">
-<h2>Returns:<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h2>
+<section id="id24">
+<h2>Returns:<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt>train<span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame containing the training set.</p>
 </dd>
@@ -408,11 +460,35 @@ class label, and missing values handled as specified.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="matdata.preprocess.suffle_df">
+<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">suffle_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#suffle_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.suffle_df" title="Link to this definition">¶</a></dt>
+<dd><p>Shuffle a DataFrame by trajectory ID column.</p>
+<section id="id25">
+<h2>Parameters:<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be shuffled.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing trajectory IDs (default ‘tid’).</p>
+</dd>
+<dt>random_num<span class="classifier">int, optional</span></dt><dd><p>Random seed for reproducibility (default 1).</p>
+</dd>
+</dl>
+</section>
+<section id="id26">
+<h2>Returns:<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>The shuffled DataFrame.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="matdata.preprocess.trainTestSplit">
-<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">trainTestSplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organize_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#trainTestSplit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.trainTestSplit" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">matdata.preprocess.</span></span><span class="sig-name descname"><span class="pre">trainTestSplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outformats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organize_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/preprocess.html#trainTestSplit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.preprocess.trainTestSplit" title="Link to this definition">¶</a></dt>
 <dd><p>Splits a DataFrame into training and testing sets, optionally organizes columns, and saves them to files.</p>
-<section id="id21">
-<h2>Parameters:<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h2>
+<section id="id27">
+<h2>Parameters:<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame to be split into training and testing sets.</p>
 </dd>
@@ -434,10 +510,12 @@ class label, and missing values handled as specified.</p>
 </dd>
 <dt>organize_columns<span class="classifier">bool, optional (default=True)</span></dt><dd><p>A flag indicating whether to organize columns before saving.</p>
 </dd>
+<dt>sort<span class="classifier">bool, optional</span></dt><dd><p>If True, sort the data by <cite>class_col</cite> and <cite>tid_col</cite> (default True).</p>
+</dd>
 </dl>
 </section>
-<section id="id22">
-<h2>Returns:<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
+<section id="id28">
+<h2>Returns:<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt>train<span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame containing the training set.</p>
 </dd>
@@ -480,7 +558,10 @@ class label, and missing values handled as specified.</p>
 <li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.klabels_stratify"><code class="docutils literal notranslate"><span class="pre">klabels_stratify()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.organizeFrame"><code class="docutils literal notranslate"><span class="pre">organizeFrame()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.readDataset"><code class="docutils literal notranslate"><span class="pre">readDataset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.sortByLabel"><code class="docutils literal notranslate"><span class="pre">sortByLabel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.sortByTID"><code class="docutils literal notranslate"><span class="pre">sortByTID()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.stratify"><code class="docutils literal notranslate"><span class="pre">stratify()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.suffle_df"><code class="docutils literal notranslate"><span class="pre">suffle_df()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#matdata.preprocess.trainTestSplit"><code class="docutils literal notranslate"><span class="pre">trainTestSplit()</span></code></a></li>
 </ul>
 </li>

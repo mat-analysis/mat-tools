@@ -194,7 +194,7 @@
 <div class="viewcode-block" id="trainTestSplit">
 <a class="viewcode-back" href="../../preprocess.html#matdata.preprocess.trainTestSplit">[docs]</a>
 <span class="k">def</span> <span class="nf">trainTestSplit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">random_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> \
-                      <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                      <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits a DataFrame into training and testing sets, optionally organizes columns, and saves them to files.</span>
 
@@ -220,6 +220,8 @@
 <span class="sd">        A flag indicating whether to display progress messages.</span>
 <span class="sd">    organize_columns : bool, optional (default=True)</span>
 <span class="sd">        A flag indicating whether to organize columns before saving.</span>
+<span class="sd">    sort : bool, optional</span>
+<span class="sd">        If True, sort the data by `class_col` and `tid_col` (default True).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">    --------</span>
@@ -229,7 +231,8 @@
 <span class="sd">        A DataFrame containing the testing set.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="c1">#outformats=[&#39;zip&#39;, &#39;csv&#39;, &#39;mat&#39;]</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_num</span><span class="p">)</span>
+    
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">train_size</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;% train and test split ... &quot;</span><span class="p">)</span>
     
@@ -241,8 +244,12 @@
     
     <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">splitTIDs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">train_size</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">min_elements</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
-    <span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">train_index</span><span class="p">)]</span>
-    <span class="n">test</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_index</span><span class="p">)]</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">tid_col</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_index</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#df.loc[df[tid_col].isin(train_index)]</span>
+    <span class="n">test</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">tid_col</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#df.loc[df[tid_col].isin(test_index)]</span>
+    
+    <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
+        <span class="n">test</span>  <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
     
     <span class="c1"># WRITE Train / Test Files</span>
     <span class="k">for</span> <span class="n">outType</span> <span class="ow">in</span> <span class="n">outformats</span><span class="p">:</span>
@@ -257,7 +264,7 @@
 
 <div class="viewcode-block" id="kfold_trainTestSplit">
 <a class="viewcode-back" href="../../preprocess.html#matdata.preprocess.kfold_trainTestSplit">[docs]</a>
-<span class="k">def</span> <span class="nf">kfold_trainTestSplit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">random_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">columns_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ktrain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ktest</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">kfold_trainTestSplit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">random_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">columns_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ktrain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ktest</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits a DataFrame into k folds for k-fold cross-validation, optionally organizes columns, and saves them to files.</span>
 
@@ -289,6 +296,8 @@
 <span class="sd">        A list of output formats for saving the datasets (e.g., [&#39;csv&#39;, &#39;zip&#39;, &#39;parquet&#39;]).</span>
 <span class="sd">    verbose : bool, optional (default=False)</span>
 <span class="sd">        A flag indicating whether to display progress messages.</span>
+<span class="sd">    sort : bool, optional</span>
+<span class="sd">        If True, sort the data by `class_col` and `tid_col` (default True).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">    --------</span>
@@ -308,6 +317,10 @@
         <span class="n">ktrain</span><span class="p">,</span> <span class="n">ktest</span> <span class="o">=</span> <span class="n">splitData</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train and test data provided.&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+        <span class="n">ktrain</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">),</span> <span class="n">ktrain</span><span class="p">))</span>
+        <span class="n">ktest</span>  <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">),</span> <span class="n">ktest</span><span class="p">))</span>
     
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">outformats</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>            
@@ -334,7 +347,7 @@
 <div class="viewcode-block" id="stratify">
 <a class="viewcode-back" href="../../preprocess.html#matdata.preprocess.stratify">[docs]</a>
 <span class="k">def</span> <span class="nf">stratify</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">sample_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">random_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> 
-             <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>  
+             <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Stratifies a DataFrame by class label and splits it into training and testing sets, optionally organizes columns, and saves them to files.</span>
 
@@ -362,6 +375,8 @@
 <span class="sd">        A list of output formats for saving the datasets (e.g., [&#39;csv&#39;, &#39;zip&#39;, &#39;parquet&#39;]).</span>
 <span class="sd">    data_path : str, optional (default=&#39;.&#39;)</span>
 <span class="sd">        The directory path where the output files will be saved.</span>
+<span class="sd">    sort : bool, optional</span>
+<span class="sd">        If True, sort the data by `class_col` and `tid_col` (default True).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">    --------</span>
@@ -371,11 +386,11 @@
 <span class="sd">        A DataFrame containing the testing set.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">train_index</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">splitTIDs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">min_elements</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">train_index</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">splitTIDs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">min_elements</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">train_index</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     
-    <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">splitTIDs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">train_size</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">min_elements</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="o">=</span> <span class="n">splitTIDs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">train_size</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">min_elements</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">organize_columns</span><span class="p">:</span>
         <span class="n">df</span><span class="p">,</span> <span class="n">columns_order_zip</span><span class="p">,</span> <span class="n">columns_order_csv</span> <span class="o">=</span> <span class="n">organizeFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
@@ -385,6 +400,10 @@
     
     <span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">train_index</span><span class="p">)]</span>
     <span class="n">test</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_index</span><span class="p">)]</span>
+    
+    <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
+        <span class="n">test</span>  <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
     
     <span class="k">for</span> <span class="n">outType</span> <span class="ow">in</span> <span class="n">outformats</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;S&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sample_size</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
@@ -399,7 +418,8 @@
     
 <span class="c1"># TODO fix stratify:</span>
 <span class="k">def</span> <span class="nf">kfold_stratify</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">inc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> 
-             <span class="n">ktrain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ktest</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">ignore_ltk</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                   <span class="n">ktrain</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ktest</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> 
+                   <span class="n">ignore_ltk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
    
     <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;-fold stratification of train and test ... &quot;</span><span class="p">)</span>
     
@@ -421,6 +441,10 @@
         <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
             <span class="n">train_aux</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">train_aux</span><span class="p">,</span>  <span class="n">ktrain</span><span class="p">[</span><span class="n">y</span><span class="p">]])</span>
             <span class="n">test_aux</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">test_aux</span><span class="p">,</span>   <span class="n">ktest</span><span class="p">[</span><span class="n">y</span><span class="p">]])</span>
+        
+        <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+            <span class="n">train_aux</span> <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">train_aux</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
+            <span class="n">test_aux</span>  <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">test_aux</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
             
         <span class="k">for</span> <span class="n">outType</span> <span class="ow">in</span> <span class="n">outformats</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;S&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="mi">100</span><span class="o">/</span><span class="n">k</span><span class="p">))</span>
@@ -438,7 +462,7 @@
 <div class="viewcode-block" id="klabels_stratify">
 <a class="viewcode-back" href="../../preprocess.html#matdata.preprocess.klabels_stratify">[docs]</a>
 <span class="k">def</span> <span class="nf">klabels_stratify</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">kl</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">random_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> 
-             <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+             <span class="n">organize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mat_columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fileprefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[],</span> <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Stratifies a DataFrame by a specified number of class labels and splits it into training and testing sets,</span>
 <span class="sd">    optionally organizes columns, and saves them to files.</span>
@@ -467,6 +491,8 @@
 <span class="sd">        A list of output formats for saving the datasets (e.g., [&#39;csv&#39;, &#39;zip&#39;, &#39;parquet&#39;]).</span>
 <span class="sd">    data_path : str, optional (default=&#39;.&#39;)</span>
 <span class="sd">        The directory path where the output files will be saved.</span>
+<span class="sd">    sort : bool, optional</span>
+<span class="sd">        If True, sort the data by `class_col` and `tid_col` (default True).</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">    --------</span>
@@ -486,7 +512,7 @@
     <span class="n">labels_index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">labels_index</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     
-    <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">splitTIDs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">train_size</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">min_elements</span><span class="o">=</span><span class="n">min_elements</span><span class="p">)</span>
+    <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="o">=</span> <span class="n">splitTIDs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">train_size</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">min_elements</span><span class="o">=</span><span class="n">min_elements</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">organize_columns</span><span class="p">:</span>
         <span class="n">df</span><span class="p">,</span> <span class="n">columns_order_zip</span><span class="p">,</span> <span class="n">columns_order_csv</span> <span class="o">=</span> <span class="n">organizeFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
@@ -496,6 +522,10 @@
     
     <span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">train_index</span><span class="p">)]</span>
     <span class="n">test</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_index</span><span class="p">)]</span>
+    
+    <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
+        <span class="n">test</span>  <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
     
     <span class="k">for</span> <span class="n">outType</span> <span class="ow">in</span> <span class="n">outformats</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;L&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -542,8 +572,7 @@
     <span class="n">dataset_train</span> <span class="o">=</span> <span class="n">readDataset</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">train_file</span><span class="p">)</span>
     <span class="n">dataset_test</span>  <span class="o">=</span> <span class="n">readDataset</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">test_file</span><span class="p">)</span>
     
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dataset_train</span><span class="p">,</span> <span class="n">dataset_test</span><span class="p">])</span>
-    <span class="n">dataset</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="n">class_col</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">])</span>
+    <span class="n">joinTrainTest_df</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">to_file</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saving joined dataset as: &quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="s1">&#39;joined.csv&#39;</span><span class="p">))</span>
@@ -553,6 +582,96 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; --------------------------------------------------------------------------------&quot;</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">dataset</span></div>
+
+
+<span class="k">def</span> <span class="nf">joinTrainTest_df</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span> 
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sort</span> <span class="ow">and</span> <span class="n">class_col</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">sortByLabel</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sort</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">sortByTID</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="c1">#--------------------------------------------------------------------------&gt;&gt; SORTING DATA</span>
+<div class="viewcode-block" id="sortByTID">
+<a class="viewcode-back" href="../../preprocess.html#matdata.preprocess.sortByTID">[docs]</a>
+<span class="k">def</span> <span class="nf">sortByTID</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sort a DataFrame by trajectory ID column.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df_ : pandas.DataFrame</span>
+<span class="sd">        The DataFrame to be sorted.</span>
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing trajectory IDs (default &#39;tid&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        The sorted DataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">tids</span> <span class="o">=</span> <span class="n">df_</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">df_</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">tid_col</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">tids</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="sortByLabel">
+<a class="viewcode-back" href="../../preprocess.html#matdata.preprocess.sortByLabel">[docs]</a>
+<span class="k">def</span> <span class="nf">sortByLabel</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sort a DataFrame by class label column and trajectory ID column.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        The DataFrame to be sorted.</span>
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing trajectory IDs (default &#39;tid&#39;).</span>
+<span class="sd">    class_col : str, optional</span>
+<span class="sd">        The name of the column representing class labels (default &#39;label&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        The sorted DataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">sortLabel</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+        <span class="n">df_</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">class_col</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">sortByTID</span><span class="p">(</span><span class="n">df_</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">label</span><span class="p">:</span> <span class="n">sortLabel</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Sorting data&quot;</span><span class="p">))</span> <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="suffle_df">
+<a class="viewcode-back" href="../../preprocess.html#matdata.preprocess.suffle_df">[docs]</a>
+<span class="k">def</span> <span class="nf">suffle_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">random_num</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Shuffle a DataFrame by trajectory ID column.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        The DataFrame to be shuffled.</span>
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing trajectory IDs (default &#39;tid&#39;).</span>
+<span class="sd">    random_num : int, optional</span>
+<span class="sd">        Random seed for reproducibility (default 1).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    pandas.DataFrame</span>
+<span class="sd">        The shuffled DataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_num</span><span class="p">)</span>
+    <span class="n">tids</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">tids</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">tid_col</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tids</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span></div>
 
 
 <span class="c1">#--------------------------------------------------------------------------&gt;&gt; DESCRIPTORS</span>
@@ -921,12 +1040,11 @@
     <span class="n">train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="n">test</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     
-    <span class="n">df_</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">tid_col</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">]]</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_num</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">splitByLabel</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
-        <span class="k">nonlocal</span> <span class="n">df_</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
-        <span class="n">tids</span> <span class="o">=</span> <span class="n">df_</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">label</span><span class="p">][</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_num</span><span class="p">)</span>
+        <span class="k">nonlocal</span> <span class="n">df</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
+        <span class="n">tids</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">label</span><span class="p">][</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
         
         <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tids</span><span class="p">))</span><span class="o">*</span><span class="n">train_size</span><span class="p">)</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">min_elements</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">min_elements</span> <span class="k">else</span> <span class="n">n</span>
@@ -937,9 +1055,9 @@
         <span class="n">train</span> <span class="o">=</span> <span class="n">train</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">train_index</span><span class="p">)</span>
         <span class="n">test</span>  <span class="o">=</span> <span class="n">test</span>  <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">test_index</span><span class="p">)</span>
         
-    <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">label</span><span class="p">:</span> <span class="n">splitByLabel</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df_</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())))</span>
+    <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">label</span><span class="p">:</span> <span class="n">splitByLabel</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())))</span>
     
-    <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">df_</span>
+    <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
 
 <span class="k">def</span> <span class="nf">splitData</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">opLabel</span><span class="o">=</span><span class="s1">&#39;Spliting Data&#39;</span><span class="p">,</span> <span class="n">ignore_ltk</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     

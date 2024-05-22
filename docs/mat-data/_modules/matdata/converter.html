@@ -361,7 +361,7 @@
 
 <div class="viewcode-block" id="df2zip">
 <a class="viewcode-back" href="../../converter.html#matdata.converter.df2zip">[docs]</a>
-<span class="k">def</span> <span class="nf">df2zip</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">select_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opLabel</span><span class="o">=</span><span class="s1">&#39;Writing MAT&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">df2zip</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">select_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opLabel</span><span class="o">=</span><span class="s1">&#39;Writing ZIP&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Writes a pandas DataFrame to a CSV file and compresses it into a ZIP archive.</span>
 
@@ -567,7 +567,7 @@
 
 <div class="viewcode-block" id="zip2arf">
 <a class="viewcode-back" href="../../converter.html#matdata.converter.zip2arf">[docs]</a>
-<span class="k">def</span> <span class="nf">zip2arf</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span> <span class="o">=</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">opLabel</span><span class="o">=</span><span class="s1">&#39;Reading CSV&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">zip2arf</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span> <span class="o">=</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">opLabel</span><span class="o">=</span><span class="s1">&#39;Reading ZIP&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extracts a CSV file from a ZIP archive and converts it into an ARFF (Attribute-Relation File Format) file.</span>
 
