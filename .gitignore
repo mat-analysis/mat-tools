@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 docs/mat-data/.DS_Store
 docs/.DS_Store
+jarfiles/.DS_Store
+.DS_Store
