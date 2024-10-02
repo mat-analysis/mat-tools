@@ -8,6 +8,10 @@ The present project is an umbrella project for MAT-tools Framework. The followin
 
 ![MAT-Tools Diagram](https://github.com/mat-analysis/mat-tools/blob/main/MAT-Tools.png?raw=true) 
 
+# Datasets Repository
+
+A pre-processed repository of multiple aspect [datasets](https://github.com/mat-analysis/datasets) is available with the MAT-Tools Framework.
+
 # Core Package Dependencies
 
 | **Package**                                               | **Description**                                                                              |
