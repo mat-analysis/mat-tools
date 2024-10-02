@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matsimilarity.methods.mat.MUITAS.MUITAS_T2T &mdash; mat-similarity 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            mat-similarity
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-similarity:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../matsimilarity.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../matsimilarity.methods.mat.html">For MAT</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">mat-similarity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matsimilarity.methods.mat.MUITAS.MUITAS_T2T</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matsimilarity.methods.mat.MUITAS.MUITAS_T2T</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created in Dec, 2021</span>
+<span class="sd">Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">- Vanessa Lago Machado</span>
+<span class="sd">- Tarlis Portela</span>
+<span class="sd">- Lucas May Petry (adapted)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="c1"># Import class and data model</span>
+<span class="kn">from</span> <span class="nn">matdata.preprocess</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">matdata.dataset</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">matmodel.base</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">matmodel.descriptor</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">matsimilarity.core</span> <span class="kn">import</span> <span class="n">SimilarityMeasure</span>
+
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="MUITAS">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS">[docs]</a>
+<span class="k">class</span> <span class="nc">MUITAS</span><span class="p">(</span><span class="n">SimilarityMeasure</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MUITAS: Similarity Measure for Multiple Aspect Trajectory</span>
+
+<span class="sd">    This class provides methods to analyze and measure the similarity between multiple aspect trajectory data.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        thresholds (Dict[int, float]): A dictionary to store threshold values for different attribute types.</span>
+<span class="sd">        _parityT1T2 (float): Parity score from trajectory T1 to T2.</span>
+<span class="sd">        _parityT2T1 (float): Parity score from trajectory T2 to T1.</span>
+<span class="sd">        _data_descriptor (DataDescriptor): The data descriptor for the dataset.</span>
+<span class="sd">        features (List[Feature]): A list to store features with their attributes and weights.</span>
+<span class="sd">        _default_thresholds (Dict[str, float]): Default threshold values based on attribute types.</span>
+<span class="sd">        </span>
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `Petry, L. M., Ferrero, C. A., Alvares, L. O., Renso, C., &amp; Bogorny, V.</span>
+<span class="sd">    (2019). Towards Semantic-Aware Multiple-Aspect Trajectory Similarity</span>
+<span class="sd">    Measuring. Transactions in GIS (accepted), XX(X), XXX-XXX.</span>
+<span class="sd">    &lt;https://onlinelibrary.wiley.com/journal/14679671&gt;`__</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_descriptor</span><span class="p">:</span> <span class="n">DataDescriptor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the MUITAS class with the given dataset descriptor.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_descriptor (DataDescriptor, optional): The data descriptor for the dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parityT1T2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parityT2T1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span> <span class="o">=</span> <span class="n">dataset_descriptor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Feature</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Default thresholds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_thresholds</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;space2d&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> 
+            <span class="s1">&#39;space3d&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> 
+            <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;numeric&#39;</span><span class="p">:</span> <span class="mf">0.1</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_thresholds</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Getter for attributes from the data descriptor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[FeatureDescriptor]: List of attributes from the data descriptor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span><span class="o">.</span><span class="n">attributes</span>
+
+<div class="viewcode-block" id="MUITAS.add_feature">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.add_feature">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">FeatureDescriptor</span><span class="p">]],</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a feature to the MUITAS object. </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attributes (List[int] or List[FeatureDescriptor]): Attributes of a feature can be either a list of </span>
+<span class="sd">                indices or a list of FeatureDescriptor objects (following attributes in dataset descriptor)</span>
+<span class="sd">            weight (float): The weight of the feature.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">FeatureDescriptor</span><span class="p">)</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">):</span>
+            <span class="n">aux_attributes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_index_attribute</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">]</span>
+            <span class="n">attributes</span> <span class="o">=</span> <span class="n">aux_attributes</span>
+        <span class="n">feat</span> <span class="o">=</span> <span class="n">Feature</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature: </span><span class="si">{</span><span class="n">feat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_initialize_thresholds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize thresholds for each attribute based on its type, using default threshold values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_thresholds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MUITAS.set_threshold">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.set_threshold">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">att_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">threshold_value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the threshold value for a given aspect or list of aspects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            att_type (str, optional): The aspect type to set the threshold.</span>
+<span class="sd">            threshold_value (float or list, optional): The threshold value to set or a list of threshold values.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If att_type is not a string or None.</span>
+<span class="sd">            ValueError: If no threshold is provided for given aspect types in the list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">att_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Thresholds should be provided as a list for each individual attribute.&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value_threshold</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_threshold</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">att_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Threshold should be provided as a single float for the specified attribute type.&quot;</span><span class="p">)</span>
+            <span class="n">idx_att_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_indices_by_dtype</span><span class="p">(</span><span class="n">att_type</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">idx_att_type</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No attribute in dataset descriptor has the aspect type </span><span class="si">{</span><span class="n">att_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idx_att_type</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">threshold_value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;att_type should be a string or None.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MUITAS.similarity">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.similarity">[docs]</a>
+    <span class="k">def</span> <span class="nf">similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="p">:</span> <span class="n">MultipleAspectSequence</span><span class="p">,</span> <span class="n">t2</span><span class="p">:</span> <span class="n">MultipleAspectSequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the similarity between two multiple aspect sequences.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            t1 (MultipleAspectSequence): The first multiple aspect trajectory or subtrajectory.</span>
+<span class="sd">            t2 (MultipleAspectSequence): The second multiple aspect trajectory or subtrajectory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The computed similarity score.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parityT1T2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parityT2T1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">len_t1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+        <span class="n">len_t2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_weights</span><span class="p">()</span>
+
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">len_t2</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_t1</span><span class="p">)]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_t1</span><span class="p">):</span>
+            <span class="n">max_score_row</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_t2</span><span class="p">):</span>
+                <span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">t2</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="n">max_score_row</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_score_row</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parityT1T2</span> <span class="o">+=</span> <span class="n">max_score_row</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_t2</span><span class="p">):</span>
+            <span class="n">max_score_col</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_t1</span><span class="p">):</span>
+                <span class="n">max_score_col</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_score_col</span><span class="p">,</span> <span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parityT2T1</span> <span class="o">+=</span> <span class="n">max_score_col</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parityT2T1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parityT1T2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">len_t1</span> <span class="o">+</span> <span class="n">len_t2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MUITAS.score">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.score">[docs]</a>
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p1</span><span class="p">:</span> <span class="n">Point</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="n">Point</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the score between two points based on their aspects and features.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            p1 (Point, optional): The first point.</span>
+<span class="sd">            p2 (Point, optional): The second point.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The computed score.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
+            <span class="n">tempMatch</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Initialize as matched</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">attributes</span><span class="p">:</span>
+                <span class="n">a1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">aspects</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                <span class="n">a2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">aspects</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                <span class="n">attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">comparator</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span>
+                <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
+                    <span class="n">tempMatch</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Set as unmatched and break</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">tempMatch</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="n">feat</span><span class="o">.</span><span class="n">weight</span>
+        <span class="k">return</span> <span class="n">score</span></div>
+
+
+<div class="viewcode-block" id="MUITAS.get_indices_by_dtype">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.get_indices_by_dtype">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_indices_by_dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get indices of attributes in the data descriptor where the attribute&#39;s dtype matches the given parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dtype (str): The dtype to match.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[int]: A list of indices where the attribute&#39;s dtype matches the given parameter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span> <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">dtype</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MUITAS.identify_unique_types_descriptor">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.identify_unique_types_descriptor">[docs]</a>
+    <span class="k">def</span> <span class="nf">identify_unique_types_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Identify unique types in the dataset descriptor attributes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            set: A set of unique attribute types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">attr</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span><span class="o">.</span><span class="n">attributes</span><span class="p">}</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_normalize_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Normalize the weights of features so that their sum equals 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_weight</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">weight</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">total_weight</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
+                <span class="n">feature</span><span class="o">.</span><span class="n">weight</span> <span class="o">/=</span> <span class="n">total_weight</span>
+
+<div class="viewcode-block" id="MUITAS.get_index_attribute">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.get_index_attribute">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_index_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="n">FeatureDescriptor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the index of an attribute in the data descriptor attributes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attribute (FeatureDescriptor): The attribute to find the index for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The index of the attribute in the data descriptor attributes.</span>
+<span class="sd">                 Returns -1 if the attribute is not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">attribute</span> <span class="o">==</span> <span class="n">attr</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">idx</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="MUITAS.display_attributes_and_thresholds">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.MUITAS.display_attributes_and_thresholds">[docs]</a>
+    <span class="k">def</span> <span class="nf">display_attributes_and_thresholds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display the attributes and their corresponding thresholds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_descriptor</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attribute: </span><span class="si">{</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, Type: </span><span class="si">{</span><span class="n">attr</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">, Threshold: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">thresholds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Not set&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------------------------------------------</span>
+<span class="c1"># Feature object in MUITAS Application</span>
+<span class="c1"># ------------------------------------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="Feature">
+<a class="viewcode-back" href="../../../../../matsimilarity.methods.mat.MUITAS.html#matsimilarity.methods.mat.MUITAS.MUITAS_T2T.Feature">[docs]</a>
+<span class="k">class</span> <span class="nc">Feature</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Feature: A class representing a feature in the MUITAS application.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _attributes (List[int]): A list of attribute indices.</span>
+<span class="sd">        _weight (float): The weight of the feature.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a Feature object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attributes (List[int]): A list of attribute indices.</span>
+<span class="sd">            weight (float): The weight of the feature.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span> <span class="o">=</span> <span class="n">weight</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter for attributes.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span>
+
+    <span class="nd">@attributes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setter for attributes.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span> <span class="o">=</span> <span class="n">attributes</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Getter for weight.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span>
+
+    <span class="nd">@weight</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setter for weight.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span> <span class="o">=</span> <span class="n">weight</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String representation of Feature.&quot;&quot;&quot;</span>
+        <span class="n">attribute_str</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Attributes: [</span><span class="si">{</span><span class="n">attribute_str</span><span class="si">}</span><span class="s2">], Weight: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_weight</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Vanessa Lago Machado and Tarlis Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

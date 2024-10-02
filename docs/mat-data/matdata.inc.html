@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matdata.inc package &mdash; mat-data 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-data
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-data:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocess.html">Pre-process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converter.html">Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">Data Generator</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-data</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matdata.inc package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matdata.inc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matdata-inc-package">
+<h1>matdata.inc package<a class="headerlink" href="#matdata-inc-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matdata.inc.ts_io">
+<span id="matdata-inc-ts-io-module"></span><h2>matdata.inc.ts_io module<a class="headerlink" href="#module-matdata.inc.ts_io" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present application offers a tool, to support the user in the preprocessing of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2023
+Copyright (C) 2023, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>sktime package (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.LongFormatDataParseException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">LongFormatDataParseException</span></span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#LongFormatDataParseException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.LongFormatDataParseException" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Should be raised when parsing a .csv file
+with long-formatted date and the format is incorrect</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.TsFileParseException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">TsFileParseException</span></span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#TsFileParseException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.TsFileParseException" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Should be raised when parsing a .ts file and the format is incorrect.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.from_long_to_nested">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">from_long_to_nested</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">long_dataframe</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#from_long_to_nested"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.from_long_to_nested" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.generate_example_long_table">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">generate_example_long_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#generate_example_long_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.generate_example_long_table" title="Link to this definition"></a></dt>
+<dd><p>Generates example from long table format file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_cases</strong> (<em>int</em>) – Number of cases.</p></li>
+<li><p><strong>series_len</strong> (<em>int</em>) – Length of the series.</p></li>
+<li><p><strong>num_dims</strong> (<em>int</em>) – Number of dimensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.load_from_arff_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">load_from_arff_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full_file_path_and_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_class_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_separate_X_and_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_missing_vals_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NaN'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#load_from_arff_to_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.load_from_arff_to_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Loads data from a .ts file into a Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>full_file_path_and_name</strong> (<em>str</em>) – The full pathname of the .ts file to read.</p></li>
+<li><p><strong>has_class_labels</strong> (<em>bool</em>) – true then line contains separated strings and class value contains
+list of separated strings, check for ‘return_separate_X_and_y’
+false otherwise.</p></li>
+<li><p><strong>return_separate_X_and_y</strong> (<em>bool</em>) – true then X and Y values should be returned as separate Data Frames (
+X) and a numpy array (y), false otherwise.
+This is only relevant for data.</p></li>
+<li><p><strong>replace_missing_vals_with</strong> (<em>str</em>) – The value that missing values in the text file should be replaced
+with prior to parsing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>DataFrame, ndarray</em> – If return_separate_X_and_y then a tuple containing a DataFrame and a
+numpy array containing the relevant time-series and corresponding
+class values.</p></li>
+<li><p><em>DataFrame</em> – If not return_separate_X_and_y then a single DataFrame containing
+all time-series and (if relevant) a column “class_vals” the
+associated class values.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.load_from_long_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">load_from_long_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full_file_path_and_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#load_from_long_to_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.load_from_long_to_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Loads data from a long format file into a Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>full_file_path_and_name</strong> (<em>str</em>) – The full pathname of the .csv file to read.</p></li>
+<li><p><strong>separator</strong> (<em>str</em>) – The character that the csv uses as a delimiter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dataframe with sktime-formatted data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.load_from_tsfile">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">load_from_tsfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_separate_X_and_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_missing_vals_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NaN'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Processing</span> <span class="pre">TS'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#load_from_tsfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.load_from_tsfile" title="Link to this definition"></a></dt>
+<dd><p>Loads data from a .ts file into a Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>full_file_path_and_name</strong> (<em>str</em>) – The full pathname of the .ts file to read.</p></li>
+<li><p><strong>return_separate_X_and_y</strong> (<em>bool</em>) – true if X and Y values should be returned as separate Data Frames (
+X) and a numpy array (y), false otherwise.
+This is only relevant for data that</p></li>
+<li><p><strong>replace_missing_vals_with</strong> (<em>str</em>) – The value that missing values in the text file should be replaced
+with prior to parsing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>DataFrame, ndarray</em> – If return_separate_X_and_y then a tuple containing a DataFrame and a
+numpy array containing the relevant time-series and corresponding
+class values.</p></li>
+<li><p><em>DataFrame</em> – If not return_separate_X_and_y then a single DataFrame containing
+all time-series and (if relevant) a column “class_vals” the
+associated class values.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.load_from_tsfile_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">load_from_tsfile_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full_file_path_and_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_separate_X_and_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_missing_vals_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'?'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opLabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Processing</span> <span class="pre">TS'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#load_from_tsfile_to_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.load_from_tsfile_to_dataframe" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.load_from_ucr_tsv_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">load_from_ucr_tsv_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full_file_path_and_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_separate_X_and_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#load_from_ucr_tsv_to_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.load_from_ucr_tsv_to_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Loads data from a .tsv file into a Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>full_file_path_and_name</strong> (<em>str</em>) – The full pathname of the .tsv file to read.</p></li>
+<li><p><strong>return_separate_X_and_y</strong> (<em>bool</em>) – true then X and Y values should be returned as separate Data Frames (
+X) and a numpy array (y), false otherwise.
+This is only relevant for data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>DataFrame, ndarray</em> – If return_separate_X_and_y then a tuple containing a DataFrame and a
+numpy array containing the relevant time-series and corresponding
+class values.</p></li>
+<li><p><em>DataFrame</em> – If not return_separate_X_and_y then a single DataFrame containing
+all time-series and (if relevant) a column “class_vals” the
+associated class values.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.write_dataframe_to_tsfile">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">write_dataframe_to_tsfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">univariate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_value_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NaN'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#write_dataframe_to_tsfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.write_dataframe_to_tsfile" title="Link to this definition"></a></dt>
+<dd><p>Output a dataset in dataframe format to .ts file
+:param data: the dataset in a dataframe to be written as a ts file</p>
+<blockquote>
+<div><p>which must be of the structure specified in the documentation
+<a class="reference external" href="https://github.com/whackteachers/sktime/blob/master/examples/loading_data.ipynb">https://github.com/whackteachers/sktime/blob/master/examples/loading_data.ipynb</a>
+index |   dim_0   |   dim_1   |    …    |  dim_c-1</p>
+<blockquote>
+<div><blockquote>
+<div><p>0  | pd.Series | pd.Series | pd.Series | pd.Series
+1  | pd.Series | pd.Series | pd.Series | pd.Series</p>
+</div></blockquote>
+<dl class="simple">
+<dt>… |    …    |    …    |    …    |    …</dt><dd><p>n  | pd.Series | pd.Series | pd.Series | pd.Series</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – The full path to output the ts file</p></li>
+<li><p><strong>problem_name</strong> (<em>str</em>) – The problemName to print in the header of the ts file
+and also the name of the file.</p></li>
+<li><p><strong>timestamp</strong> (<em>{False</em><em>, </em><em>bool}</em><em>, </em><em>optional</em>) – Indicate whether the data contains timestamps in the header.</p></li>
+<li><p><strong>univariate</strong> (<em>{True</em><em>, </em><em>bool}</em><em>, </em><em>optional</em>) – Indicate whether the data is univariate or multivariate in the header.
+If univariate, only the first dimension will be written to file</p></li>
+<li><p><strong>class_label</strong> (<em>{list</em><em>, </em><em>None}</em><em>, </em><em>optional</em>) – Provide class label to show the possible class values
+for classification problems in the header.</p></li>
+<li><p><strong>class_value_list</strong> (<em>{list/ndarray</em><em>, </em><em>[</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – ndarray containing the class values for each case in classification problems</p></li>
+<li><p><strong>equal_length</strong> (<em>{False</em><em>, </em><em>bool}</em><em>, </em><em>optional</em>) – Indicate whether each series has equal length. It only write to file if true.</p></li>
+<li><p><strong>series_length</strong> (<em>{-1</em><em>, </em><em>int}</em><em>, </em><em>optional</em>) – Indicate each series length if they are of equal length.
+It only write to file if true.</p></li>
+<li><p><strong>missing_values</strong> (<em>{NaN</em><em>, </em><em>str}</em><em>, </em><em>optional</em>) – Representation for missing value, default is NaN.</p></li>
+<li><p><strong>comment</strong> (<em>{None</em><em>, </em><em>str}</em><em>, </em><em>optional</em>) – Comment text to be inserted before the header in a block.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This version currently does not support writing timestamp data.</p>
+<p class="rubric">References</p>
+<p>The code for writing series data into file is adopted from
+<a class="reference external" href="https://stackoverflow.com/questions/37877708/">https://stackoverflow.com/questions/37877708/</a>
+how-to-turn-a-pandas-dataframe-row-into-a-comma-separated-string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matdata.inc.ts_io.write_results_to_uea_format">
+<span class="sig-prename descclassname"><span class="pre">matdata.inc.ts_io.</span></span><span class="sig-name descname"><span class="pre">write_results_to_uea_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TEST'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_proba</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_line</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N/A'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matdata/inc/ts_io.html#write_results_to_uea_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matdata.inc.ts_io.write_results_to_uea_format" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-matdata.inc">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matdata.inc" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

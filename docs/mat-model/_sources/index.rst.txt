@@ -1,0 +1,34 @@
+MAT-model's Documentation!
+==========================
+   
+----
+
+.. include:: ../../matmodel/README.md
+   :parser: myst_parser.sphinx_
+
+----
+
+Module contents
+---------------
+
+.. automodule:: matmodel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: 5
+   :caption: Modules in MAT-model:
+
+    Base <matmodel.base>
+    Comparator <matmodel.comparator>
+    Dataset Descriptor <matmodel.descriptor>
+    Feature <matmodel.feature>
+    Representative <matmodel.representative>
+    Util <matmodel.util>
+   
+----
+
+.. include:: ../../CHANGELOG.md
+   :parser: myst_parser.sphinx_

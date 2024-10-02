@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.feature.POIS &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.feature.POIS</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.feature.POIS</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">    - Francisco Vicenzi (adapted)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">os</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">argmax</span>
+<span class="c1">#sys.path.insert(0, os.path.abspath(&#39;.&#39;)) # TODO fix imports</span>
+
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">matdata.preprocess</span> <span class="kn">import</span> <span class="n">trainTestSplit</span>
+  
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.regularizers</span> <span class="kn">import</span> <span class="n">l2</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">History</span>
+
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="n">compute_acc_acc5_f1_prec_rec</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="c1">#from matclassification.methods._lib.pymove.models import metrics</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="n">MetricsLogger</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods.mat.MARC</span> <span class="kn">import</span> <span class="n">EpochLogger</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods.core</span> <span class="kn">import</span> <span class="n">HSClassifier</span>
+
+<span class="kn">from</span> <span class="nn">matclassification.methods.feature.feature_extraction.pois</span> <span class="kn">import</span> <span class="n">pois</span>
+
+<div class="viewcode-block" id="POIS">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.POIS">[docs]</a>
+<span class="k">class</span> <span class="nc">POIS</span><span class="p">(</span><span class="n">HSClassifier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    POIS: Point of Interest Sequence Feature Exctractor and Classifier.</span>
+
+<span class="sd">    This class implements a trajectory classifier based on the POI-F/POIS approach, which considers the frequency of visits to </span>
+<span class="sd">    Points of Interest (POIs). It has been extended to concatenate sequences of POIs, which allows classification based on </span>
+<span class="sd">    patterns in POI sequences. </span>
+
+<span class="sd">    POI Frequency types:</span>
+<span class="sd">    (i) poi: POI frequency</span>
+<span class="sd">    (ii) npoi: Normalized POI frequency</span>
+<span class="sd">    (iii) wnpoi: Weighted Normalized POI frequency</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    method : str, optional (default=&#39;npoi&#39;)</span>
+<span class="sd">        The method used to compute POI frequencies. Options include &#39;poi&#39;, &#39;npoi&#39;, and &#39;wnpoi&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    sequences : list of int, optional (default=[1, 2, 3])</span>
+<span class="sd">        Defines the length of the sequences of POIs used for classification.</span>
+<span class="sd">    </span>
+<span class="sd">    features : list, optional</span>
+<span class="sd">        Specifies which features from the dataset to use. If None, choose the feature with higher variance.</span>
+<span class="sd">    </span>
+<span class="sd">    n_jobs : int, optional (default=-1)</span>
+<span class="sd">        The number of parallel jobs to run for computation.</span>
+<span class="sd">    </span>
+<span class="sd">    verbose : bool, optional (default=True)</span>
+<span class="sd">        Controls verbosity of logging during model training.</span>
+<span class="sd">    </span>
+<span class="sd">    random_state : int, optional (default=42)</span>
+<span class="sd">        Seed used by the random number generator to ensure reproducibility.</span>
+
+<span class="sd">    filterwarnings : str, optional (default=&#39;ignore&#39;)</span>
+<span class="sd">        Controls the filter for output warnings.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+<span class="sd">    xy(train, test, tid_col, class_col, geo_precision, validate, res_path):</span>
+<span class="sd">        Prepares the data for training and testing by computing the POI sequences and extracting features for classification.</span>
+<span class="sd">    </span>
+<span class="sd">    prepare_input(train, test, tid_col, class_col, geo_precision, validate, res_path):</span>
+<span class="sd">        Prepares and splits the input data into training, validation, and testing sets. Adds the necessary configuration details.</span>
+<span class="sd">    </span>
+<span class="sd">    create():</span>
+<span class="sd">        Initializes a neural network model with two layers: a hidden layer with 100 units and a softmax output layer for classification.</span>
+
+<span class="sd">    fit(X_train, y_train, X_val, y_val, save_results, res_path):</span>
+<span class="sd">        Trains the model using the training data. Optionally saves the results.</span>
+
+<span class="sd">    predict(X_test, y_test):</span>
+<span class="sd">        Predicts the labels for the test data and returns the classification report.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">method</span><span class="o">=</span><span class="s1">&#39;npoi&#39;</span><span class="p">,</span>
+                 <span class="n">sequences</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> 
+                 <span class="n">features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+<span class="c1">#                 dataset=&#39;specific&#39;, #DEPRECATED</span>
+                 
+                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                 <span class="n">filterwarnings</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">filterwarnings</span><span class="o">=</span><span class="n">filterwarnings</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                        <span class="n">sequences</span><span class="o">=</span><span class="n">sequences</span><span class="p">,</span> 
+                        <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">)</span> 
+<span class="c1">#                        dataset=dataset)</span>
+        
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="POIS.xy">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.POIS.xy">[docs]</a>
+    <span class="k">def</span> <span class="nf">xy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+           <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span>
+           <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> 
+           <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span>
+<span class="c1">#          space_geohash=False, # For future implementation</span>
+           <span class="n">geo_precision</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+           <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># For future implementation</span>
+           <span class="n">res_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> 
+        
+        <span class="k">def</span> <span class="nf">check_label_sort</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">class_col</span><span class="p">])</span>
+            <span class="n">indexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">!=</span> <span class="n">labels</span><span class="p">[</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">final</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">indexes</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">final</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">final</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">final</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">final</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">final</span><span class="p">))</span>
+        
+        <span class="k">assert</span> <span class="n">check_label_sort</span><span class="p">(</span><span class="n">train</span><span class="p">)</span> <span class="ow">and</span> <span class="n">check_label_sort</span><span class="p">(</span><span class="n">test</span><span class="p">),</span> <span class="s2">&quot;This method requires input data to be ordered by labels.&quot;</span>
+        
+        <span class="k">if</span> <span class="n">res_path</span><span class="p">:</span>
+            <span class="n">save_results</span><span class="o">=</span><span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">save_results</span><span class="o">=</span><span class="kc">False</span>
+        
+        <span class="n">sequences</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sequences&#39;</span><span class="p">]</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span>
+<span class="c1">#        dataset = self.config[&#39;dataset&#39;] # DEPRECATED</span>
+        
+        <span class="n">random_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">]</span>
+        
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pois</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> 
+                                                   <span class="n">sequences</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> 
+                                                   <span class="n">res_path</span><span class="p">,</span> <span class="n">save_results</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> 
+                                                   <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">)</span>
+        
+        <span class="c1"># return: (num_features, num_classes, labels, X, y, one_hot_y)</span>
+        <span class="k">return</span> <span class="n">prepareData</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span>
+                             <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="n">random_num</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="POIS.prepare_input">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.POIS.prepare_input">[docs]</a>
+    <span class="k">def</span> <span class="nf">prepare_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span>
+                      <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> 
+                      <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span>
+<span class="c1">#                      space_geohash=False, # For future implementation</span>
+                      <span class="n">geo_precision</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                      <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># For future implementation</span>
+                      <span class="n">res_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> 
+        
+        <span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">one_hot_y</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">geo_precision</span><span class="p">,</span> <span class="n">validate</span><span class="p">,</span> <span class="n">res_path</span><span class="p">)</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">num_features</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                        <span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> 
+                        <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">le</span> <span class="o">=</span> <span class="n">one_hot_y</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_val</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate</span> <span class="o">=</span> <span class="kc">True</span>
+        
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;num_features&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;num_classes&#39;</span><span class="p">]</span></div>
+
+        
+    
+<div class="viewcode-block" id="POIS.create">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.POIS.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">num_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;num_classes&#39;</span><span class="p">]</span>
+        <span class="n">num_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;num_features&#39;</span><span class="p">]</span>
+        
+        <span class="n">keep_prob</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+        <span class="n">HIDDEN_UNITS</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="c1">#        EARLY_STOPPING_PATIENCE = 30</span>
+        
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="n">HIDDEN_UNITS</span><span class="p">,</span>
+                        <span class="n">input_dim</span><span class="o">=</span><span class="p">(</span><span class="n">num_features</span><span class="p">),</span>
+                        <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span>
+                        <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">l2</span><span class="p">(</span><span class="mf">0.02</span><span class="p">)))</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="n">keep_prob</span><span class="p">))</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span>
+                        <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span>
+                        <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">num_classes</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">my_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">my_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="s1">&#39;top_k_categorical_accuracy&#39;</span><span class="p">]</span>
+        
+        <span class="n">opt</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span>
+                      <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span>
+                      <span class="n">metrics</span><span class="o">=</span><span class="n">my_metrics</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">model</span></div>
+
+
+        
+<div class="viewcode-block" id="POIS.fit">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.POIS.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+            <span class="n">X_train</span><span class="p">,</span> 
+            <span class="n">y_train</span><span class="p">,</span> 
+            <span class="n">X_val</span><span class="p">,</span>
+            <span class="n">y_val</span><span class="p">,</span> 
+            <span class="n">save_results</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">res_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+        
+        <span class="c1"># Check if config is done:</span>
+        <span class="k">if</span> <span class="s1">&#39;num_features&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+            <span class="n">num_features</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+            <span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">num_features</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
+                            <span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> 
+                            <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+        
+        <span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">250</span>
+        <span class="n">BASELINE_METRIC</span> <span class="o">=</span> <span class="s1">&#39;acc&#39;</span>
+        <span class="n">BASELINE_VALUE</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+        <span class="n">EARLY_STOPPING_PATIENCE</span> <span class="o">=</span> <span class="mi">30</span>
+        
+        <span class="n">METRICS_FILE</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">save_results</span><span class="p">:</span>
+            <span class="n">METRICS_FILE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;-results.csv&#39;</span>
+            <span class="n">METRICS_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res_path</span><span class="p">,</span> <span class="n">METRICS_FILE</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        
+        <span class="n">hist</span> <span class="o">=</span> <span class="n">History</span><span class="p">()</span>
+        
+        <span class="n">history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+                  <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span>
+                  <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span>
+                  <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span><span class="p">,</span>
+                  <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                  <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">EpochLogger</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> 
+                                          <span class="n">metric</span><span class="o">=</span><span class="n">BASELINE_METRIC</span><span class="p">,</span>
+                                          <span class="n">baseline</span><span class="o">=</span><span class="n">BASELINE_VALUE</span><span class="p">,</span>
+                                          <span class="n">patience</span><span class="o">=</span><span class="n">EARLY_STOPPING_PATIENCE</span><span class="p">,</span>
+                                          <span class="n">metrics_file</span><span class="o">=</span><span class="n">METRICS_FILE</span><span class="p">),</span> <span class="n">hist</span><span class="p">])</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">report</span></div>
+
+    
+<div class="viewcode-block" id="POIS.predict">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.POIS.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>                 
+                <span class="n">X_test</span><span class="p">,</span>
+                <span class="n">y_test</span><span class="p">):</span>
+        
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="c1">#, y_test)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">),</span> <span class="n">y_pred</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NOW:&#39;</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span> <span class="o">=</span> <span class="n">y_test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">y_pred</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span><span class="p">,</span> <span class="n">y_pred</span></div>
+</div>
+
+
+
+<span class="c1">###############################################################################    </span>
+<div class="viewcode-block" id="prepareData">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.prepareData">[docs]</a>
+<span class="k">def</span> <span class="nf">prepareData</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepares the dataset for training, testing, and optional validation (#TODO) for POIS.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    x_train : pandas.DataFrame or numpy.ndarray</span>
+<span class="sd">        Feature set for the training data.</span>
+<span class="sd">        </span>
+<span class="sd">    x_test : pandas.DataFrame or numpy.ndarray</span>
+<span class="sd">        Feature set for the test data.</span>
+<span class="sd">        </span>
+<span class="sd">    y_train : pandas.Series or numpy.ndarray</span>
+<span class="sd">        Labels for the training data.</span>
+<span class="sd">        </span>
+<span class="sd">    y_test : pandas.Series or numpy.ndarray</span>
+<span class="sd">        Labels for the test data.</span>
+<span class="sd">        </span>
+<span class="sd">    validate : bool, optional (default=False)</span>
+<span class="sd">        If True, splits the training data into training and validation sets. </span>
+<span class="sd">        Validation handling is currently not implemented.</span>
+<span class="sd">        </span>
+<span class="sd">    random_state : int, optional (default=42)</span>
+<span class="sd">        Random seed used for reproducibility when splitting data.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    num_features : int</span>
+<span class="sd">        The number of features in the dataset.</span>
+<span class="sd">        </span>
+<span class="sd">    num_classes : int</span>
+<span class="sd">        The number of unique classes in the target labels.</span>
+<span class="sd">        </span>
+<span class="sd">    labels : numpy.ndarray</span>
+<span class="sd">        An array of the unique class labels.</span>
+<span class="sd">        </span>
+<span class="sd">    X : list</span>
+<span class="sd">        A list containing feature sets. If `validate` is False, returns </span>
+<span class="sd">        [X_train, X_test]. Otherwise, returns [X_train, X_val, X_test].</span>
+<span class="sd">        </span>
+<span class="sd">    y : list</span>
+<span class="sd">        A list containing one-hot encoded target sets. If `validate` is False, returns </span>
+<span class="sd">        [y_train, y_test]. Otherwise, returns [y_train, y_val, y_test].</span>
+<span class="sd">        </span>
+<span class="sd">    one_hot_encoder : sklearn.preprocessing.OneHotEncoder</span>
+<span class="sd">        The fitted OneHotEncoder object used to encode the target labels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">validate</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;POIS method prepareData(validate=True) is not implemented.&#39;</span><span class="p">)</span>
+    
+    <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+
+    <span class="n">num_features</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x_train</span><span class="p">))</span>
+    <span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">validate</span><span class="p">:</span>
+        <span class="n">df_xtrain</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">df_ytrain</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+        <span class="n">df_xtrain</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_xtrain</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">df_ytrain</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_ytrain</span><span class="o">.</span><span class="n">index</span>
+        
+        <span class="k">return</span> <span class="n">df_xtrain</span><span class="p">,</span> <span class="n">df_ytrain</span><span class="p">,</span> <span class="n">df_xtrain</span><span class="p">,</span> <span class="n">df_ytrain</span>
+
+        <span class="n">df_xtrain</span><span class="p">,</span> <span class="n">df_xval</span> <span class="o">=</span> <span class="n">trainTestSplit</span><span class="p">(</span><span class="n">df_xtrain</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
+                                             <span class="n">random_num</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[])</span>
+        <span class="n">df_ytrain</span><span class="p">,</span> <span class="n">df_yval</span> <span class="o">=</span> <span class="n">trainTestSplit</span><span class="p">(</span><span class="n">df_ytrain</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
+                                             <span class="n">random_num</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">outformats</span><span class="o">=</span><span class="p">[])</span>
+
+        <span class="n">df_xtrain</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_xval</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_ytrain</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_yval</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tid&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">df_xtrain</span><span class="p">,</span> <span class="n">df_xval</span><span class="p">,</span> <span class="n">x_test</span><span class="p">),</span> <span class="p">(</span><span class="n">df_ytrain</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">df_yval</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_test</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">),</span> <span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)]</span>
+        
+    
+    <span class="n">X</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">one_hot_y</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+    <span class="n">one_hot_y</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>
+<span class="c1">#    one_hot_y.fit(y_train.loc[:, [class_col]])</span>
+    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>       
+<span class="c1">#        df = df.reshape(-1, 1)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">one_hot_y</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="c1">#        df = one_hot_y.transform(df.loc[:, [class_col]]).toarray()</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        
+    <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">one_hot_y</span><span class="p">)</span></div>
+
+
+<span class="c1"># --------------------------------------------------------------------------------------------------------  </span>
+<div class="viewcode-block" id="loadData">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.POIS.loadData">[docs]</a>
+<span class="k">def</span> <span class="nf">loadData</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads training and testing datasets from CSV files.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    dir_path : str</span>
+<span class="sd">        The directory path (without file extension) from which to load the datasets. </span>
+<span class="sd">        It expects the following CSV files:</span>
+<span class="sd">        - &#39;{dir_path}-x_train.csv&#39;: Features for training data.</span>
+<span class="sd">        - &#39;{dir_path}-y_train.csv&#39;: Labels for training data.</span>
+<span class="sd">        - &#39;{dir_path}-x_test.csv&#39;: Features for testing data.</span>
+<span class="sd">        - &#39;{dir_path}-y_test.csv&#39;: Labels for testing data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    x_train : pandas.DataFrame</span>
+<span class="sd">        A DataFrame containing the features for the training dataset.</span>
+<span class="sd">        </span>
+<span class="sd">    x_test : pandas.DataFrame</span>
+<span class="sd">        A DataFrame containing the features for the testing dataset.</span>
+<span class="sd">        </span>
+<span class="sd">    y_train : numpy.ndarray</span>
+<span class="sd">        A numpy array containing the labels for the training dataset.</span>
+<span class="sd">        </span>
+<span class="sd">    y_test : numpy.ndarray</span>
+<span class="sd">        A numpy array containing the labels for the testing dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">dir_path</span><span class="o">+</span><span class="s1">&#39;-x_train.csv&#39;</span><span class="p">)</span><span class="c1">#, header=None)</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">dir_path</span><span class="o">+</span><span class="s1">&#39;-y_train.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="c1">#[:,-1].values</span>
+
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">dir_path</span><span class="o">+</span><span class="s1">&#39;-x_test.csv&#39;</span><span class="p">)</span><span class="c1">#, header=None)</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">dir_path</span><span class="o">+</span><span class="s1">&#39;-y_test.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    
+    <span class="k">return</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

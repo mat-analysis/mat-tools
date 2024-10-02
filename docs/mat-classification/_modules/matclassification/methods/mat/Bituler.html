@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.mat.Bituler &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.mat.Bituler</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.mat.Bituler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">    - Original source:</span>
+<span class="sd">        - Nicksson C. A. de Freitas, </span>
+<span class="sd">        - Ticiana L. Coelho da Silva, </span>
+<span class="sd">        - Jose António Fernandes de Macêdo, </span>
+<span class="sd">        - Leopoldo Melo Junior, </span>
+<span class="sd">        - Matheus Gomes Cordeiro</span>
+<span class="sd">    - Adapted from: https://github.com/nickssonfreitas/ICAART2021</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">argmax</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">GRU</span><span class="p">,</span> <span class="n">Bidirectional</span><span class="p">,</span> <span class="n">Concatenate</span><span class="p">,</span> <span class="n">Add</span><span class="p">,</span> <span class="n">Average</span><span class="p">,</span> <span class="n">Embedding</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.initializers</span> <span class="kn">import</span> <span class="n">he_normal</span><span class="p">,</span> <span class="n">he_uniform</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">load_model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">ModelCheckpoint</span><span class="p">,</span> <span class="n">TensorBoard</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.optimizers</span> <span class="kn">import</span> <span class="n">RMSprop</span><span class="p">,</span> <span class="n">Adam</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.sequence</span> <span class="kn">import</span> <span class="n">pad_sequences</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.regularizers</span> <span class="kn">import</span> <span class="n">l1</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.datahandler</span> <span class="kn">import</span> <span class="n">prepareTrajectories</span>
+
+<span class="kn">from</span> <span class="nn">matclassification.methods.core</span> <span class="kn">import</span> <span class="n">THSClassifier</span>
+
+<div class="viewcode-block" id="Bituler">
+<a class="viewcode-back" href="../../../../matclassification.methods.mat.html#matclassification.methods.mat.Bituler.Bituler">[docs]</a>
+<span class="k">class</span> <span class="nc">Bituler</span><span class="p">(</span><span class="n">THSClassifier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gao et al. (2017) proposed BiTULER, a model that uses word embeddings and a Bidirectional Recurrent Neural Network, </span>
+<span class="sd">    but it is limited to the sequence of check-in identifiers, not supporting other dimensions.</span>
+<span class="sd">    </span>
+<span class="sd">    Bituler is a trajectory classification model that extends the THSClassifier. </span>
+<span class="sd">    It is designed for handling multiple aspect trajectory data, utilizing deep learning techniques </span>
+<span class="sd">    such as Recurrent Neural Networks (RNNs) for feature extraction and classification. The model </span>
+<span class="sd">    can be configured with various neural network architectures, embedding sizes, and optimization </span>
+<span class="sd">    settings. </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rnn : list, optional</span>
+<span class="sd">        List of RNN architectures to use. Currently, only &#39;bilstm&#39; is supported (default: [&#39;bilstm&#39;]).</span>
+<span class="sd">    units : list, optional</span>
+<span class="sd">        List of integers specifying the number of hidden units in each layer (default: [100, 200, 250, 300]).</span>
+<span class="sd">    stack : list, optional</span>
+<span class="sd">        List of integers specifying the number of RNN layers to stack (default: [1]).</span>
+<span class="sd">    dropout : list, optional</span>
+<span class="sd">        List of floats specifying the dropout rate for regularization (default: [0.5]).</span>
+<span class="sd">    embedding_size : list, optional</span>
+<span class="sd">        List of integers specifying the size of the embedding layer (default: [100, 200, 300, 400]).</span>
+<span class="sd">    batch_size : list, optional</span>
+<span class="sd">        List of batch sizes for training (default: [64]).</span>
+<span class="sd">    epochs : list, optional</span>
+<span class="sd">        List of the number of epochs for training (default: [1000]).</span>
+<span class="sd">    patience : list, optional</span>
+<span class="sd">        List of integers specifying the number of epochs to wait for early stopping (default: [20], currently unused).</span>
+<span class="sd">    monitor : list, optional</span>
+<span class="sd">        List of metrics to monitor for early stopping (default: [&#39;val_acc&#39;]).</span>
+<span class="sd">    optimizer : list, optional</span>
+<span class="sd">        List of optimizers to use during training (default: [&#39;ada&#39;]).</span>
+<span class="sd">    learning_rate : list, optional</span>
+<span class="sd">        List of learning rates for the optimizer (default: [0.001]).</span>
+<span class="sd">    save_results : bool, optional</span>
+<span class="sd">        If True, saves the results of the training process (default: False).</span>
+<span class="sd">    n_jobs : int, optional</span>
+<span class="sd">        Number of parallel jobs to run (default: -1).</span>
+<span class="sd">    verbose : int, optional</span>
+<span class="sd">        Verbosity level of the training process (default: 0).</span>
+<span class="sd">    random_state : int, optional</span>
+<span class="sd">        Seed for random number generation (default: 42).</span>
+<span class="sd">    filterwarnings : str, optional</span>
+<span class="sd">        Configures warning filtering (default: &#39;ignore&#39;).</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    xy(train, test, tid_col=&#39;tid&#39;, class_col=&#39;label&#39;, space_geohash=False, geo_precision=30, features=[&#39;poi&#39;], validate=False)</span>
+<span class="sd">        Prepares the trajectory data for model training and testing.</span>
+<span class="sd">        </span>
+<span class="sd">    prepare_input(train, test, tid_col=&#39;tid&#39;, class_col=&#39;label&#39;, space_geohash=False, geo_precision=30, features=[&#39;poi&#39;], validate=False)</span>
+<span class="sd">        Prepares the input data by configuring the model parameters and splitting the data into training and testing sets.</span>
+<span class="sd">        </span>
+<span class="sd">    create(config)</span>
+<span class="sd">        Creates and returns the RNN model architecture based on the provided configuration.</span>
+<span class="sd">        </span>
+<span class="sd">    fit(X_train, y_train, X_val, y_val, config=None)</span>
+<span class="sd">        Trains the model on the provided training data and evaluates it on the validation data.</span>
+<span class="sd">        </span>
+<span class="sd">    clear()</span>
+<span class="sd">        Clears the model session to free memory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+<span class="c1">#                 num_classes = -1,</span>
+<span class="c1">#                 max_lenght = -1,</span>
+<span class="c1">#                 vocab_size = -1,</span>
+                 <span class="n">rnn</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bilstm&#39;</span><span class="p">],</span> <span class="c1">#Unused</span>
+                 <span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span>
+                 <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                 <span class="n">dropout</span> <span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
+                 <span class="n">embedding_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">],</span>
+                 <span class="n">batch_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">64</span><span class="p">],</span>
+                 <span class="n">epochs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">],</span>
+                 <span class="n">patience</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="c1">#Unused</span>
+                 <span class="n">monitor</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;val_acc&#39;</span><span class="p">],</span>
+                 <span class="n">optimizer</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ada&#39;</span><span class="p">],</span>
+                 <span class="n">learning_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">],</span>
+                 
+                 <span class="n">save_results</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                 <span class="n">filterwarnings</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;Bituler&#39;</span><span class="p">,</span> <span class="n">save_results</span><span class="o">=</span><span class="n">save_results</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">filterwarnings</span><span class="o">=</span><span class="n">filterwarnings</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">rnn</span><span class="o">=</span><span class="n">rnn</span><span class="p">,</span> 
+                        <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span> 
+                        <span class="n">stack</span><span class="o">=</span><span class="n">stack</span><span class="p">,</span> 
+                        <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span> 
+                        <span class="n">embedding_size</span><span class="o">=</span><span class="n">embedding_size</span><span class="p">,</span> 
+                        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> 
+                        <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> 
+                        <span class="n">patience</span><span class="o">=</span><span class="n">patience</span><span class="p">,</span> 
+                        <span class="n">monitor</span><span class="o">=</span><span class="n">monitor</span><span class="p">,</span> 
+                        <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> 
+                        <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+
+        <span class="c1"># Moved to prepare_input:</span>
+<span class="c1">#        self.grid = list(itertools.product())</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+    
+<div class="viewcode-block" id="Bituler.xy">
+<a class="viewcode-back" href="../../../../matclassification.methods.mat.html#matclassification.methods.mat.Bituler.Bituler.xy">[docs]</a>
+    <span class="k">def</span> <span class="nf">xy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+           <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span>
+           <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> 
+           <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span>
+           <span class="n">space_geohash</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># True: Geohash, False: indexgrid</span>
+           <span class="n">geo_precision</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>    <span class="c1"># Geohash: precision OR IndexGrid: meters</span>
+           <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;poi&#39;</span><span class="p">],</span>
+           <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        
+        <span class="c1"># RETURN: X, y, features, num_classes, space, dic_parameters</span>
+        <span class="k">return</span> <span class="n">prepareTrajectories</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">test</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                                   <span class="n">tid_col</span><span class="o">=</span><span class="n">tid_col</span><span class="p">,</span> 
+                                   <span class="n">class_col</span><span class="o">=</span><span class="n">class_col</span><span class="p">,</span>
+                                   <span class="c1"># space_geohash, True: Geohash, False: indexgrid</span>
+                                   <span class="n">space_geohash</span><span class="o">=</span><span class="n">space_geohash</span><span class="p">,</span> 
+                                   <span class="c1"># Geohash: precision OR IndexGrid: meters</span>
+                                   <span class="n">geo_precision</span><span class="o">=</span><span class="n">geo_precision</span><span class="p">,</span>     
+
+                                   <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>
+                                   <span class="n">features_encoding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                   <span class="n">y_one_hot_encodding</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                   <span class="n">split_test_validation</span><span class="o">=</span><span class="n">validate</span><span class="p">,</span>
+                                   <span class="n">data_preparation</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+
+                                   <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Bituler.prepare_input">
+<a class="viewcode-back" href="../../../../matclassification.methods.mat.html#matclassification.methods.mat.Bituler.Bituler.prepare_input">[docs]</a>
+    <span class="k">def</span> <span class="nf">prepare_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span>
+                      <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> 
+                      <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span>
+                      <span class="n">space_geohash</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="c1"># True: Geohash, False: indexgrid</span>
+                      <span class="n">geo_precision</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>     <span class="c1"># Geohash: precision OR IndexGrid: meters</span>
+                      <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;poi&#39;</span><span class="p">],</span>
+                      <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        
+        <span class="c1">## Rewriting the method to change default params</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dic_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="n">space_geohash</span><span class="p">,</span> <span class="n">geo_precision</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">validate</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">,</span>
+                        <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>
+                        <span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span> 
+                        <span class="n">dic_parameters</span><span class="o">=</span><span class="n">dic_parameters</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="s1">&#39;encode_y&#39;</span> <span class="ow">in</span> <span class="n">dic_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">le</span> <span class="o">=</span> <span class="n">dic_parameters</span><span class="p">[</span><span class="s1">&#39;encode_y&#39;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_val</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate</span> <span class="o">=</span> <span class="kc">True</span>
+        
+        <span class="n">num_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;num_classes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dic_parameters</span><span class="p">[</span><span class="s1">&#39;num_classes&#39;</span><span class="p">]</span>
+        <span class="n">max_lenght</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;max_lenght&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dic_parameters</span><span class="p">[</span><span class="s1">&#39;max_lenght&#39;</span><span class="p">]</span>
+        <span class="n">vocab_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;vocab_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dic_parameters</span><span class="p">[</span><span class="s1">&#39;vocab_size&#39;</span><span class="p">][</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="c1">#[&#39;poi&#39;]</span>
+        <span class="n">rnn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;rnn&#39;</span><span class="p">]</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">]</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;stack&#39;</span><span class="p">]</span>
+        <span class="n">dropout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;dropout&#39;</span><span class="p">]</span>
+        <span class="n">embedding_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;embedding_size&#39;</span><span class="p">]</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">]</span>
+        <span class="n">epochs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;epochs&#39;</span><span class="p">]</span>
+        <span class="n">patience</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;patience&#39;</span><span class="p">]</span>
+        <span class="n">monitor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;monitor&#39;</span><span class="p">]</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">]</span>
+        <span class="n">learning_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">]</span>
+        
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_search</span><span class="p">(</span><span class="n">rnn</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">monitor</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">)</span>
+<span class="c1">#        self.grid = list(itertools.product(rnn, units, stack, dropout, embedding_size, </span>
+<span class="c1">#                                           batch_size, epochs, patience, monitor, learning_rate))</span>
+        
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dic_parameters</span></div>
+
+        
+<div class="viewcode-block" id="Bituler.create">
+<a class="viewcode-back" href="../../../../matclassification.methods.mat.html#matclassification.methods.mat.Bituler.Bituler.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+
+        <span class="n">max_lenght</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;max_lenght&#39;</span><span class="p">]</span>   
+        <span class="n">num_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;num_classes&#39;</span><span class="p">]</span>
+        <span class="n">vocab_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;vocab_size&#39;</span><span class="p">]</span>
+        <span class="n">rnn_units</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">stack</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">dropout</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">embedding_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        
+        <span class="c1">#Initializing Neural Network</span>
+        <span class="n">input_model</span><span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">max_lenght</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;spatial_poi&#39;</span><span class="p">)</span> 
+        <span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">Embedding</span><span class="p">(</span><span class="n">input_dim</span> <span class="o">=</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">output_dim</span> <span class="o">=</span> <span class="n">embedding_size</span><span class="p">,</span> 
+                              <span class="n">name</span><span class="o">=</span><span class="s1">&#39;embedding_poi&#39;</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">max_lenght</span><span class="p">)(</span><span class="n">input_model</span><span class="p">)</span>
+
+        <span class="n">rnn_cell</span> <span class="o">=</span> <span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="n">rnn_units</span><span class="p">))(</span><span class="n">embedding_layer</span><span class="p">)</span>
+                            
+        <span class="n">hidden_dropout</span> <span class="o">=</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)(</span><span class="n">rnn_cell</span><span class="p">)</span>
+        <span class="n">output_model</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)(</span><span class="n">hidden_dropout</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">input_model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">output_model</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Bituler.fit">
+<a class="viewcode-back" href="../../../../matclassification.methods.mat.html#matclassification.methods.mat.Bituler.Bituler.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+            <span class="n">X_train</span><span class="p">,</span> 
+            <span class="n">y_train</span><span class="p">,</span> 
+            <span class="n">X_val</span><span class="p">,</span>
+            <span class="n">y_val</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_config</span>            
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="n">epochs</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+        
+        <span class="c1">## seting parameters</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">]</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acc&#39;</span><span class="p">]</span>  
+        <span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_acc&#39;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+        
+        <span class="n">early_stop</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_acc&#39;</span><span class="p">,</span>
+                                   <span class="n">min_delta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                   <span class="n">patience</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> 
+                                   <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># without print </span>
+                                   <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+                                   <span class="n">restore_best_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="n">my_callbacks</span><span class="o">=</span> <span class="p">[</span><span class="n">early_stop</span><span class="p">]</span>   
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> 
+                                    <span class="n">y_train</span><span class="p">,</span>
+                                    <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                                    <span class="n">callbacks</span><span class="o">=</span><span class="n">my_callbacks</span><span class="p">,</span>
+                                    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span>
+                                    <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="n">use_multiprocessing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>          
+                                    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Bituler.clear">
+<a class="viewcode-back" href="../../../../matclassification.methods.mat.html#matclassification.methods.mat.Bituler.Bituler.clear">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

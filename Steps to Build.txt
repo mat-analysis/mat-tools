@@ -1,0 +1,11 @@
+# ---------------------------------
+# For making the docs
+# ---------------------------------
+python3 -m pip install -U sphinx
+
+cd docs-src
+sphinx-quickstart
+
+# Check configurations ...
+
+make html

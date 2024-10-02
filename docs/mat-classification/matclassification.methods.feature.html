@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.feature package &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matclassification.methods.feature.feature_extraction package" href="matclassification.methods.feature.feature_extraction.html" />
+    <link rel="prev" title="matclassification.methods.core package" href="matclassification.methods.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Feature-based</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html">matclassification.methods.feature.feature_extraction package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.feature.MoveletDT">matclassification.methods.feature.MoveletDT module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.MoveletDT.MDT"><code class="docutils literal notranslate"><span class="pre">MDT</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletDT.MDT.create"><code class="docutils literal notranslate"><span class="pre">MDT.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletDT.MDT.fit"><code class="docutils literal notranslate"><span class="pre">MDT.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletDT.MDT.graph_tree"><code class="docutils literal notranslate"><span class="pre">MDT.graph_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletDT.MDT.plot_tree"><code class="docutils literal notranslate"><span class="pre">MDT.plot_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletDT.MDT.prepare_input"><code class="docutils literal notranslate"><span class="pre">MDT.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletDT.MDT.training_report"><code class="docutils literal notranslate"><span class="pre">MDT.training_report()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.feature.MoveletMLP">matclassification.methods.feature.MoveletMLP module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP"><code class="docutils literal notranslate"><span class="pre">MMLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP.create"><code class="docutils literal notranslate"><span class="pre">MMLP.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP.fit"><code class="docutils literal notranslate"><span class="pre">MMLP.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP.predict"><code class="docutils literal notranslate"><span class="pre">MMLP.predict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP1"><code class="docutils literal notranslate"><span class="pre">MMLP1</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP1.create"><code class="docutils literal notranslate"><span class="pre">MMLP1.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP1.fit"><code class="docutils literal notranslate"><span class="pre">MMLP1.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletMLP.MMLP1.predict"><code class="docutils literal notranslate"><span class="pre">MMLP1.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.feature.MoveletRF">matclassification.methods.feature.MoveletRF module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.MoveletRF.MRF"><code class="docutils literal notranslate"><span class="pre">MRF</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletRF.MRF.create"><code class="docutils literal notranslate"><span class="pre">MRF.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletRF.MRF.fit"><code class="docutils literal notranslate"><span class="pre">MRF.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletRF.MRF.training_report"><code class="docutils literal notranslate"><span class="pre">MRF.training_report()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.feature.MoveletRFHP">matclassification.methods.feature.MoveletRFHP module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.MoveletRFHP.MRFHP"><code class="docutils literal notranslate"><span class="pre">MRFHP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletRFHP.MRFHP.create"><code class="docutils literal notranslate"><span class="pre">MRFHP.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletRFHP.MRFHP.fit"><code class="docutils literal notranslate"><span class="pre">MRFHP.fit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.feature.MoveletSVC">matclassification.methods.feature.MoveletSVC module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.MoveletSVC.MSVC"><code class="docutils literal notranslate"><span class="pre">MSVC</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletSVC.MSVC.create"><code class="docutils literal notranslate"><span class="pre">MSVC.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletSVC.MSVC.fit"><code class="docutils literal notranslate"><span class="pre">MSVC.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletSVC.MSVC.predict"><code class="docutils literal notranslate"><span class="pre">MSVC.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.MoveletSVC.MSVC.training_report"><code class="docutils literal notranslate"><span class="pre">MSVC.training_report()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.feature.POIS">matclassification.methods.feature.POIS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.POIS.POIS"><code class="docutils literal notranslate"><span class="pre">POIS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.POIS.POIS.create"><code class="docutils literal notranslate"><span class="pre">POIS.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.POIS.POIS.fit"><code class="docutils literal notranslate"><span class="pre">POIS.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.POIS.POIS.predict"><code class="docutils literal notranslate"><span class="pre">POIS.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.POIS.POIS.prepare_input"><code class="docutils literal notranslate"><span class="pre">POIS.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.feature.POIS.POIS.xy"><code class="docutils literal notranslate"><span class="pre">POIS.xy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.POIS.loadData"><code class="docutils literal notranslate"><span class="pre">loadData()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.feature.POIS.prepareData"><code class="docutils literal notranslate"><span class="pre">prepareData()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.feature">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matclassification.methods.feature package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matclassification.methods.feature.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matclassification-methods-feature-package">
+<h1>matclassification.methods.feature package<a class="headerlink" href="#matclassification-methods-feature-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html">matclassification.methods.feature.feature_extraction package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#module-matclassification.methods.feature.feature_extraction.pois">matclassification.methods.feature.feature_extraction.pois module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.geoHasTransform"><code class="docutils literal notranslate"><span class="pre">geoHasTransform()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.loadTrainTest"><code class="docutils literal notranslate"><span class="pre">loadTrainTest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.npoi"><code class="docutils literal notranslate"><span class="pre">npoi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.poi"><code class="docutils literal notranslate"><span class="pre">poi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.poifreq_all"><code class="docutils literal notranslate"><span class="pre">poifreq_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.pois"><code class="docutils literal notranslate"><span class="pre">pois()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.pois_read"><code class="docutils literal notranslate"><span class="pre">pois_read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.to_file"><code class="docutils literal notranslate"><span class="pre">to_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.wnpoi"><code class="docutils literal notranslate"><span class="pre">wnpoi()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.feature_extraction.html#module-matclassification.methods.feature.feature_extraction">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matclassification.methods.feature.MoveletDT">
+<span id="matclassification-methods-feature-moveletdt-module"></span><h2>matclassification.methods.feature.MoveletDT module<a class="headerlink" href="#module-matclassification.methods.feature.MoveletDT" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Carlos Andrés Ferrero (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletDT.MDT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.MoveletDT.</span></span><span class="sig-name descname"><span class="pre">MDT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletDT.html#MDT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletDT.MDT" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.MHSClassifier.MHSClassifier" title="matclassification.methods.core.MHSClassifier.MHSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MHSClassifier</span></code></a></p>
+<p>Movelet Decision Tree (MDT) Classifier, extending MHSClassifier, designed for movelet-based
+classification using decision trees. Provides tools for decision tree visualization and manipulation.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation. -1 means using all processors.</p>
+</dd>
+<dt>verbose<span class="classifier">int, optional (default=2)</span></dt><dd><p>Verbosity level. Higher values enable more detailed output during training and model creation.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Random seed used for reproducibility.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Controls the filter for output warnings.</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h3>Methods:<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>prepare_input(train, test, tid_col=’tid’, class_col=’label’, geo_precision=30, validate=False):</dt><dd><p>Prepares the input data by extracting the features and labels, and configures the trajectory classification process.</p>
+</dd>
+<dt>create():</dt><dd><p>Initializes and returns a new instance of the decision tree classifier.</p>
+</dd>
+<dt>fit(X_train, y_train, X_val, y_val):</dt><dd><p>Trains the decision tree classifier on the training data and evaluates it on the validation data.
+Returns a report on the validation performance.</p>
+</dd>
+<dt>plot_tree(figsize=(20, 10)):</dt><dd><p>Visualizes the trained decision tree using matplotlib, showing features and tree structure in a user-defined size.</p>
+</dd>
+<dt>graph_tree():</dt><dd><p>Generates a visual graph of the decision tree using Graphviz, returning the tree structure as a graph.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletDT.MDT.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletDT.html#MDT.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletDT.MDT.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletDT.MDT.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletDT.html#MDT.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletDT.MDT.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletDT.MDT.graph_tree">
+<span class="sig-name descname"><span class="pre">graph_tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletDT.html#MDT.graph_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletDT.MDT.graph_tree" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletDT.MDT.plot_tree">
+<span class="sig-name descname"><span class="pre">plot_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">10)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletDT.html#MDT.plot_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletDT.MDT.plot_tree" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletDT.MDT.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletDT.html#MDT.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletDT.MDT.prepare_input" title="Link to this definition"></a></dt>
+<dd><p>Prepares the input datasets (training, validation, and test) for the classifier by invoking
+the <cite>xy()</cite> method, storing the processed data, and setting the classifier configuration.</p>
+<section id="id1">
+<h4>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>train<span class="classifier">pd.DataFrame</span></dt><dd><p>The training dataset.</p>
+</dd>
+<dt>test<span class="classifier">pd.DataFrame</span></dt><dd><p>The test dataset.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>Column name representing the trajectory ID (default: ‘tid’).</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>Column name representing the class label (default: ‘label’).</p>
+</dd>
+<dt>validate<span class="classifier">bool, optional</span></dt><dd><p>If True, splits the training data into training and validation sets (default: False)&gt;&gt; #TODO Under Dev.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h4>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>X_set<span class="classifier">list</span></dt><dd><p>List containing the feature matrices (training, validation, test).</p>
+</dd>
+<dt>y_set<span class="classifier">list</span></dt><dd><p>List containing the label vectors (training, validation, test).</p>
+</dd>
+<dt>num_features<span class="classifier">int</span></dt><dd><p>The number of features in the dataset, excluding the class label.</p>
+</dd>
+<dt>num_classes<span class="classifier">int</span></dt><dd><p>The number of unique classes in the dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletDT.MDT.training_report">
+<span class="sig-name descname"><span class="pre">training_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletDT.html#MDT.training_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletDT.MDT.training_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.feature.MoveletMLP">
+<span id="matclassification-methods-feature-moveletmlp-module"></span><h2>matclassification.methods.feature.MoveletMLP module<a class="headerlink" href="#module-matclassification.methods.feature.MoveletMLP" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Carlos Andrés Ferrero (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.MoveletMLP.</span></span><span class="sig-name descname"><span class="pre">MMLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">par_dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">par_batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lst_par_epochs_lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[80,</span> <span class="pre">0.00095],</span> <span class="pre">[50,</span> <span class="pre">0.00075],</span> <span class="pre">[50,</span> <span class="pre">0.00055],</span> <span class="pre">[30,</span> <span class="pre">0.00025],</span> <span class="pre">[20,</span> <span class="pre">0.00015]]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.MHSClassifier.MHSClassifier" title="matclassification.methods.core.MHSClassifier.MHSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MHSClassifier</span></code></a></p>
+<p>Movelet Multi-layer Perceptron (MMLP) Classifier, extending MHSClassifier, designed for movelet-based
+classification using a neural network with configurable layers, dropout, and learning rates.</p>
+<section id="id2">
+<h3>Parameters:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>num_features<span class="classifier">int, optional (default=-1)</span></dt><dd><p>Number of input features for the neural network.</p>
+</dd>
+<dt>num_classes<span class="classifier">int, optional (default=-1)</span></dt><dd><p>Number of output classes for classification.</p>
+</dd>
+<dt>par_dropout<span class="classifier">float, optional (default=0.5)</span></dt><dd><p>Dropout rate for regularization in the neural network.</p>
+</dd>
+<dt>par_batch_size<span class="classifier">int, optional (default=200)</span></dt><dd><p>Batch size used during training.</p>
+</dd>
+<dt>lst_par_epochs_lr<span class="classifier">list of tuples, optional (default=[(80, 0.00095), (50, 0.00075), (50, 0.00055), (30, 0.00025), (20, 0.00015)])</span></dt><dd><p>A list where each element is a tuple containing the number of epochs and the learning rate for each stage of training.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation. -1 means using all processors.</p>
+</dd>
+<dt>verbose<span class="classifier">int, optional (default=2)</span></dt><dd><p>Verbosity level. Higher values enable more detailed output during training.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Random seed used for reproducibility.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Controls the filter for output warnings.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h3>Methods:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>create():</dt><dd><p>Builds and returns a multi-layer perceptron model with specified input features, output classes, and dropout rate.</p>
+</dd>
+<dt>fit(X_train, y_train, X_val, y_val):</dt><dd><p>Trains the MLP model on the training data with configurable epochs and learning rates, and evaluates it on the validation data.
+Returns a report on the training history.</p>
+</dd>
+<dt>predict(X_test, y_test):</dt><dd><p>Predicts the output class probabilities for the test set, returning the evaluation summary and predicted probabilities.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP1">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.MoveletMLP.</span></span><span class="sig-name descname"><span class="pre">MMLP1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">par_dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">par_batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">par_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">80</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">par_lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.00095</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP1" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.MHSClassifier.MHSClassifier" title="matclassification.methods.core.MHSClassifier.MHSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MHSClassifier</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP1.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP1.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP1.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP1.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP1.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP1.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletMLP.MMLP1.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletMLP.html#MMLP1.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletMLP.MMLP1.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.feature.MoveletRF">
+<span id="matclassification-methods-feature-moveletrf-module"></span><h2>matclassification.methods.feature.MoveletRF module<a class="headerlink" href="#module-matclassification.methods.feature.MoveletRF" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Carlos Andrés Ferrero (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletRF.MRF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.MoveletRF.</span></span><span class="sig-name descname"><span class="pre">MRF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[300]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletRF.html#MRF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletRF.MRF" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.MHSClassifier.MHSClassifier" title="matclassification.methods.core.MHSClassifier.MHSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MHSClassifier</span></code></a></p>
+<p>Movelet Random Forest (MRF) Classifier, extending MHSClassifier, designed for movelet-based classification using
+a Random Forest model with multiple configurations for the number of trees.</p>
+<section id="id4">
+<h3>Parameters:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>n_estimators<span class="classifier">list of int, optional (default=[300])</span></dt><dd><p>A list specifying the different number of trees (estimators) to be used in the Random Forest.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation. -1 means using all processors.</p>
+</dd>
+<dt>verbose<span class="classifier">int, optional (default=0)</span></dt><dd><p>Verbosity level for logging and output during the model’s training process.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Random seed for reproducibility of results.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Controls the filter for output warnings.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Methods:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>create(n_tree=None):</dt><dd><p>Creates and returns a Random Forest model with a specified number of trees (n_tree). If not provided, defaults to the configuration’s ‘n_tree’.</p>
+</dd>
+<dt>fit(X_train, y_train, X_val, y_val):</dt><dd><p>Fits the Random Forest model on the training data, evaluates it on the validation data, and logs the performance for each configuration of n_estimators.
+Returns a report on the evaluation metrics.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletRF.MRF.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_tree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletRF.html#MRF.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletRF.MRF.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletRF.MRF.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletRF.html#MRF.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletRF.MRF.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletRF.MRF.training_report">
+<span class="sig-name descname"><span class="pre">training_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletRF.html#MRF.training_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletRF.MRF.training_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.feature.MoveletRFHP">
+<span id="matclassification-methods-feature-moveletrfhp-module"></span><h2>matclassification.methods.feature.MoveletRFHP module<a class="headerlink" href="#module-matclassification.methods.feature.MoveletRFHP" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Carlos Andrés Ferrero (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletRFHP.MRFHP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.MoveletRFHP.</span></span><span class="sig-name descname"><span class="pre">MRFHP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[300,</span> <span class="pre">350,</span> <span class="pre">400,</span> <span class="pre">450,</span> <span class="pre">500,</span> <span class="pre">550,</span> <span class="pre">600]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['auto',</span> <span class="pre">'sqrt']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[30]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">4,</span> <span class="pre">6]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">3,</span> <span class="pre">4]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">False]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['entropy',</span> <span class="pre">'gini']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletRFHP.html#MRFHP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletRFHP.MRFHP" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.MHSClassifier.MHSClassifier" title="matclassification.methods.core.MHSClassifier.MHSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MHSClassifier</span></code></a></p>
+<p>Movelet Random Forest with Hyperparameter Optimization (MRFHP) Classifier, extending MHSClassifier, designed to
+optimize hyperparameters for movelet-based classification using RandomizedSearchCV.</p>
+<section id="id6">
+<h3>Parameters:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>n_estimators<span class="classifier">list of int, optional (default=[300, 350, 400, 450, 500, 550, 600])</span></dt><dd><p>A list of the number of trees (estimators) to be used in the Random Forest.</p>
+</dd>
+<dt>max_features<span class="classifier">list of str, optional (default=[‘auto’, ‘sqrt’])</span></dt><dd><p>Number of features to consider at every split. Options include ‘auto’, ‘sqrt’, etc.</p>
+</dd>
+<dt>max_depth<span class="classifier">list of int, optional (default=[30])</span></dt><dd><p>Maximum number of levels in each decision tree. The default is 30, and None is added to allow full growth.</p>
+</dd>
+<dt>min_samples_split<span class="classifier">list of int, optional (default=[2, 4, 6])</span></dt><dd><p>The minimum number of samples required to split a node.</p>
+</dd>
+<dt>min_samples_leaf<span class="classifier">list of int, optional (default=[2, 3, 4])</span></dt><dd><p>The minimum number of samples required to be at a leaf node.</p>
+</dd>
+<dt>bootstrap<span class="classifier">list of bool, optional (default=[True, False])</span></dt><dd><p>Whether to bootstrap samples when building trees.</p>
+</dd>
+<dt>criterion<span class="classifier">list of str, optional (default=[‘entropy’, ‘gini’])</span></dt><dd><p>The function to measure the quality of a split. Options are ‘gini’ or ‘entropy’.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation. -1 means using all processors.</p>
+</dd>
+<dt>verbose<span class="classifier">int, optional (default=2)</span></dt><dd><p>Verbosity level for logging and output during model training and hyperparameter tuning.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Seed used by the random number generator to ensure reproducibility.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Controls the filter for output warnings.</p>
+</dd>
+</dl>
+</section>
+<section id="id7">
+<h3>Methods:<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>create():</dt><dd><p>Creates a Random Forest model wrapped with RandomizedSearchCV to search for optimal hyperparameters.</p>
+</dd>
+<dt>fit(X_train, y_train, X_val, y_val):</dt><dd><p>Fits the model using the training data and performs hyperparameter optimization using cross-validation. Returns a report on the search results and sets the model to the best estimator.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletRFHP.MRFHP.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletRFHP.html#MRFHP.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletRFHP.MRFHP.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletRFHP.MRFHP.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletRFHP.html#MRFHP.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletRFHP.MRFHP.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.feature.MoveletSVC">
+<span id="matclassification-methods-feature-moveletsvc-module"></span><h2>matclassification.methods.feature.MoveletSVC module<a class="headerlink" href="#module-matclassification.methods.feature.MoveletSVC" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Carlos Andrés Ferrero (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletSVC.MSVC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.MoveletSVC.</span></span><span class="sig-name descname"><span class="pre">MSVC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletSVC.html#MSVC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletSVC.MSVC" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.MHSClassifier.MHSClassifier" title="matclassification.methods.core.MHSClassifier.MHSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MHSClassifier</span></code></a></p>
+<p>Movelet Support Vector Classifier (MSVC) extending MHSClassifier, designed for movelet-based classification using
+Support Vector Machines (SVM).</p>
+<section id="id8">
+<h3>Parameters:<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>kernel<span class="classifier">str, optional (default=”linear”)</span></dt><dd><p>Specifies the kernel type to be used in the algorithm. Options include “linear”, “poly”, “rbf”, “sigmoid”, etc.</p>
+</dd>
+<dt>probability<span class="classifier">bool, optional (default=True)</span></dt><dd><p>Enables probability estimates for classification, which allows <cite>predict_proba()</cite> to be used.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation. This parameter is not directly used in SVC but passed for consistency.</p>
+</dd>
+<dt>verbose<span class="classifier">int, optional (default=2)</span></dt><dd><p>Controls the verbosity of logging during model training.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Seed used by the random number generator to ensure reproducibility.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Controls the filter for output warnings.</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h3>Methods:<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>create():</dt><dd><p>Creates an SVM model with the specified kernel and probability configuration.</p>
+</dd>
+<dt>fit(X_train, y_train, X_val, y_val):</dt><dd><p>Fits the model using the training data and returns a report on the classification results. It uses <cite>predict_proba()</cite> for predictions.</p>
+</dd>
+<dt>predict(X_test, y_test):</dt><dd><p>Predicts the probabilities for the test data and returns a summary of the results, including true and predicted class labels.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletSVC.MSVC.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletSVC.html#MSVC.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletSVC.MSVC.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletSVC.MSVC.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletSVC.html#MSVC.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletSVC.MSVC.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletSVC.MSVC.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletSVC.html#MSVC.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletSVC.MSVC.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.MoveletSVC.MSVC.training_report">
+<span class="sig-name descname"><span class="pre">training_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/MoveletSVC.html#MSVC.training_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.MoveletSVC.MSVC.training_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.feature.POIS">
+<span id="matclassification-methods-feature-pois-module"></span><h2>matclassification.methods.feature.POIS module<a class="headerlink" href="#module-matclassification.methods.feature.POIS" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Francisco Vicenzi (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.POIS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.POIS.</span></span><span class="sig-name descname"><span class="pre">POIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'npoi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#POIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.POIS" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.HSClassifier.HSClassifier" title="matclassification.methods.core.HSClassifier.HSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">HSClassifier</span></code></a></p>
+<p>POIS: Point of Interest Sequence Feature Exctractor and Classifier.</p>
+<p>This class implements a trajectory classifier based on the POI-F/POIS approach, which considers the frequency of visits to
+Points of Interest (POIs). It has been extended to concatenate sequences of POIs, which allows classification based on
+patterns in POI sequences.</p>
+<p>POI Frequency types:
+(i) poi: POI frequency
+(ii) npoi: Normalized POI frequency
+(iii) wnpoi: Weighted Normalized POI frequency</p>
+<section id="id10">
+<h3>Parameters:<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>method<span class="classifier">str, optional (default=’npoi’)</span></dt><dd><p>The method used to compute POI frequencies. Options include ‘poi’, ‘npoi’, and ‘wnpoi’.</p>
+</dd>
+<dt>sequences<span class="classifier">list of int, optional (default=[1, 2, 3])</span></dt><dd><p>Defines the length of the sequences of POIs used for classification.</p>
+</dd>
+<dt>features<span class="classifier">list, optional</span></dt><dd><p>Specifies which features from the dataset to use. If None, choose the feature with higher variance.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation.</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional (default=True)</span></dt><dd><p>Controls verbosity of logging during model training.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Seed used by the random number generator to ensure reproducibility.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Controls the filter for output warnings.</p>
+</dd>
+</dl>
+</section>
+<section id="id11">
+<h3>Methods:<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>xy(train, test, tid_col, class_col, geo_precision, validate, res_path):</dt><dd><p>Prepares the data for training and testing by computing the POI sequences and extracting features for classification.</p>
+</dd>
+<dt>prepare_input(train, test, tid_col, class_col, geo_precision, validate, res_path):</dt><dd><p>Prepares and splits the input data into training, validation, and testing sets. Adds the necessary configuration details.</p>
+</dd>
+<dt>create():</dt><dd><p>Initializes a neural network model with two layers: a hidden layer with 100 units and a softmax output layer for classification.</p>
+</dd>
+<dt>fit(X_train, y_train, X_val, y_val, save_results, res_path):</dt><dd><p>Trains the model using the training data. Optionally saves the results.</p>
+</dd>
+<dt>predict(X_test, y_test):</dt><dd><p>Predicts the labels for the test data and returns the classification report.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.POIS.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#POIS.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.POIS.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.POIS.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#POIS.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.POIS.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.POIS.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#POIS.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.POIS.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.POIS.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#POIS.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.POIS.prepare_input" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.POIS.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#POIS.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.POIS.xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.loadData">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.POIS.</span></span><span class="sig-name descname"><span class="pre">loadData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#loadData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.loadData" title="Link to this definition"></a></dt>
+<dd><p>Loads training and testing datasets from CSV files.</p>
+<section id="id12">
+<h3>Parameters:<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>dir_path<span class="classifier">str</span></dt><dd><p>The directory path (without file extension) from which to load the datasets.
+It expects the following CSV files:
+- ‘{dir_path}-x_train.csv’: Features for training data.
+- ‘{dir_path}-y_train.csv’: Labels for training data.
+- ‘{dir_path}-x_test.csv’: Features for testing data.
+- ‘{dir_path}-y_test.csv’: Labels for testing data.</p>
+</dd>
+</dl>
+</section>
+<section id="id13">
+<h3>Returns:<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>x_train<span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame containing the features for the training dataset.</p>
+</dd>
+<dt>x_test<span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame containing the features for the testing dataset.</p>
+</dd>
+<dt>y_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A numpy array containing the labels for the training dataset.</p>
+</dd>
+<dt>y_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A numpy array containing the labels for the testing dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.POIS.prepareData">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.POIS.</span></span><span class="sig-name descname"><span class="pre">prepareData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/POIS.html#prepareData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.POIS.prepareData" title="Link to this definition"></a></dt>
+<dd><p>Prepares the dataset for training, testing, and optional validation (#TODO) for POIS.</p>
+<section id="id14">
+<h3>Parameters:<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>x_train<span class="classifier">pandas.DataFrame or numpy.ndarray</span></dt><dd><p>Feature set for the training data.</p>
+</dd>
+<dt>x_test<span class="classifier">pandas.DataFrame or numpy.ndarray</span></dt><dd><p>Feature set for the test data.</p>
+</dd>
+<dt>y_train<span class="classifier">pandas.Series or numpy.ndarray</span></dt><dd><p>Labels for the training data.</p>
+</dd>
+<dt>y_test<span class="classifier">pandas.Series or numpy.ndarray</span></dt><dd><p>Labels for the test data.</p>
+</dd>
+<dt>validate<span class="classifier">bool, optional (default=False)</span></dt><dd><p>If True, splits the training data into training and validation sets.
+Validation handling is currently not implemented.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Random seed used for reproducibility when splitting data.</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h3>Returns:<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>num_features<span class="classifier">int</span></dt><dd><p>The number of features in the dataset.</p>
+</dd>
+<dt>num_classes<span class="classifier">int</span></dt><dd><p>The number of unique classes in the target labels.</p>
+</dd>
+<dt>labels<span class="classifier">numpy.ndarray</span></dt><dd><p>An array of the unique class labels.</p>
+</dd>
+<dt>X<span class="classifier">list</span></dt><dd><p>A list containing feature sets. If <cite>validate</cite> is False, returns
+[X_train, X_test]. Otherwise, returns [X_train, X_val, X_test].</p>
+</dd>
+<dt>y<span class="classifier">list</span></dt><dd><p>A list containing one-hot encoded target sets. If <cite>validate</cite> is False, returns
+[y_train, y_test]. Otherwise, returns [y_train, y_val, y_test].</p>
+</dd>
+<dt>one_hot_encoder<span class="classifier">sklearn.preprocessing.OneHotEncoder</span></dt><dd><p>The fitted OneHotEncoder object used to encode the target labels.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.feature">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matclassification.methods.feature" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matclassification.methods.core.html" class="btn btn-neutral float-left" title="matclassification.methods.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matclassification.methods.feature.feature_extraction.html" class="btn btn-neutral float-right" title="matclassification.methods.feature.feature_extraction package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

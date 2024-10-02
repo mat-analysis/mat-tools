@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.feature.MoveletRFHP &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.feature.MoveletRFHP</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.feature.MoveletRFHP</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">    - Carlos Andrés Ferrero (adapted)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">argmax</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
+
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="n">compute_acc_acc5_f1_prec_rec</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">matclassification.methods.core</span> <span class="kn">import</span> <span class="n">MHSClassifier</span>
+
+<div class="viewcode-block" id="MRFHP">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletRFHP.MRFHP">[docs]</a>
+<span class="k">class</span> <span class="nc">MRFHP</span><span class="p">(</span><span class="n">MHSClassifier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Movelet Random Forest with Hyperparameter Optimization (MRFHP) Classifier, extending MHSClassifier, designed to</span>
+<span class="sd">    optimize hyperparameters for movelet-based classification using RandomizedSearchCV.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    n_estimators : list of int, optional (default=[300, 350, 400, 450, 500, 550, 600])</span>
+<span class="sd">        A list of the number of trees (estimators) to be used in the Random Forest.</span>
+
+<span class="sd">    max_features : list of str, optional (default=[&#39;auto&#39;, &#39;sqrt&#39;])</span>
+<span class="sd">        Number of features to consider at every split. Options include &#39;auto&#39;, &#39;sqrt&#39;, etc.</span>
+
+<span class="sd">    max_depth : list of int, optional (default=[30])</span>
+<span class="sd">        Maximum number of levels in each decision tree. The default is 30, and None is added to allow full growth.</span>
+
+<span class="sd">    min_samples_split : list of int, optional (default=[2, 4, 6])</span>
+<span class="sd">        The minimum number of samples required to split a node.</span>
+
+<span class="sd">    min_samples_leaf : list of int, optional (default=[2, 3, 4])</span>
+<span class="sd">        The minimum number of samples required to be at a leaf node.</span>
+
+<span class="sd">    bootstrap : list of bool, optional (default=[True, False])</span>
+<span class="sd">        Whether to bootstrap samples when building trees.</span>
+
+<span class="sd">    criterion : list of str, optional (default=[&#39;entropy&#39;, &#39;gini&#39;])</span>
+<span class="sd">        The function to measure the quality of a split. Options are &#39;gini&#39; or &#39;entropy&#39;.</span>
+
+<span class="sd">    n_jobs : int, optional (default=-1)</span>
+<span class="sd">        The number of parallel jobs to run for computation. -1 means using all processors.</span>
+
+<span class="sd">    verbose : int, optional (default=2)</span>
+<span class="sd">        Verbosity level for logging and output during model training and hyperparameter tuning.</span>
+
+<span class="sd">    random_state : int, optional (default=42)</span>
+<span class="sd">        Seed used by the random number generator to ensure reproducibility.</span>
+
+<span class="sd">    filterwarnings : str, optional (default=&#39;ignore&#39;)</span>
+<span class="sd">        Controls the filter for output warnings.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+<span class="sd">    create():</span>
+<span class="sd">        Creates a Random Forest model wrapped with RandomizedSearchCV to search for optimal hyperparameters.</span>
+
+<span class="sd">    fit(X_train, y_train, X_val, y_val):</span>
+<span class="sd">        Fits the model using the training data and performs hyperparameter optimization using cross-validation. Returns a report on the search results and sets the model to the best estimator.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="c1"># Number of trees in random forest</span>
+                 <span class="n">n_estimators</span> <span class="o">=</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span><span class="mi">350</span><span class="p">,</span><span class="mi">400</span><span class="p">,</span><span class="mi">450</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">550</span><span class="p">,</span><span class="mi">600</span><span class="p">],</span>
+                 <span class="c1"># Number of features to consider at every split</span>
+                 <span class="n">max_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">],</span>
+                 <span class="c1"># Maximum number of levels in tree</span>
+                 <span class="n">max_depth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">],</span>
+                 <span class="c1"># Minimum number of samples required to split a node</span>
+                 <span class="n">min_samples_split</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>
+                 <span class="c1"># Minimum number of samples required at each leaf node</span>
+                 <span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+                 <span class="c1"># Method of selecting samples for training each tree</span>
+                 <span class="n">bootstrap</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+                 <span class="c1"># Create the random grid</span>
+                 <span class="n">criterion</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span><span class="s1">&#39;gini&#39;</span><span class="p">],</span>
+                 
+                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                 <span class="n">filterwarnings</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;MRFHP&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">filterwarnings</span><span class="o">=</span><span class="n">filterwarnings</span><span class="p">)</span>
+        
+        <span class="n">max_depth</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span>
+                        <span class="n">max_features</span><span class="o">=</span><span class="n">max_features</span><span class="p">,</span>
+                        <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
+                        <span class="n">min_samples_split</span><span class="o">=</span><span class="n">min_samples_split</span><span class="p">,</span>
+                        <span class="n">min_samples_leaf</span><span class="o">=</span><span class="n">min_samples_leaf</span><span class="p">,</span>
+                        <span class="n">bootstrap</span><span class="o">=</span><span class="n">bootstrap</span><span class="p">,</span>
+                        <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="n">n_estimators</span><span class="p">,</span>
+                            <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="n">max_features</span><span class="p">,</span>
+                            <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="n">max_depth</span><span class="p">,</span>
+                            <span class="s1">&#39;min_samples_split&#39;</span><span class="p">:</span> <span class="n">min_samples_split</span><span class="p">,</span>
+                            <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">min_samples_leaf</span><span class="p">,</span>
+                            <span class="s1">&#39;bootstrap&#39;</span><span class="p">:</span> <span class="n">bootstrap</span><span class="p">,</span>
+                            <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="n">criterion</span><span class="p">}</span>
+        
+<div class="viewcode-block" id="MRFHP.create">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletRFHP.MRFHP.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;verbose&#39;</span><span class="p">],</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">rf</span><span class="p">,</span> <span class="n">param_distributions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_grid</span><span class="p">,</span> <span class="n">n_iter</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;verbose&#39;</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">model</span></div>
+
+        
+<div class="viewcode-block" id="MRFHP.fit">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletRFHP.MRFHP.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+            <span class="n">X_train</span><span class="p">,</span> 
+            <span class="n">y_train</span><span class="p">,</span> 
+            <span class="n">X_val</span><span class="p">,</span>
+            <span class="n">y_val</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+    
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">best_estimator_</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">report</span></div>
+</div>
+
+<span class="c1"># --------------------------------------------------------------------------------</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

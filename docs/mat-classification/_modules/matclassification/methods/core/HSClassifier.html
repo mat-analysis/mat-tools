@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.core.HSClassifier &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.core.HSClassifier</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.core.HSClassifier</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">os</span> 
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods.core</span> <span class="kn">import</span> <span class="n">AbstractClassifier</span>
+<span class="c1"># -------------------------------------------------------------------------------- </span>
+
+<span class="c1"># Hiperparameter Optimization Classifier - For Trajectory input data</span>
+<div class="viewcode-block" id="HSClassifier">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.HSClassifier.HSClassifier">[docs]</a>
+<span class="k">class</span> <span class="nc">HSClassifier</span><span class="p">(</span><span class="n">AbstractClassifier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hyperparameter Optimization Classifier for Trajectory Input Data.</span>
+
+<span class="sd">    This class extends `AbstractClassifier` to include functionality for training and testing </span>
+<span class="sd">    machine learning models with hyperparameter optimization. It is designed for trajectory </span>
+<span class="sd">    data inputs and handles multiple configurations to find the best-performing model.</span>
+<span class="sd">    </span>
+<span class="sd">    Check: help(AbstractClassifier)</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        Classifier name (default: &#39;NN&#39;).</span>
+<span class="sd">    save_results : bool, optional</span>
+<span class="sd">        Flag to enable saving results to disk (default: False).</span>
+<span class="sd">    n_jobs : int, optional</span>
+<span class="sd">        Number of parallel jobs to run (default: -1 for using all processors).</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        Flag for verbosity (default: False).</span>
+<span class="sd">    random_state : int, optional</span>
+<span class="sd">        Random seed for reproducibility (default: 42).</span>
+<span class="sd">    filterwarnings : str, optional</span>
+<span class="sd">        Warning filter level (default: &#39;ignore&#39;).</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+<span class="sd">    train(dir_validation=&#39;.&#39;):</span>
+<span class="sd">        Trains the model using a single hyperparameter configuration.</span>
+<span class="sd">        If validation is enabled, it will evaluate on a validation set; otherwise, </span>
+<span class="sd">        it evaluates on the test set. Results are optionally saved to a CSV file.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        dir_validation : str, optional</span>
+<span class="sd">            Directory where validation results will be saved (default: current directory).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A DataFrame containing the training report with evaluation metrics for the model.</span>
+
+<span class="sd">    test(rounds=1, dir_evaluation=&#39;.&#39;):</span>
+<span class="sd">        Tests the model over a specified number of rounds, each with a different random seed, </span>
+<span class="sd">        to simulate multiple model evaluations.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        rounds : int, optional</span>
+<span class="sd">            The number of evaluation rounds (default: 1).</span>
+<span class="sd">        dir_evaluation : str, optional</span>
+<span class="sd">            Directory where evaluation results will be saved (default: current directory).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame, np.array</span>
+<span class="sd">            A DataFrame containing the evaluation report and the predicted labels for the test data.</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;NN&#39;</span><span class="p">,</span>
+                 
+                 <span class="n">save_results</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                 <span class="n">filterwarnings</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">filterwarnings</span><span class="o">=</span><span class="n">filterwarnings</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_results</span> <span class="o">=</span> <span class="n">save_results</span>
+        
+    <span class="c1">## Overwrite train and test methods to do enable Hiperparameter Optimizations:</span>
+    <span class="c1">## (in this case, trains only one default configuration.</span>
+<div class="viewcode-block" id="HSClassifier.train">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.HSClassifier.HSClassifier.train">[docs]</a>
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_validation</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trains the model using all hyperparameter configurations.</span>
+
+<span class="sd">        If validation is enabled, it will evaluate on a validation set; otherwise, </span>
+<span class="sd">        it evaluates on the test set. Results are optionally saved to a CSV file.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        dir_validation : str, optional</span>
+<span class="sd">            Directory where validation results will be saved (default: current directory).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A DataFrame containing the training report with evaluation metrics for the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This implementation, trains only one model </span>
+        <span class="c1"># (but, you may overwrite the method following this method)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        
+        <span class="n">X_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">:</span>
+            <span class="n">X_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_val</span>
+            <span class="n">y_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span>
+            <span class="n">y_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span>            
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] Training hiperparameter model&#39;</span><span class="p">)</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># TODO: Hiperparam config training...</span>
+        <span class="c1">## This part you may want to run for each configuration (as a progress bar):</span>
+        <span class="c1">#for config in pbar:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_validation</span><span class="p">,</span> <span class="s1">&#39;val_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Skip ---&gt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span> <span class="c1"># pass the config dict()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span> <span class="c1">#, config)</span>
+
+            <span class="n">validation_report</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+            <span class="n">validation_report</span><span class="p">[</span><span class="s1">&#39;clstime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
+                <span class="n">validation_report</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">validation_report</span> <span class="p">)</span>
+
+<span class="c1">#                self.model.free()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">report</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Use sorting if each train is a different model for hiperparam search, and you are loonig for the best model acc.</span>
+        <span class="c1">#self.report.sort_values(&#39;acc&#39;, ascending=False, inplace=True)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">report</span></div>
+
+    
+<div class="viewcode-block" id="HSClassifier.test">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.HSClassifier.HSClassifier.test">[docs]</a>
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">rounds</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+             <span class="n">dir_evaluation</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests the model in teh simgle best model trained, over a specified number of rounds, </span>
+<span class="sd">        each with a different random seeds, to simulate multiple model evaluations.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        rounds : int, optional</span>
+<span class="sd">            The number of evaluation rounds (default: 1).</span>
+<span class="sd">        dir_evaluation : str, optional</span>
+<span class="sd">            Directory where evaluation results will be saved (default: current directory).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame, np.array</span>
+<span class="sd">            A DataFrame containing the evaluation report and the predicted labels for the test data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">X_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">:</span>
+            <span class="n">X_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_val</span>
+            <span class="n">y_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span>
+            <span class="n">y_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span>  
+            
+        <span class="n">X_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span>
+        <span class="n">y_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span>
+        
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_evaluation</span><span class="p">,</span> <span class="s1">&#39;eval_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] Model previoulsy built.&#39;</span><span class="p">)</span>
+            <span class="c1"># TODO read</span>
+            <span class="c1">#return self.read_report(filename, prefix=&#39;eval_&#39;)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] Creating a model to test set&#39;</span><span class="p">)</span>
+            
+                <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">rounds</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Model Testing&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pbar</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">rounds</span><span class="p">))</span>
+                
+            <span class="n">random_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">]</span>
+            
+            <span class="n">evaluate_report</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+                <span class="n">re</span> <span class="o">=</span> <span class="p">(</span><span class="n">random_state</span><span class="o">+</span><span class="n">e</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="n">pbar</span><span class="p">,</span> <span class="s1">&#39;Round </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1"> (random </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">rounds</span><span class="p">,</span> <span class="n">re</span><span class="p">))</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+                
+                <span class="n">eval_report</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+                <span class="n">eval_report</span><span class="p">[</span><span class="s1">&#39;clstime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
+                
+                <span class="n">evaluate_report</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_report</span><span class="p">)</span>
+                        
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">random_state</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">evaluate_report</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_report</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] Processing time: </span><span class="si">{}</span><span class="s1"> milliseconds. Done.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()))</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_report</span><span class="p">,</span> <span class="n">y_pred</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

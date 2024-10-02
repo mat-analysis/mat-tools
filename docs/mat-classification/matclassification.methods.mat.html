@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.mat package &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matclassification.methods.similarity package" href="matclassification.methods.similarity.html" />
+    <link rel="prev" title="matclassification.methods.feature.feature_extraction package" href="matclassification.methods.feature.feature_extraction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MAT-based</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.mat.Bituler">matclassification.methods.mat.Bituler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.Bituler.Bituler"><code class="docutils literal notranslate"><span class="pre">Bituler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Bituler.Bituler.xy"><code class="docutils literal notranslate"><span class="pre">Bituler.xy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Bituler.Bituler.prepare_input"><code class="docutils literal notranslate"><span class="pre">Bituler.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Bituler.Bituler.create"><code class="docutils literal notranslate"><span class="pre">Bituler.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Bituler.Bituler.fit"><code class="docutils literal notranslate"><span class="pre">Bituler.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Bituler.Bituler.clear"><code class="docutils literal notranslate"><span class="pre">Bituler.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Bituler.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Bituler.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">Bituler.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">Bituler.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">Bituler.xy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.mat.DeepeST">matclassification.methods.mat.DeepeST module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.DeepeST.DeepeST"><code class="docutils literal notranslate"><span class="pre">DeepeST</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.DeepeST.DeepeST.xy"><code class="docutils literal notranslate"><span class="pre">DeepeST.xy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.DeepeST.DeepeST.prepare_input"><code class="docutils literal notranslate"><span class="pre">DeepeST.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.DeepeST.DeepeST.create"><code class="docutils literal notranslate"><span class="pre">DeepeST.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.DeepeST.DeepeST.fit"><code class="docutils literal notranslate"><span class="pre">DeepeST.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.DeepeST.DeepeST.predict"><code class="docutils literal notranslate"><span class="pre">DeepeST.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.DeepeST.DeepeST.clear"><code class="docutils literal notranslate"><span class="pre">DeepeST.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">DeepeST.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">DeepeST.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">DeepeST.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">DeepeST.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">DeepeST.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">DeepeST.xy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.mat.MARC">matclassification.methods.mat.MARC module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.MARC.EpochLogger"><code class="docutils literal notranslate"><span class="pre">EpochLogger</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.EpochLogger.on_epoch_begin"><code class="docutils literal notranslate"><span class="pre">EpochLogger.on_epoch_begin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.EpochLogger.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">EpochLogger.on_epoch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.EpochLogger.on_train_begin"><code class="docutils literal notranslate"><span class="pre">EpochLogger.on_train_begin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.EpochLogger.on_train_end"><code class="docutils literal notranslate"><span class="pre">EpochLogger.on_train_end()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.MARC.MARC"><code class="docutils literal notranslate"><span class="pre">MARC</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.MARC.xy"><code class="docutils literal notranslate"><span class="pre">MARC.xy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.MARC.prepare_input"><code class="docutils literal notranslate"><span class="pre">MARC.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.MARC.create"><code class="docutils literal notranslate"><span class="pre">MARC.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.MARC.fit"><code class="docutils literal notranslate"><span class="pre">MARC.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.MARC.predict"><code class="docutils literal notranslate"><span class="pre">MARC.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.MARC.MARC.clear"><code class="docutils literal notranslate"><span class="pre">MARC.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">MARC.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12"><code class="docutils literal notranslate"><span class="pre">MARC.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13"><code class="docutils literal notranslate"><span class="pre">MARC.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14"><code class="docutils literal notranslate"><span class="pre">MARC.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15"><code class="docutils literal notranslate"><span class="pre">MARC.xy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.MARC.loadTrajectories"><code class="docutils literal notranslate"><span class="pre">loadTrajectories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.MARC.prepareTrajectories"><code class="docutils literal notranslate"><span class="pre">prepareTrajectories()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.mat.TRF">matclassification.methods.mat.TRF module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.TRF.TRF"><code class="docutils literal notranslate"><span class="pre">TRF</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.TRF.TRF.create"><code class="docutils literal notranslate"><span class="pre">TRF.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.TRF.TRF.fit"><code class="docutils literal notranslate"><span class="pre">TRF.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.TRF.TRF.predict"><code class="docutils literal notranslate"><span class="pre">TRF.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.mat.TXGB">matclassification.methods.mat.TXGB module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.TXGB.TXGB"><code class="docutils literal notranslate"><span class="pre">TXGB</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.TXGB.TXGB.create"><code class="docutils literal notranslate"><span class="pre">TXGB.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.TXGB.TXGB.fit"><code class="docutils literal notranslate"><span class="pre">TXGB.fit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.TXGB.nvidia_gpu_count"><code class="docutils literal notranslate"><span class="pre">nvidia_gpu_count()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.mat.Tulvae">matclassification.methods.mat.Tulvae module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.Tulvae"><code class="docutils literal notranslate"><span class="pre">Tulvae</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.Tulvae.clear"><code class="docutils literal notranslate"><span class="pre">Tulvae.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.Tulvae.create"><code class="docutils literal notranslate"><span class="pre">Tulvae.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.Tulvae.fit"><code class="docutils literal notranslate"><span class="pre">Tulvae.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.Tulvae.prepare_input"><code class="docutils literal notranslate"><span class="pre">Tulvae.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.Tulvae.xy"><code class="docutils literal notranslate"><span class="pre">Tulvae.xy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.sampling"><code class="docutils literal notranslate"><span class="pre">sampling()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.mat.Tulvae.sampling_error"><code class="docutils literal notranslate"><span class="pre">sampling_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.mat">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matclassification.methods.mat package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matclassification.methods.mat.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matclassification-methods-mat-package">
+<h1>matclassification.methods.mat package<a class="headerlink" href="#matclassification-methods-mat-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matclassification.methods.mat.Bituler">
+<span id="matclassification-methods-mat-bituler-module"></span><h2>matclassification.methods.mat.Bituler module<a class="headerlink" href="#module-matclassification.methods.mat.Bituler" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (this portion of code is subject to licensing from source project distribution)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><dl class="simple">
+<dt>Original source:</dt><dd><ul>
+<li><p>Nicksson C. A. de Freitas,</p></li>
+<li><p>Ticiana L. Coelho da Silva,</p></li>
+<li><p>Jose António Fernandes de Macêdo,</p></li>
+<li><p>Leopoldo Melo Junior,</p></li>
+<li><p>Matheus Gomes Cordeiro</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Adapted from: <a class="reference external" href="https://github.com/nickssonfreitas/ICAART2021">https://github.com/nickssonfreitas/ICAART2021</a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Bituler.Bituler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.Bituler.</span></span><span class="sig-name descname"><span class="pre">Bituler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['bilstm']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">200,</span> <span class="pre">250,</span> <span class="pre">300]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">200,</span> <span class="pre">300,</span> <span class="pre">400]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[64]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1000]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['val_acc']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['ada']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.001]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Bituler.Bituler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.THSClassifier.THSClassifier" title="matclassification.methods.core.THSClassifier.THSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">THSClassifier</span></code></a></p>
+<p>Gao et al. (2017) proposed BiTULER, a model that uses word embeddings and a Bidirectional Recurrent Neural Network,
+but it is limited to the sequence of check-in identifiers, not supporting other dimensions.</p>
+<p>Bituler is a trajectory classification model that extends the THSClassifier.
+It is designed for handling multiple aspect trajectory data, utilizing deep learning techniques
+such as Recurrent Neural Networks (RNNs) for feature extraction and classification. The model
+can be configured with various neural network architectures, embedding sizes, and optimization
+settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rnn</strong> (<em>list</em><em>, </em><em>optional</em>) – List of RNN architectures to use. Currently, only ‘bilstm’ is supported (default: [‘bilstm’]).</p></li>
+<li><p><strong>units</strong> (<em>list</em><em>, </em><em>optional</em>) – List of integers specifying the number of hidden units in each layer (default: [100, 200, 250, 300]).</p></li>
+<li><p><strong>stack</strong> (<em>list</em><em>, </em><em>optional</em>) – List of integers specifying the number of RNN layers to stack (default: [1]).</p></li>
+<li><p><strong>dropout</strong> (<em>list</em><em>, </em><em>optional</em>) – List of floats specifying the dropout rate for regularization (default: [0.5]).</p></li>
+<li><p><strong>embedding_size</strong> (<em>list</em><em>, </em><em>optional</em>) – List of integers specifying the size of the embedding layer (default: [100, 200, 300, 400]).</p></li>
+<li><p><strong>batch_size</strong> (<em>list</em><em>, </em><em>optional</em>) – List of batch sizes for training (default: [64]).</p></li>
+<li><p><strong>epochs</strong> (<em>list</em><em>, </em><em>optional</em>) – List of the number of epochs for training (default: [1000]).</p></li>
+<li><p><strong>patience</strong> (<em>list</em><em>, </em><em>optional</em>) – List of integers specifying the number of epochs to wait for early stopping (default: [20], currently unused).</p></li>
+<li><p><strong>monitor</strong> (<em>list</em><em>, </em><em>optional</em>) – List of metrics to monitor for early stopping (default: [‘val_acc’]).</p></li>
+<li><p><strong>optimizer</strong> (<em>list</em><em>, </em><em>optional</em>) – List of optimizers to use during training (default: [‘ada’]).</p></li>
+<li><p><strong>learning_rate</strong> (<em>list</em><em>, </em><em>optional</em>) – List of learning rates for the optimizer (default: [0.001]).</p></li>
+<li><p><strong>save_results</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, saves the results of the training process (default: False).</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of parallel jobs to run (default: -1).</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – Verbosity level of the training process (default: 0).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for random number generation (default: 42).</p></li>
+<li><p><strong>filterwarnings</strong> (<em>str</em><em>, </em><em>optional</em>) – Configures warning filtering (default: ‘ignore’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Bituler.Bituler.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['poi']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Bituler.Bituler.xy" title="Link to this definition"></a></dt>
+<dd><p>Prepares the trajectory data for model training and testing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Bituler.Bituler.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['poi']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Bituler.Bituler.prepare_input" title="Link to this definition"></a></dt>
+<dd><p>Prepares the input data by configuring the model parameters and splitting the data into training and testing sets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Bituler.Bituler.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Bituler.Bituler.create" title="Link to this definition"></a></dt>
+<dd><p>Creates and returns the RNN model architecture based on the provided configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Bituler.Bituler.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Bituler.Bituler.fit" title="Link to this definition"></a></dt>
+<dd><p>Trains the model on the provided training data and evaluates it on the validation data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Bituler.Bituler.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Bituler.Bituler.clear" title="Link to this definition"></a></dt>
+<dd><p>Clears the model session to free memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['poi']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['poi']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Bituler.html#Bituler.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.mat.DeepeST">
+<span id="matclassification-methods-mat-deepest-module"></span><h2>matclassification.methods.mat.DeepeST module<a class="headerlink" href="#module-matclassification.methods.mat.DeepeST" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (this portion of code is subject to licensing from source project distribution)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><dl class="simple">
+<dt>Original source:</dt><dd><ul>
+<li><p>Nicksson C. A. de Freitas,</p></li>
+<li><p>Ticiana L. Coelho da Silva,</p></li>
+<li><p>Jose António Fernandes de Macêdo,</p></li>
+<li><p>Leopoldo Melo Junior,</p></li>
+<li><p>Matheus Gomes Cordeiro</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Adapted from: <a class="reference external" href="https://github.com/nickssonfreitas/ICAART2021">https://github.com/nickssonfreitas/ICAART2021</a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.mat.DeepeST.DeepeST">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.DeepeST.</span></span><span class="sig-name descname"><span class="pre">DeepeST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['bilstm',</span> <span class="pre">'lstm']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">200,</span> <span class="pre">300,</span> <span class="pre">400,</span> <span class="pre">500]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['concat']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout_before_rnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0.5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout_after_rnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[50,</span> <span class="pre">100,</span> <span class="pre">200,</span> <span class="pre">300,</span> <span class="pre">400]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[64]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1000]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['val_acc']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['ada']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.001]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['CCE']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[{}]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_one_hot_encodding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.DeepeST.DeepeST" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.THSClassifier.THSClassifier" title="matclassification.methods.core.THSClassifier.THSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">THSClassifier</span></code></a></p>
+<p>DeepeST: (Deep Learning for Sub-Trajectory classification)</p>
+<p>The <cite>DeepeST</cite> class is a deep learning model for trajectory-based classification,
+which extends the <cite>THSClassifier</cite>. It uses RNN-based architectures, such as
+LSTM and BiLSTM, to handle spatial-temporal data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rnn</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'bilstm'</em><em>, </em><em>'lstm'</em><em>]</em>) – Types of recurrent neural networks to use (‘bilstm’ or ‘lstm’).</p></li>
+<li><p><strong>units</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>100</em><em>, </em><em>200</em><em>, </em><em>300</em><em>, </em><em>400</em><em>, </em><em>500</em><em>]</em>) – List of number of units for the recurrent layers.</p></li>
+<li><p><strong>merge_type</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'concat'</em><em>]</em>) – How to merge embedding layers. Options: ‘concat’, ‘add’, ‘avg’.</p></li>
+<li><p><strong>dropout_before_rnn</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0</em><em>, </em><em>0.5</em><em>]</em>) – Dropout rates applied before the recurrent layers.</p></li>
+<li><p><strong>dropout_after_rnn</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.5</em><em>]</em>) – Dropout rates applied after the recurrent layers.</p></li>
+<li><p><strong>embedding_size</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>50</em><em>, </em><em>100</em><em>, </em><em>200</em><em>, </em><em>300</em><em>, </em><em>400</em><em>]</em>) – Sizes for the embedding layers.</p></li>
+<li><p><strong>batch_size</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>64</em><em>]</em>) – Batch sizes for training the model.</p></li>
+<li><p><strong>epochs</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>1000</em><em>]</em>) – Number of epochs to train the model.</p></li>
+<li><p><strong>patience</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>20</em><em>]</em>) – Patience for early stopping based on monitored metric.</p></li>
+<li><p><strong>monitor</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'val_acc'</em><em>]</em>) – Metric to monitor for early stopping.</p></li>
+<li><p><strong>optimizer</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'ada'</em><em>]</em>) – Optimizer for training (‘ada’ for Adam, ‘rmsprop’ for RMSProp).</p></li>
+<li><p><strong>learning_rate</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.001</em><em>]</em>) – Learning rate for the optimizer.</p></li>
+<li><p><strong>loss</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'CCE'</em><em>]</em>) – Loss function to use (‘CCE’ for categorical cross-entropy).</p></li>
+<li><p><strong>loss_parameters</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>{}</em><em>]</em>) – Additional parameters for the loss function.</p></li>
+<li><p><strong>y_one_hot_encoding</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to one-hot encode the target labels.</p></li>
+<li><p><strong>save_results</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to save results after execution.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>default=-1</em>) – Number of parallel jobs for computations.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>default=0</em>) – Verbosity level for output (0: silent, 1: progress).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>default=42</em>) – Random seed for reproducibility.</p></li>
+<li><p><strong>filterwarnings</strong> (<em>str</em><em>, </em><em>default='ignore'</em>) – Filter warnings during execution.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.DeepeST.DeepeST.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.DeepeST.DeepeST.xy" title="Link to this definition"></a></dt>
+<dd><p>Prepares the trajectory data for training and testing, returning features and labels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.DeepeST.DeepeST.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.DeepeST.DeepeST.prepare_input" title="Link to this definition"></a></dt>
+<dd><p>Prepares input features and configurations from the data for model training.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.DeepeST.DeepeST.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.DeepeST.DeepeST.create" title="Link to this definition"></a></dt>
+<dd><p>Constructs the deep learning model using the given configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.DeepeST.DeepeST.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.DeepeST.DeepeST.fit" title="Link to this definition"></a></dt>
+<dd><p>Trains the model on the training data with validation using the specified configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.DeepeST.DeepeST.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.DeepeST.DeepeST.predict" title="Link to this definition"></a></dt>
+<dd><p>Generates predictions on the test data and computes performance metrics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.DeepeST.DeepeST.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.DeepeST.DeepeST.clear" title="Link to this definition"></a></dt>
+<dd><p>Resets the model and clears the Keras session to free memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/DeepeST.html#DeepeST.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.mat.MARC">
+<span id="matclassification-methods-mat-marc-module"></span><h2>matclassification.methods.mat.MARC module<a class="headerlink" href="#module-matclassification.methods.mat.MARC" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Lucas May Petry (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.EpochLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.MARC.</span></span><span class="sig-name descname"><span class="pre">EpochLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'val_acc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#EpochLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.EpochLogger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">EarlyStopping</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.EpochLogger.on_epoch_begin">
+<span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#EpochLogger.on_epoch_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.EpochLogger.on_epoch_begin" title="Link to this definition"></a></dt>
+<dd><p>Called at the start of an epoch.</p>
+<p>Subclasses should override for any actions to run. This function should
+only be called during TRAIN mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> – Integer, index of epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.EpochLogger.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#EpochLogger.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.EpochLogger.on_epoch_end" title="Link to this definition"></a></dt>
+<dd><p>Called at the end of an epoch.</p>
+<p>Subclasses should override for any actions to run. This function should
+only be called during TRAIN mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> – Integer, index of epoch.</p></li>
+<li><p><strong>logs</strong> – Dict, metric results for this training epoch, and for the
+validation epoch if validation is performed. Validation result
+keys are prefixed with <cite>val_</cite>. For training epoch, the values of
+the <cite>Model</cite>’s metrics are returned. Example:
+<cite>{‘loss’: 0.2, ‘accuracy’: 0.7}</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.EpochLogger.on_train_begin">
+<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#EpochLogger.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.EpochLogger.on_train_begin" title="Link to this definition"></a></dt>
+<dd><p>Called at the beginning of training.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.EpochLogger.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#EpochLogger.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.EpochLogger.on_train_end" title="Link to this definition"></a></dt>
+<dd><p>Called at the end of training.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently the output of the last call to
+<cite>on_epoch_end()</cite> is passed to this argument for this method but
+that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.MARC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.MARC.</span></span><span class="sig-name descname"><span class="pre">MARC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedder_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">200,</span> <span class="pre">300]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['add',</span> <span class="pre">'average',</span> <span class="pre">'concatenate']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rnn_cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['gru',</span> <span class="pre">'lstm']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_hidden_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_lrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopping_patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'acc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.MARC" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.THSClassifier.THSClassifier" title="matclassification.methods.core.THSClassifier.THSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">THSClassifier</span></code></a></p>
+<p>MARC: a robust method for multiple-aspect trajectory classification via space, time, and semantic embeddings</p>
+<p>The <cite>MARC</cite> class is a deep learning classifier for sequential trajectory data using
+different recurrent neural network cells and various strategies for embedding and merging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embedder_size</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>100</em><em>, </em><em>200</em><em>, </em><em>300</em><em>]</em>) – List of sizes for the embedding layers.</p></li>
+<li><p><strong>merge_type</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'add'</em><em>, </em><em>'average'</em><em>, </em><em>'concatenate'</em><em>]</em>) – Merge strategy for combining embedding layers (‘add’, ‘average’, ‘concatenate’).</p></li>
+<li><p><strong>rnn_cell</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'gru'</em><em>, </em><em>'lstm'</em><em>]</em>) – Types of recurrent neural network cells (‘gru’ or ‘lstm’).</p></li>
+<li><p><strong>class_dropout</strong> (<em>float</em><em>, </em><em>default=0.5</em>) – Dropout rate to apply after the recurrent layer.</p></li>
+<li><p><strong>class_hidden_units</strong> (<em>int</em><em>, </em><em>default=100</em>) – Number of hidden units in the recurrent layer.</p></li>
+<li><p><strong>class_lrate</strong> (<em>float</em><em>, </em><em>default=0.001</em>) – Learning rate for the optimizer.</p></li>
+<li><p><strong>class_batch_size</strong> (<em>int</em><em>, </em><em>default=64</em>) – Batch size for training.</p></li>
+<li><p><strong>class_epochs</strong> (<em>int</em><em>, </em><em>default=1000</em>) – Number of epochs for training the model.</p></li>
+<li><p><strong>early_stopping_patience</strong> (<em>int</em><em>, </em><em>default=30</em>) – Patience for early stopping based on validation metrics.</p></li>
+<li><p><strong>baseline_metric</strong> (<em>str</em><em>, </em><em>default='acc'</em>) – Metric to monitor for early stopping (‘acc’ for accuracy).</p></li>
+<li><p><strong>baseline_value</strong> (<em>float</em><em>, </em><em>default=0.5</em>) – Baseline value for early stopping based on the monitored metric.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>default=-1</em>) – Number of parallel jobs for computations.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Verbosity level for model training (True for detailed output).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>default=42</em>) – Random seed for reproducibility.</p></li>
+<li><p><strong>filterwarnings</strong> (<em>str</em><em>, </em><em>default='ignore'</em>) – Filter warnings during execution.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.MARC.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.MARC.xy" title="Link to this definition"></a></dt>
+<dd><p>Prepares the trajectory data for training and testing, returning features and labels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.MARC.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.MARC.prepare_input" title="Link to this definition"></a></dt>
+<dd><p>Prepares input features and configurations from the data for model training.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.MARC.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.MARC.create" title="Link to this definition"></a></dt>
+<dd><p>Constructs the deep learning model using the given configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.MARC.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.MARC.fit" title="Link to this definition"></a></dt>
+<dd><p>Trains the model on the training data with validation using the specified configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.MARC.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.MARC.predict" title="Link to this definition"></a></dt>
+<dd><p>Generates predictions on the test data and computes performance metrics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.MARC.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matclassification.methods.mat.MARC.MARC.clear" title="Link to this definition"></a></dt>
+<dd><p>Resets the model and clears the Keras session to free memory.</p>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This implementation currently sets a default configuration (<cite>best_config</cite>) and initializes grid search with embedding sizes, merge types, and RNN cells.</p></li>
+<li><p>The model uses early stopping based on accuracy with a baseline of 0.5.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#MARC.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.loadTrajectories">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.MARC.</span></span><span class="sig-name descname"><span class="pre">loadTrajectories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#loadTrajectories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.loadTrajectories" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.mat.MARC.prepareTrajectories">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.MARC.</span></span><span class="sig-name descname"><span class="pre">prepareTrajectories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/MARC.html#prepareTrajectories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.MARC.prepareTrajectories" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-matclassification.methods.mat.TRF">
+<span id="matclassification-methods-mat-trf-module"></span><h2>matclassification.methods.mat.TRF module<a class="headerlink" href="#module-matclassification.methods.mat.TRF" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (this portion of code is subject to licensing from source project distribution)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><dl class="simple">
+<dt>Original source:</dt><dd><ul>
+<li><p>Nicksson C. A. de Freitas,</p></li>
+<li><p>Ticiana L. Coelho da Silva,</p></li>
+<li><p>Jose António Fernandes de Macêdo,</p></li>
+<li><p>Leopoldo Melo Junior,</p></li>
+<li><p>Matheus Gomes Cordeiro</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Adapted from: <a class="reference external" href="https://github.com/nickssonfreitas/ICAART2021">https://github.com/nickssonfreitas/ICAART2021</a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TRF.TRF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.TRF.</span></span><span class="sig-name descname"><span class="pre">TRF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[200,</span> <span class="pre">400,</span> <span class="pre">600,</span> <span class="pre">800,</span> <span class="pre">1000,</span> <span class="pre">1200,</span> <span class="pre">1400,</span> <span class="pre">1600,</span> <span class="pre">1800,</span> <span class="pre">2000]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">30,</span> <span class="pre">40]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">5,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">4]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['sqrt',</span> <span class="pre">'log2']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">False]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TRF.html#TRF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TRF.TRF" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.THSClassifier.THSClassifier" title="matclassification.methods.core.THSClassifier.THSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">THSClassifier</span></code></a></p>
+<p>TRF: Trajectory Random Forest Classifier</p>
+<p>The <cite>TRF</cite> class is a Random Forest trajectory-based classifier specifically designed for trajectory classification tasks. It provides tunable hyperparameters and performs grid search to find the optimal model configuration.
+#TODO: It supports parallelization, result saving, and allows for a flexible and efficient approach to handling complex trajectory data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_estimators</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>200</em><em>, </em><em>400</em><em>, </em><em>600</em><em>, </em><em>800</em><em>, </em><em>1000</em><em>, </em><em>1200</em><em>, </em><em>1400</em><em>, </em><em>1600</em><em>, </em><em>1800</em><em>, </em><em>2000</em><em>]</em>) – Number of trees in the forest.</p></li>
+<li><p><strong>max_depth</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>20</em><em>, </em><em>30</em><em>, </em><em>40</em><em>]</em>) – Maximum depth of each tree.</p></li>
+<li><p><strong>min_samples_split</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>2</em><em>, </em><em>5</em><em>, </em><em>10</em><em>]</em>) – Minimum number of samples required to split an internal node.</p></li>
+<li><p><strong>min_samples_leaf</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>1</em><em>, </em><em>2</em><em>, </em><em>4</em><em>]</em>) – Minimum number of samples required to be at a leaf node.</p></li>
+<li><p><strong>max_features</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'sqrt'</em><em>, </em><em>'log2'</em><em>]</em>) – Number of features to consider when looking for the best split.</p></li>
+<li><p><strong>bootstrap</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>True</em><em>, </em><em>False</em><em>]</em>) – Method of selecting samples for training each tree (whether to use bootstrap sampling).</p></li>
+<li><p><strong>save_results</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Option to save the results of the classifier.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>default=-1</em>) – Number of jobs to run in parallel. -1 means using all processors.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>default=0</em>) – Controls the verbosity during model training.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>default=42</em>) – Controls the randomness of the estimator.</p></li>
+<li><p><strong>filterwarnings</strong> (<em>str</em><em>, </em><em>default='ignore'</em>) – Whether to suppress or display warnings during model training and evaluation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create(config):</span></span></dt>
+<dd><p>Initializes the Random Forest classifier with the given configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">fit(X_train,</span> <span class="pre">y_train,</span> <span class="pre">X_val,</span> <span class="pre">y_val,</span> <span class="pre">config=None):</span></span></dt>
+<dd><p>Trains the Random Forest classifier on the provided training data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">predict(X_test,</span> <span class="pre">y_test):</span></span></dt>
+<dd><p>Predicts class probabilities and the most likely class for the test data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TRF.TRF.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TRF.html#TRF.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TRF.TRF.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TRF.TRF.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TRF.html#TRF.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TRF.TRF.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TRF.TRF.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TRF.html#TRF.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TRF.TRF.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.mat.TXGB">
+<span id="matclassification-methods-mat-txgb-module"></span><h2>matclassification.methods.mat.TXGB module<a class="headerlink" href="#module-matclassification.methods.mat.TXGB" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (this portion of code is subject to licensing from source project distribution)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><dl class="simple">
+<dt>Original source:</dt><dd><ul>
+<li><p>Nicksson C. A. de Freitas,</p></li>
+<li><p>Ticiana L. Coelho da Silva,</p></li>
+<li><p>Jose António Fernandes de Macêdo,</p></li>
+<li><p>Leopoldo Melo Junior,</p></li>
+<li><p>Matheus Gomes Cordeiro</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Adapted from: <a class="reference external" href="https://github.com/nickssonfreitas/ICAART2021">https://github.com/nickssonfreitas/ICAART2021</a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TXGB.TXGB">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.TXGB.</span></span><span class="sig-name descname"><span class="pre">TXGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2000]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[3,</span> <span class="pre">5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.01]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.0,</span> <span class="pre">1,</span> <span class="pre">5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.5,</span> <span class="pre">0.8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colsample_bytree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.5,</span> <span class="pre">0.7]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_alpha_l1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_lambda_l2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['merror',</span> <span class="pre">'mlogloss']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">esr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TXGB.html#TXGB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TXGB.TXGB" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.THSClassifier.THSClassifier" title="matclassification.methods.core.THSClassifier.THSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">THSClassifier</span></code></a></p>
+<p>TXGB: Trajectory XGBoost Classifier</p>
+<p>The <cite>TXGB</cite> class is an implementation of the XGBoost classifier, tailored specifically for trajectory classification tasks. It utilizes the efficient gradient boosting algorithm provided by XGBoost and supports a wide range of tunable hyperparameters.</p>
+<p>The model selection process is driven by grid search, making it adaptable to various data configurations and problem complexities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_estimators</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>2000</em><em>]</em>) – Number of boosting rounds.</p></li>
+<li><p><strong>max_depth</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>3</em><em>, </em><em>5</em><em>]</em>) – Maximum depth of a tree.</p></li>
+<li><p><strong>learning_rate</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.01</em><em>]</em>) – Step size shrinkage used in update to prevent overfitting.</p></li>
+<li><p><strong>gamma</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.0</em><em>, </em><em>1</em><em>, </em><em>5</em><em>]</em>) – Minimum loss reduction required to make a further partition on a leaf node.</p></li>
+<li><p><strong>subsample</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.1</em><em>, </em><em>0.2</em><em>, </em><em>0.5</em><em>, </em><em>0.8</em><em>]</em>) – Subsample ratio of the training instance.</p></li>
+<li><p><strong>colsample_bytree</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.5</em><em>, </em><em>0.7</em><em>]</em>) – Subsample ratio of columns when constructing each tree.</p></li>
+<li><p><strong>reg_alpha_l1</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>1.0</em><em>]</em>) – L1 regularization term on weights.</p></li>
+<li><p><strong>reg_lambda_l2</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>100</em><em>]</em>) – L2 regularization term on weights.</p></li>
+<li><p><strong>eval_metric</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'merror'</em><em>, </em><em>'mlogloss'</em><em>]</em>) – Evaluation metrics used to monitor performance (merror: classification error, mlogloss: log loss).</p></li>
+<li><p><strong>tree_method</strong> (<em>str</em><em>, </em><em>default='auto'</em>) – The tree construction algorithm used by XGBoost (e.g., ‘auto’, ‘gpu_hist’).</p></li>
+<li><p><strong>esr</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>20</em><em>]</em>) – Early stopping rounds (used to stop training early if no improvement is seen).</p></li>
+<li><p><strong>save_results</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to save the results of the classifier.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>default=-1</em>) – Number of parallel threads used by XGBoost.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>default=0</em>) – Verbosity of XGBoost training output.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>default=42</em>) – Controls the randomness of the model.</p></li>
+<li><p><strong>filterwarnings</strong> (<em>str</em><em>, </em><em>default='ignore'</em>) – Whether to suppress or display warnings during model training and evaluation.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create(config):</span></span></dt>
+<dd><p>Initializes the XGBoost classifier with the given configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">fit(X_train,</span> <span class="pre">y_train,</span> <span class="pre">X_val,</span> <span class="pre">y_val,</span> <span class="pre">config=None):</span></span></dt>
+<dd><p>Trains the XGBoost classifier on the provided training data, with optional early stopping.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TXGB.TXGB.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TXGB.html#TXGB.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TXGB.TXGB.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TXGB.TXGB.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TXGB.html#TXGB.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TXGB.TXGB.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.mat.TXGB.nvidia_gpu_count">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.TXGB.</span></span><span class="sig-name descname"><span class="pre">nvidia_gpu_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/TXGB.html#nvidia_gpu_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.TXGB.nvidia_gpu_count" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-matclassification.methods.mat.Tulvae">
+<span id="matclassification-methods-mat-tulvae-module"></span><h2>matclassification.methods.mat.Tulvae module<a class="headerlink" href="#module-matclassification.methods.mat.Tulvae" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (this portion of code is subject to licensing from source project distribution)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><dl class="simple">
+<dt>Original source:</dt><dd><ul>
+<li><p>Nicksson C. A. de Freitas,</p></li>
+<li><p>Ticiana L. Coelho da Silva,</p></li>
+<li><p>Jose António Fernandes de Macêdo,</p></li>
+<li><p>Leopoldo Melo Junior,</p></li>
+<li><p>Matheus Gomes Cordeiro</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Adapted from: <a class="reference external" href="https://github.com/nickssonfreitas/ICAART2021">https://github.com/nickssonfreitas/ICAART2021</a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.Tulvae">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.Tulvae.</span></span><span class="sig-name descname"><span class="pre">Tulvae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['bilstm']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">200,</span> <span class="pre">300]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">200,</span> <span class="pre">300]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100,</span> <span class="pre">200,</span> <span class="pre">300]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[64]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1000]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['val_acc']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['ada']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.001]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#Tulvae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.Tulvae" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="matclassification.methods.core.html#matclassification.methods.core.THSClassifier.THSClassifier" title="matclassification.methods.core.THSClassifier.THSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">THSClassifier</span></code></a></p>
+<p>Tulvae: Trajectory-user linking via variational autoencoder</p>
+<p>The <cite>Tulvae</cite> class is an implementation of a deep learning model based on variable auto-encoders, designed for trajectory classification tasks. It utilizes a variety of tunable hyperparameters and neural network structures to encode spatial trajectories and decode them for predictive modeling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rnn</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'bilstm'</em><em>]</em>) – Recurrent neural network cell used, e.g., ‘bilstm’ (Bidirectional LSTM).</p></li>
+<li><p><strong>units</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>100</em><em>, </em><em>200</em><em>, </em><em>300</em><em>]</em>) – Number of units in the recurrent layers.</p></li>
+<li><p><strong>stack</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>1</em><em>]</em>) – Number of stacked recurrent layers.</p></li>
+<li><p><strong>dropout</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.5</em><em>]</em>) – Fraction of units to drop for the linear transformation of the inputs.</p></li>
+<li><p><strong>embedding_size</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>100</em><em>, </em><em>200</em><em>, </em><em>300</em><em>]</em>) – Size of the embedding vectors used to represent trajectory features.</p></li>
+<li><p><strong>z_values</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>100</em><em>, </em><em>200</em><em>, </em><em>300</em><em>]</em>) – Dimensionality of the latent variable space.</p></li>
+<li><p><strong>batch_size</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>64</em><em>]</em>) – Number of samples per batch of computation.</p></li>
+<li><p><strong>epochs</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>1000</em><em>]</em>) – Number of epochs to train the model.</p></li>
+<li><p><strong>patience</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>20</em><em>]</em>) – Number of epochs with no improvement after which training will be stopped.</p></li>
+<li><p><strong>monitor</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'val_acc'</em><em>]</em>) – Metric used for early stopping and performance evaluation.</p></li>
+<li><p><strong>optimizer</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>'ada'</em><em>]</em>) – Optimizer used to minimize the loss function.</p></li>
+<li><p><strong>learning_rate</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>0.001</em><em>]</em>) – Learning rate for the optimizer.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">xy(train,</span> <span class="pre">test,</span> <span class="pre">tid_col='tid',</span> <span class="pre">class_col='label',</span> <span class="pre">space_geohash=False,</span> <span class="pre">geo_precision=30,</span> <span class="pre">features=['poi'],</span> <span class="pre">validate=False):</span></span></dt>
+<dd><p>Prepares trajectory data and transforms it into training and testing datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">prepare_input(train,</span> <span class="pre">test,</span> <span class="pre">tid_col='tid',</span> <span class="pre">class_col='label',</span> <span class="pre">space_geohash=False,</span> <span class="pre">geo_precision=30,</span> <span class="pre">features=['poi'],</span> <span class="pre">validate=False):</span></span></dt>
+<dd><p>Prepares the input data, generates configuration, and initializes grid search.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create(config):</span></span></dt>
+<dd><p>Builds the neural network model based on the configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">fit(X_train,</span> <span class="pre">y_train,</span> <span class="pre">X_val,</span> <span class="pre">y_val,</span> <span class="pre">config=None):</span></span></dt>
+<dd><p>Trains the model on the provided training data, using early stopping and validation data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">clear():</span></span></dt>
+<dd><p>Clears the session and resets the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.Tulvae.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#Tulvae.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.Tulvae.clear" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.Tulvae.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#Tulvae.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.Tulvae.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.Tulvae.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#Tulvae.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.Tulvae.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.Tulvae.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['poi']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#Tulvae.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.Tulvae.prepare_input" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.Tulvae.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['poi']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#Tulvae.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.Tulvae.xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.sampling">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.Tulvae.</span></span><span class="sig-name descname"><span class="pre">sampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#sampling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.sampling" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.mat.Tulvae.sampling_error">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.mat.Tulvae.</span></span><span class="sig-name descname"><span class="pre">sampling_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/mat/Tulvae.html#sampling_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.mat.Tulvae.sampling_error" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-matclassification.methods.mat">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matclassification.methods.mat" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matclassification.methods.feature.feature_extraction.html" class="btn btn-neutral float-left" title="matclassification.methods.feature.feature_extraction package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matclassification.methods.similarity.html" class="btn btn-neutral float-right" title="matclassification.methods.similarity package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

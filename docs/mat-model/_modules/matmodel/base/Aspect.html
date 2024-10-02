@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matmodel.base.Aspect &mdash; mat-model 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mat-model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-model:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../matmodel.base.html"> Base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../matmodel.comparator.html"> Comparator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../matmodel.descriptor.html"> Dataset Descriptor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../matmodel.feature.html"> Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../matmodel.representative.html"> Representative</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../matmodel.util.html"> Util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mat-model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matmodel.base.Aspect</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matmodel.base.Aspect</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present application offers a tool, to support the user in the modeling of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Apr, 2024</span>
+<span class="sd">Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</span>
+
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">    - Vanessa Lago Machado</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<div class="viewcode-block" id="Aspect">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Aspect">[docs]</a>
+<span class="k">class</span> <span class="nc">Aspect</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a generic attribute or &#39;aspect&#39; of a point, such as a spatial, temporal, or categorical aspect.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    _value: </span>
+<span class="sd">        The actual value of the aspect.</span>
+<span class="sd">    </span>
+<span class="sd">    Methods:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    value(units=None): </span>
+<span class="sd">        Property to get the value of the aspect.</span>
+<span class="sd">    __repr__(): </span>
+<span class="sd">        Returns a string representation of the aspect.</span>
+<span class="sd">    match(asp1, asp2): </span>
+<span class="sd">        Checks if two aspects are equal.</span>
+<span class="sd">    __eq__(other): </span>
+<span class="sd">        Checks if this aspect is equal to another aspect based on its value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="Aspect.match">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Aspect.match">[docs]</a>
+    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asp1</span><span class="p">,</span> <span class="n">asp2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">asp1</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">asp2</span><span class="p">)</span></div>
+
+    
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_value</span></div>
+
+    
+<div class="viewcode-block" id="Boolean">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Boolean">[docs]</a>
+<span class="k">class</span> <span class="nc">Boolean</span><span class="p">(</span><span class="n">Aspect</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a boolean aspect. The value can be a boolean or strings that can be interpreted as boolean.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span> <span class="c1"># TODO Other possible false and true values?</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;False&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;FALSE&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;NO&#39;</span><span class="p">]:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;True&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;TRUE&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;YES&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">]:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">Aspect</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Numeric">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Numeric">[docs]</a>
+<span class="k">class</span> <span class="nc">Numeric</span><span class="p">(</span><span class="n">Aspect</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a numeric aspect, where the value is instantiated as a float.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">Aspect</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Categoric">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Categoric">[docs]</a>
+<span class="k">class</span> <span class="nc">Categoric</span><span class="p">(</span><span class="n">Aspect</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a categorical aspect. The value is treated as a string variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">Aspect</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Space2D">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Space2D">[docs]</a>
+<span class="k">class</span> <span class="nc">Space2D</span><span class="p">(</span><span class="n">Aspect</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a 2D spatial aspect, storing x and y coordinates.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    x (float): </span>
+<span class="sd">        The x-coordinate (latitude).</span>
+<span class="sd">    y (float): </span>
+<span class="sd">        The y-coordinate (longitude).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">Aspect</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">str</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)))</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="nd">@Aspect</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">getter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">{:.3f}</span><span class="s2"> </span><span class="si">{:.3f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="Space3D">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Space3D">[docs]</a>
+<span class="k">class</span> <span class="nc">Space3D</span><span class="p">(</span><span class="n">Space2D</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a 3D spatial aspect, extending the 2D space with an additional z-coordinate.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    x (float): </span>
+<span class="sd">        The x-coordinate.</span>
+<span class="sd">    y (float): </span>
+<span class="sd">        The y-coordinate.</span>
+<span class="sd">    z (float): </span>
+<span class="sd">        The z-coordinate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>        
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">Aspect</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">str</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)))</span>
+        
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+
+    <span class="nd">@Aspect</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">getter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">{:.3f}</span><span class="s2"> </span><span class="si">{:.3f}</span><span class="s2"> </span><span class="si">{:.3f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">z</span></div>
+
+
+<div class="viewcode-block" id="DateTime">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime">[docs]</a>
+<span class="k">class</span> <span class="nc">DateTime</span><span class="p">(</span><span class="n">Aspect</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a temporal aspect, storing date and time information.</span>
+<span class="sd">    </span>
+<span class="sd">    Uni</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    start or value (datetime): </span>
+<span class="sd">        The start time of the interval.</span>
+<span class="sd">    mask (str): </span>
+<span class="sd">        The format in which the date and time is provided.</span>
+<span class="sd">    </span>
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+<span class="sd">    day(): </span>
+<span class="sd">        Returns the day of the month.</span>
+<span class="sd">    month(): </span>
+<span class="sd">        Returns the month.</span>
+<span class="sd">    year():  </span>
+<span class="sd">        Returns the year.</span>
+<span class="sd">    weekday():  </span>
+<span class="sd">        Returns the day of the week (0 for Monday, 6 for Sunday).</span>
+<span class="sd">    isweekend(): C </span>
+<span class="sd">        hecks if the date falls on a weekend.</span>
+<span class="sd">    isweekday():  </span>
+<span class="sd">        Checks if the date falls on a weekday.</span>
+<span class="sd">    hours():  </span>
+<span class="sd">        Returns the hour of the day.</span>
+<span class="sd">    minutes():  </span>
+<span class="sd">        Returns the total minutes since the start of the day.</span>
+<span class="sd">    seconds():  </span>
+<span class="sd">        Returns the total seconds since the start of the day.</span>
+<span class="sd">    microseconds():  </span>
+<span class="sd">        Returns the total microseconds since the start of the day.</span>
+<span class="sd">    get(units=None):  </span>
+<span class="sd">        Returns the value in a specified unit (e.g., D, M, Y, etc.).</span>
+<span class="sd">    convertMinToDate(minutes):  </span>
+<span class="sd">        Converts minutes to a datetime object.</span>
+<span class="sd">    convert(value, mask=None):  </span>
+<span class="sd">        Converts a string value to a datetime object.</span>
+<span class="sd">        </span>
+<span class="sd">    Notes:</span>
+<span class="sd">    ------</span>
+<span class="sd">    units: The available unit codes are:</span>
+<span class="sd">        - D: days</span>
+<span class="sd">        - M: months</span>
+<span class="sd">        - Y: years</span>
+<span class="sd">        - w: weekday</span>
+<span class="sd">        - h: hours</span>
+<span class="sd">        - m: minutes</span>
+<span class="sd">        - s: seconds</span>
+<span class="sd">        - ms: microseconds</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s2">&quot;%H:%M&quot;</span><span class="p">):</span> 
+        <span class="c1"># Convert to datetime:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+        <span class="n">Aspect</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+    
+<div class="viewcode-block" id="DateTime.day">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.day">[docs]</a>
+    <span class="k">def</span> <span class="nf">day</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#Just the day (1..30|31*)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">day</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.month">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.month">[docs]</a>
+    <span class="k">def</span> <span class="nf">month</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#Just the month (1..12)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">month</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.year">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.year">[docs]</a>
+    <span class="k">def</span> <span class="nf">year</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#Just the year</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">year</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.weekday">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.weekday">[docs]</a>
+    <span class="k">def</span> <span class="nf">weekday</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#Just the weekday (0..6)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.isweekend">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.isweekend">[docs]</a>
+    <span class="k">def</span> <span class="nf">isweekend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.isweekday">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.isweekday">[docs]</a>
+    <span class="k">def</span> <span class="nf">isweekday</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isweekend</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.hours">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.hours">[docs]</a>
+    <span class="k">def</span> <span class="nf">hours</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#Just the hours of the day</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">hour</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.minutes">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.minutes">[docs]</a>
+    <span class="k">def</span> <span class="nf">minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">hour</span><span class="o">*</span><span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">minute</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.seconds">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.seconds">[docs]</a>
+    <span class="k">def</span> <span class="nf">seconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span><span class="p">()</span><span class="o">*</span><span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">second</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.microseconds">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.microseconds">[docs]</a>
+    <span class="k">def</span> <span class="nf">microseconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span><span class="p">()</span><span class="o">*</span><span class="mi">1000000</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">microsecond</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.get">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1"># TODO for interval?</span>
+        <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">day</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">month</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;h&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hours</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">units</span> <span class="o">==</span> <span class="s1">&#39;ms&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">microseconds</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;[ERROR DateTime Aspect]: invalid </span><span class="se">\&#39;</span><span class="s1">units=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">units</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1"> conversion.&#39;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.convertMinToDate">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.convertMinToDate">[docs]</a>
+    <span class="k">def</span> <span class="nf">convertMinToDate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minutes</span><span class="p">):</span>
+        <span class="c1"># reference date (can be any one)</span>
+        <span class="n">reference_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Compute difference of time in minutes</span>
+        <span class="n">time_diff</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">minutes</span><span class="p">)</span>
+
+        <span class="c1"># Add diff to refence date</span>
+        <span class="n">result_date</span> <span class="o">=</span> <span class="n">reference_date</span> <span class="o">+</span> <span class="n">time_diff</span>
+
+        <span class="k">return</span> <span class="n">result_date</span></div>
+
+    
+<div class="viewcode-block" id="DateTime.convert">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.DateTime.convert">[docs]</a>
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span> <span class="k">if</span> <span class="n">mask</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertMinToDate</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+</div>
+
+    
+<div class="viewcode-block" id="Interval">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Interval">[docs]</a>
+<span class="k">class</span> <span class="nc">Interval</span><span class="p">(</span><span class="n">DateTime</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a temporal interval between two DateTime points.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    start or value (datetime): </span>
+<span class="sd">        The start time of the interval.</span>
+<span class="sd">    end (datetime): </span>
+<span class="sd">        The end time of the interval.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s2">&quot;%H:%M&quot;</span><span class="p">):</span>
+        <span class="n">DateTime</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+        <span class="c1"># Convert to datetime</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">end</span>
+        
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;[</span><span class="si">{}</span><span class="s1"> 𛲔𛲔 </span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Rank">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Rank">[docs]</a>
+<span class="k">class</span> <span class="nc">Rank</span><span class="p">(</span><span class="n">Aspect</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a ranked aspect, containing ranked values.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    rank_values (list):</span>
+<span class="sd">        A list of RankValue objects, each containing an aspect and its proportion.</span>
+<span class="sd">    </span>
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+<span class="sd">    add(aspect, proportion): </span>
+<span class="sd">        Adds a ranked value to the rank with its proportion.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">):</span>
+        <span class="n">Aspect</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank_values</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># -&gt;RankValue</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+    
+<div class="viewcode-block" id="Rank.add">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.Rank.add">[docs]</a>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">proportion</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RankValue</span><span class="p">(</span><span class="n">aspect</span><span class="p">,</span> <span class="n">proportion</span><span class="p">))</span></div>
+</div>
+
+    
+<div class="viewcode-block" id="RankValue">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.RankValue">[docs]</a>
+<span class="k">class</span> <span class="nc">RankValue</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a value in a Rank, with its corresponding proportion.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    value (Aspect): </span>
+<span class="sd">        The aspect associated with this rank value.</span>
+<span class="sd">    proportion (float): </span>
+<span class="sd">        The proportion associated with this rank value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">proportion</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proportion</span> <span class="o">=</span> <span class="n">proportion</span></div>
+
+
+<span class="c1"># ------------------------------------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="instantiateAspect">
+<a class="viewcode-back" href="../../../matmodel.base.html#matmodel.base.Aspect.instantiateAspect">[docs]</a>
+<span class="k">def</span> <span class="nf">instantiateAspect</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Instantiates an Aspect object based on the data type specified in the DataDescriptor.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    k: </span>
+<span class="sd">        DataDescriptor object that contains metadata about the attribute.</span>
+<span class="sd">    v: </span>
+<span class="sd">        The raw value to be converted into an Aspect.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">        An instantiated Aspect object (e.g., Boolean, Numeric, Space2D, DateTime, etc.).</span>
+<span class="sd">    </span>
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    Exception: </span>
+<span class="sd">        If the instantiation fails for any reason.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;nominal&#39;</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;categorical&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Categoric</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;numeric&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Numeric</span><span class="p">(</span> <span class="n">v</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;datetime&#39;</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DateTime</span><span class="p">(</span> <span class="n">v</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;space2d&#39;</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Space2D</span><span class="p">(</span> <span class="n">v</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;space3d&#39;</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Space3D</span><span class="p">(</span> <span class="n">v</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;rank&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Rank</span><span class="p">(</span> <span class="n">v</span> <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;boolean&#39;</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Boolean</span><span class="p">(</span> <span class="n">v</span> <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Aspect</span><span class="p">(</span> <span class="n">v</span> <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;[ERROR Aspect.py]: Failed to load value &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> \
+                        <span class="o">+</span> <span class="s2">&quot; as type &quot;</span> <span class="o">+</span> <span class="n">k</span><span class="o">.</span><span class="n">dtype</span> <span class="o">+</span> <span class="s1">&#39; attr#&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">order</span><span class="p">))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela and Vanessa Lago Machado.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

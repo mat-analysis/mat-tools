@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matmodel.comparator package &mdash; mat-model 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matmodel.descriptor package" href="matmodel.descriptor.html" />
+    <link rel="prev" title="matmodel.base package" href="matmodel.base.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-model:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="matmodel.base.html"> Base</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Comparator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.comparator.distance">matmodel.comparator.distance module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.AbsoluteDistance"><code class="docutils literal notranslate"><span class="pre">AbsoluteDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.AbsoluteDistance.distance"><code class="docutils literal notranslate"><span class="pre">AbsoluteDistance.distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.CaselessDistance"><code class="docutils literal notranslate"><span class="pre">CaselessDistance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.Comparator"><code class="docutils literal notranslate"><span class="pre">Comparator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.Comparator.MAX_VALUE"><code class="docutils literal notranslate"><span class="pre">Comparator.MAX_VALUE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.Comparator.distance"><code class="docutils literal notranslate"><span class="pre">Comparator.distance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.Comparator.enhance"><code class="docutils literal notranslate"><span class="pre">Comparator.enhance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.Comparator.instantiate"><code class="docutils literal notranslate"><span class="pre">Comparator.instantiate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.Comparator.match"><code class="docutils literal notranslate"><span class="pre">Comparator.match()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.Comparator.normalize"><code class="docutils literal notranslate"><span class="pre">Comparator.normalize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.DatetimeDistance"><code class="docutils literal notranslate"><span class="pre">DatetimeDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.DatetimeDistance.distance"><code class="docutils literal notranslate"><span class="pre">DatetimeDistance.distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.EditlcsDistance"><code class="docutils literal notranslate"><span class="pre">EditlcsDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.EditlcsDistance.distance"><code class="docutils literal notranslate"><span class="pre">EditlcsDistance.distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.EqualsDistance"><code class="docutils literal notranslate"><span class="pre">EqualsDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.EqualsDistance.distance"><code class="docutils literal notranslate"><span class="pre">EqualsDistance.distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.EuclideanDistance"><code class="docutils literal notranslate"><span class="pre">EuclideanDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.EuclideanDistance.distance"><code class="docutils literal notranslate"><span class="pre">EuclideanDistance.distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.InintervalDistance"><code class="docutils literal notranslate"><span class="pre">InintervalDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.InintervalDistance.converge"><code class="docutils literal notranslate"><span class="pre">InintervalDistance.converge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.InintervalDistance.distance"><code class="docutils literal notranslate"><span class="pre">InintervalDistance.distance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.InintervalDistance.match"><code class="docutils literal notranslate"><span class="pre">InintervalDistance.match()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.InintervalDistance.match_date_interval"><code class="docutils literal notranslate"><span class="pre">InintervalDistance.match_date_interval()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.InintervalDistance.match_dates"><code class="docutils literal notranslate"><span class="pre">InintervalDistance.match_dates()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.LcsDistance"><code class="docutils literal notranslate"><span class="pre">LcsDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.LcsDistance.distance"><code class="docutils literal notranslate"><span class="pre">LcsDistance.distance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.LcsDistance.lcs"><code class="docutils literal notranslate"><span class="pre">LcsDistance.lcs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.LcsDistance.lcs_distance"><code class="docutils literal notranslate"><span class="pre">LcsDistance.lcs_distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.ManhattanDistance"><code class="docutils literal notranslate"><span class="pre">ManhattanDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.ManhattanDistance.distance"><code class="docutils literal notranslate"><span class="pre">ManhattanDistance.distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.NumericDistance"><code class="docutils literal notranslate"><span class="pre">NumericDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.NumericDistance.distance"><code class="docutils literal notranslate"><span class="pre">NumericDistance.distance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.comparator.distance.TimeDistance"><code class="docutils literal notranslate"><span class="pre">TimeDistance</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.TimeDistance.abs_distance"><code class="docutils literal notranslate"><span class="pre">TimeDistance.abs_distance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.comparator.distance.TimeDistance.distance"><code class="docutils literal notranslate"><span class="pre">TimeDistance.distance()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.comparator.helper">matmodel.comparator.helper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.comparator">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.descriptor.html"> Dataset Descriptor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.feature.html"> Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.representative.html"> Representative</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.util.html"> Util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matmodel.comparator package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matmodel.comparator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matmodel-comparator-package">
+<h1>matmodel.comparator package<a class="headerlink" href="#matmodel-comparator-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matmodel.comparator.distance">
+<span id="matmodel-comparator-distance-module"></span><h2>matmodel.comparator.distance module<a class="headerlink" href="#module-matmodel.comparator.distance" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present application offers a tool, to support the user in the modeling of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Apr, 2024
+Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Vanessa Lago Machado</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.AbsoluteDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">AbsoluteDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#AbsoluteDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.AbsoluteDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.NumericDistance" title="matmodel.comparator.distance.NumericDistance"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericDistance</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.AbsoluteDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#AbsoluteDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.AbsoluteDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the absolute distance.</p>
+<p>Arguments:
+asp1 (Aspect&lt;numeric&gt;) - value 1 to compare
+asp2 (Aspect&lt;numeric&gt;) - value 2 to compare</p>
+<p>Return:
+distance - distance difference value, abs(asp1 - asp2).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.CaselessDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">CaselessDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#CaselessDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.CaselessDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.Comparator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">Comparator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#Comparator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.Comparator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>&lt;Abstract&gt; Calculates the distance.</p>
+<p>Properties:
+max_value=None  - Maximum possible value for distance, default: Comparator.MAX_VALUE = float(‘inf’).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.Comparator.MAX_VALUE">
+<span class="sig-name descname"><span class="pre">MAX_VALUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">inf</span></em><a class="headerlink" href="#matmodel.comparator.distance.Comparator.MAX_VALUE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.Comparator.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#Comparator.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.Comparator.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the distance.</p>
+<p>Arguments:
+asp1 (Aspect&lt;?&gt;) - value 1 to compare
+asp2 (Aspect&lt;?&gt;) - value 2 to compare</p>
+<p>Return:
+distance - distance equality value (0 for equal values, 1 for different).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.Comparator.enhance">
+<span class="sig-name descname"><span class="pre">enhance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#Comparator.enhance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.Comparator.enhance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.Comparator.instantiate">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#Comparator.instantiate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.Comparator.instantiate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.Comparator.match">
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#Comparator.match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.Comparator.match" title="Link to this definition"></a></dt>
+<dd><p>Determine whether two aspects match in equality
+Override this method to change behavior, can use match_threshold to match based on a specified threshold.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>asp1<span class="classifier">Aspect</span></dt><dd><p>The first aspect to be compared.</p>
+</dd>
+<dt>asp2<span class="classifier">Aspect</span></dt><dd><p>The second aspect to be compared.</p>
+</dd>
+<dt>match_threshold<span class="classifier">float, optional</span></dt><dd><p>A threshold for matching criteria (default 0).
+Currently, it is used to match based on 0 distance.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the two aspects match, False otherwise.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.Comparator.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#Comparator.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.Comparator.normalize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.DatetimeDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">DatetimeDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#DatetimeDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.DatetimeDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+<p>Calculates the date distance in one of the following units:
+D - days
+M - months
+Y - years
+w - weeks
+h - hours
+m - minutes
+s - seconds (default), which includes microseconds fraction</p>
+<p>‘weekday’   - difference in weekdays
+‘=weekday’  - equal weekday (0 for equal values, 1 for different)
+‘isweekday’ - equal if both are weekdays or both are weekends (0 for equal values, 1 for different)</p>
+<p>Properties:
+units=’ms’      - Unit measure to get distance.
+max_value=None  - Maximum possible value for distance, default: Comparator.MAX_VALUE = float(‘inf’)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.DatetimeDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#DatetimeDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.DatetimeDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the distance.</p>
+<p>Arguments:
+asp1 (Aspect&lt;?&gt;) - value 1 to compare
+asp2 (Aspect&lt;?&gt;) - value 2 to compare</p>
+<p>Return:
+distance - distance equality value (0 for equal values, 1 for different).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.EditlcsDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">EditlcsDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#EditlcsDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.EditlcsDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.LcsDistance" title="matmodel.comparator.distance.LcsDistance"><code class="xref py py-class docutils literal notranslate"><span class="pre">LcsDistance</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.EditlcsDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#EditlcsDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.EditlcsDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the Longest Common Subsequence difference.</p>
+<p>Arguments:
+asp1 (Aspect&lt;nominal&gt;) - value 1 to compare
+asp2 (Aspect&lt;nominal&gt;) - value 2 to compare</p>
+<p>Return:
+distance - LCS distance value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.EqualsDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">EqualsDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#EqualsDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.EqualsDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.EqualsDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#EqualsDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.EqualsDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the distance for eqality ignoring case.</p>
+<p>Arguments:
+asp1 (Aspect&lt;nominal&gt;) - value 1 to compare
+asp2 (Aspect&lt;nominal&gt;) - value 2 to compare</p>
+<p>Return:
+distance - distance equality value (0 for equal values, 1 for different).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.EuclideanDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">EuclideanDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#EuclideanDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.EuclideanDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.EuclideanDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#EuclideanDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.EuclideanDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the Euclidean distance (works for points of 2D, 3D, and more).</p>
+<p>Arguments:
+asp1 (Space2D, Space3D) - value 1 to compare
+asp2 (Space2D, Space3D) - value 2 to compare</p>
+<p>Return:
+distance - distance value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.InintervalDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">InintervalDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#InintervalDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.InintervalDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.DatetimeDistance" title="matmodel.comparator.distance.DatetimeDistance"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatetimeDistance</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.InintervalDistance.converge">
+<span class="sig-name descname"><span class="pre">converge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#InintervalDistance.converge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.InintervalDistance.converge" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.InintervalDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#InintervalDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.InintervalDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the distance.</p>
+<p>Arguments:
+asp1 (Aspect&lt;?&gt;) - value 1 to compare
+asp2 (Aspect&lt;?&gt;) - value 2 to compare</p>
+<p>Return:
+distance - distance equality value (0 for equal values, 1 for different).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.InintervalDistance.match">
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#InintervalDistance.match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.InintervalDistance.match" title="Link to this definition"></a></dt>
+<dd><p>Determine whether two aspects match in equality
+Override this method to change behavior, can use match_threshold to match based on a specified threshold.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>asp1<span class="classifier">Aspect</span></dt><dd><p>The first aspect to be compared.</p>
+</dd>
+<dt>asp2<span class="classifier">Aspect</span></dt><dd><p>The second aspect to be compared.</p>
+</dd>
+<dt>match_threshold<span class="classifier">float, optional</span></dt><dd><p>A threshold for matching criteria (default 0).
+Currently, it is used to match based on 0 distance.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the two aspects match, False otherwise.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.InintervalDistance.match_date_interval">
+<span class="sig-name descname"><span class="pre">match_date_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#InintervalDistance.match_date_interval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.InintervalDistance.match_date_interval" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.InintervalDistance.match_dates">
+<span class="sig-name descname"><span class="pre">match_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#InintervalDistance.match_dates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.InintervalDistance.match_dates" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.LcsDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">LcsDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#LcsDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.LcsDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.LcsDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#LcsDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.LcsDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the Longest Common Subsequence difference.</p>
+<p>Arguments:
+asp1 (Aspect&lt;nominal&gt;) - value 1 to compare
+asp2 (Aspect&lt;nominal&gt;) - value 2 to compare</p>
+<p>Return:
+distance - LCS distance value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.LcsDistance.lcs">
+<span class="sig-name descname"><span class="pre">lcs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#LcsDistance.lcs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.LcsDistance.lcs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.LcsDistance.lcs_distance">
+<span class="sig-name descname"><span class="pre">lcs_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#LcsDistance.lcs_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.LcsDistance.lcs_distance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.ManhattanDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">ManhattanDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#ManhattanDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.ManhattanDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.ManhattanDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#ManhattanDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.ManhattanDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the Manhattan distance (works for points of 2D, 3D, and more).</p>
+<p>Arguments:
+asp1 (Space2D, Space3D) - value 1 to compare
+asp2 (Space2D, Space3D) - value 2 to compare</p>
+<p>Return:
+distance - distance value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.NumericDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">NumericDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#NumericDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.NumericDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.NumericDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#NumericDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.NumericDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the numeric distance.</p>
+<p>Arguments:
+asp1 (Aspect&lt;numeric&gt;) - value 1 to compare
+asp2 (Aspect&lt;numeric&gt;) - value 2 to compare</p>
+<p>Return:
+distance - distance difference value (asp1 - asp2).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.TimeDistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.comparator.distance.</span></span><span class="sig-name descname"><span class="pre">TimeDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#TimeDistance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.TimeDistance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.comparator.distance.Comparator" title="matmodel.comparator.distance.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a></p>
+<p>Calculates the closest time distance.
+Only works for time in hours, minutes, seconds, and microseconds. Ex.: difference between 22h and 2h is 3h.</p>
+<p>Properties:
+units=’ms’      - Unit measure to get distance: h (hours), m (minutes), s (seconds), ms (microseconds)
+max_value=None  - Maximum possible value for distance (Ex.: hours = 24)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.TimeDistance.abs_distance">
+<span class="sig-name descname"><span class="pre">abs_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#TimeDistance.abs_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.TimeDistance.abs_distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the simple time distance.</p>
+<p>Arguments:
+asp1 (Aspect&lt;numeric&gt;, DateTime Aspect) - value 1 to compare
+asp2 (Aspect&lt;numeric&gt;, DateTime Aspect) - value 2 to compare</p>
+<p>Return:
+distance - distance difference in the informed units.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.comparator.distance.TimeDistance.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/comparator/distance.html#TimeDistance.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.comparator.distance.TimeDistance.distance" title="Link to this definition"></a></dt>
+<dd><p>Calculates the closest time distance.</p>
+<p>Arguments:
+asp1 (Aspect&lt;numeric&gt;, DateTime Aspect) - value 1 to compare
+asp2 (Aspect&lt;numeric&gt;, DateTime Aspect) - value 2 to compare</p>
+<p>Return:
+distance - distance difference in the informed units.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matmodel.comparator.helper">
+<span id="matmodel-comparator-helper-module"></span><h2>matmodel.comparator.helper module<a class="headerlink" href="#module-matmodel.comparator.helper" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present application offers a tool, to support the user in the modeling of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Apr, 2024
+Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Vanessa Lago Machado</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="module-matmodel.comparator">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matmodel.comparator" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matmodel.base.html" class="btn btn-neutral float-left" title="matmodel.base package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matmodel.descriptor.html" class="btn btn-neutral float-right" title="matmodel.descriptor package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela and Vanessa Lago Machado.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

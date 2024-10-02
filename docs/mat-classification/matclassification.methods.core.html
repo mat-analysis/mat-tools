@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.core package &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matclassification.methods.feature package" href="matclassification.methods.feature.html" />
+    <link rel="prev" title="MAT-classification’s Documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.core.AbstractClassifier">matclassification.methods.core.AbstractClassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.add_config"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.add_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.classification_report"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.classification_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.clear"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.cm"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.cm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.create"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.duration"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.duration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.fit"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.grid_search"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.grid_search()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.labels"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.message"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.predict"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.prediction_report"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.prediction_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.save"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.save_model"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.save_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.score"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.summary"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.summary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.testing_report"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.testing_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.training_report"><code class="docutils literal notranslate"><span class="pre">AbstractClassifier.training_report()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.Approach"><code class="docutils literal notranslate"><span class="pre">Approach</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.Approach.DT"><code class="docutils literal notranslate"><span class="pre">Approach.DT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.Approach.NN"><code class="docutils literal notranslate"><span class="pre">Approach.NN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.Approach.RF"><code class="docutils literal notranslate"><span class="pre">Approach.RF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.Approach.SVM"><code class="docutils literal notranslate"><span class="pre">Approach.SVM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.Approach.XGB"><code class="docutils literal notranslate"><span class="pre">Approach.XGB</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.core.HSClassifier">matclassification.methods.core.HSClassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.HSClassifier.HSClassifier"><code class="docutils literal notranslate"><span class="pre">HSClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.HSClassifier.HSClassifier.test"><code class="docutils literal notranslate"><span class="pre">HSClassifier.test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.HSClassifier.HSClassifier.train"><code class="docutils literal notranslate"><span class="pre">HSClassifier.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.core.MClassifier">matclassification.methods.core.MClassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.MClassifier.MClassifier"><code class="docutils literal notranslate"><span class="pre">MClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.MClassifier.MClassifier.prepare_input"><code class="docutils literal notranslate"><span class="pre">MClassifier.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.MClassifier.MClassifier.xy"><code class="docutils literal notranslate"><span class="pre">MClassifier.xy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.core.MHSClassifier">matclassification.methods.core.MHSClassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.MHSClassifier.MHSClassifier"><code class="docutils literal notranslate"><span class="pre">MHSClassifier</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.core.SimilarityClassifier">matclassification.methods.core.SimilarityClassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier"><code class="docutils literal notranslate"><span class="pre">SimilarityClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.default_metric"><code class="docutils literal notranslate"><span class="pre">SimilarityClassifier.default_metric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.fit"><code class="docutils literal notranslate"><span class="pre">SimilarityClassifier.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.predict"><code class="docutils literal notranslate"><span class="pre">SimilarityClassifier.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.prepare_input"><code class="docutils literal notranslate"><span class="pre">SimilarityClassifier.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.xy"><code class="docutils literal notranslate"><span class="pre">SimilarityClassifier.xy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.SimilarityClassifier.similarity_matrix"><code class="docutils literal notranslate"><span class="pre">similarity_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.core.THSClassifier">matclassification.methods.core.THSClassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier"><code class="docutils literal notranslate"><span class="pre">THSClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.fit"><code class="docutils literal notranslate"><span class="pre">THSClassifier.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.message"><code class="docutils literal notranslate"><span class="pre">THSClassifier.message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.predict"><code class="docutils literal notranslate"><span class="pre">THSClassifier.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.prepare_input"><code class="docutils literal notranslate"><span class="pre">THSClassifier.prepare_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.read_report"><code class="docutils literal notranslate"><span class="pre">THSClassifier.read_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.test"><code class="docutils literal notranslate"><span class="pre">THSClassifier.test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.train"><code class="docutils literal notranslate"><span class="pre">THSClassifier.train()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier.xy"><code class="docutils literal notranslate"><span class="pre">THSClassifier.xy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matclassification.methods.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matclassification.methods.core package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matclassification.methods.core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matclassification-methods-core-package">
+<h1>matclassification.methods.core package<a class="headerlink" href="#matclassification-methods-core-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matclassification.methods.core.AbstractClassifier">
+<span id="matclassification-methods-core-abstractclassifier-module"></span><h2>matclassification.methods.core.AbstractClassifier module<a class="headerlink" href="#module-matclassification.methods.core.AbstractClassifier" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.AbstractClassifier.</span></span><span class="sig-name descname"><span class="pre">AbstractClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NN'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Simple Abstract Classifier Model.</p>
+<p>This abstract class defines the core structure for a machine learning classifier model.
+It provides common methods such as model creation, and evaluation,
+while specific implementations of the model must be defined in derived classes by overriding
+the <cite>create()</cite> method.</p>
+<section id="attributes">
+<h3>Attributes:<a class="headerlink" href="#attributes" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>Name of the classifier implementation (default: ‘NN’).</p>
+</dd>
+<dt>model<span class="classifier">object</span></dt><dd><p>The actual machine learning model to be defined in the subclass.</p>
+</dd>
+<dt>le<span class="classifier">object</span></dt><dd><p>Label encoder (optional).</p>
+</dd>
+<dt>approach<span class="classifier">Enum</span></dt><dd><p>The category of approach used (default: Approach.NN).</p>
+</dd>
+<dt>isverbose<span class="classifier">bool</span></dt><dd><p>Flag to control verbosity of model’s output (default: based on <cite>verbose</cite> parameter).</p>
+</dd>
+<dt>save_results<span class="classifier">bool</span></dt><dd><p>Indicates whether to save results (default: False).</p>
+</dd>
+<dt>validate<span class="classifier">bool</span></dt><dd><p>Indicates whether validation should be performed (default: False).</p>
+</dd>
+<dt>config<span class="classifier">dict</span></dt><dd><p>Dictionary of configuration parameters.</p>
+</dd>
+<dt>y_test_true<span class="classifier">array-like</span></dt><dd><p>True labels for the test dataset (available after call to predict).</p>
+</dd>
+<dt>y_test_pred<span class="classifier">array-like</span></dt><dd><p>Predicted labels for the test dataset (available after call to predict).</p>
+</dd>
+</dl>
+</section>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str, optional</span></dt><dd><p>Classifier name (default: ‘NN’).</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional</span></dt><dd><p>Number of parallel jobs to run (default: -1 for using all processors).</p>
+</dd>
+<dt>verbose<span class="classifier">int, optional</span></dt><dd><p>Verbosity level (default: 0).</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional</span></dt><dd><p>Random seed for reproducibility (default: 42).</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional</span></dt><dd><p>Warning filter level (default: ‘ignore’).</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h3>Methods:<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>add_config(<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs):</dt><dd><p>Updates the configuration with additional parameters.</p>
+</dd>
+<dt>grid_search(<a href="#id3"><span class="problematic" id="id4">*</span></a>args):</dt><dd><p>Defines the grid of hyperparameters to search over.</p>
+</dd>
+<dt>duration():</dt><dd><p>Returns the duration in milliseconds since the start of model execution.</p>
+</dd>
+<dt>message(pbar, text):</dt><dd><p>Logs a message if verbosity is enabled.</p>
+</dd>
+<dt>labels:</dt><dd><p>Returns the unique labels in the test data.</p>
+</dd>
+<dt>create():</dt><dd><p>Abstract method to be overridden in subclasses to define the model.</p>
+</dd>
+<dt>clear():</dt><dd><p>Clears the model from memory.</p>
+</dd>
+<dt>fit(X_train, y_train, X_val, y_val):</dt><dd><p>Trains the model on the training data and evaluates it on validation data.</p>
+</dd>
+<dt>predict(X_test, y_test):</dt><dd><p>Generates predictions on the test data and returns a performance summary.</p>
+</dd>
+<dt>score(y_test, y_pred):</dt><dd><p>Computes various evaluation metrics (accuracy, precision, recall, F1, etc.) from
+the true and predicted labels.</p>
+</dd>
+<dt>summary():</dt><dd><p>Returns a summary of the test performance.</p>
+</dd>
+<dt>cm():</dt><dd><p>Plots the confusion matrix for the test results.</p>
+</dd>
+<dt>save_model(dir_path=’.’, modelfolder=’model’, model_name=’’):</dt><dd><p>Saves the trained model to the specified directory.</p>
+</dd>
+<dt>save(dir_path=’.’, modelfolder=’model’):</dt><dd><p>Saves the prediction, classification report, and performance metrics to files.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.add_config">
+<span class="sig-name descname"><span class="pre">add_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.add_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.add_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.classification_report">
+<span class="sig-name descname"><span class="pre">classification_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.classification_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.classification_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.clear" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.cm">
+<span class="sig-name descname"><span class="pre">cm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.cm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.cm" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.create">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.create" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.duration">
+<span class="sig-name descname"><span class="pre">duration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.duration" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.grid_search">
+<span class="sig-name descname"><span class="pre">grid_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.grid_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.grid_search" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.labels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.message">
+<span class="sig-name descname"><span class="pre">message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pbar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.prediction_report">
+<span class="sig-name descname"><span class="pre">prediction_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.prediction_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.prediction_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelfolder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.save" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelfolder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.save_model" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.score" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.summary" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.testing_report">
+<span class="sig-name descname"><span class="pre">testing_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.testing_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.testing_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.AbstractClassifier.training_report">
+<span class="sig-name descname"><span class="pre">training_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#AbstractClassifier.training_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier.training_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.Approach">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.AbstractClassifier.</span></span><span class="sig-name descname"><span class="pre">Approach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/AbstractClassifier.html#Approach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.Approach" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.Approach.DT">
+<span class="sig-name descname"><span class="pre">DT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.Approach.DT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.Approach.NN">
+<span class="sig-name descname"><span class="pre">NN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.Approach.NN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.Approach.RF">
+<span class="sig-name descname"><span class="pre">RF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.Approach.RF" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.Approach.SVM">
+<span class="sig-name descname"><span class="pre">SVM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.Approach.SVM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matclassification.methods.core.AbstractClassifier.Approach.XGB">
+<span class="sig-name descname"><span class="pre">XGB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#matclassification.methods.core.AbstractClassifier.Approach.XGB" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.core.HSClassifier">
+<span id="matclassification-methods-core-hsclassifier-module"></span><h2>matclassification.methods.core.HSClassifier module<a class="headerlink" href="#module-matclassification.methods.core.HSClassifier" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.core.HSClassifier.HSClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.HSClassifier.</span></span><span class="sig-name descname"><span class="pre">HSClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NN'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/HSClassifier.html#HSClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.HSClassifier.HSClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier" title="matclassification.methods.core.AbstractClassifier.AbstractClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractClassifier</span></code></a></p>
+<p>Hyperparameter Optimization Classifier for Trajectory Input Data.</p>
+<p>This class extends <cite>AbstractClassifier</cite> to include functionality for training and testing
+machine learning models with hyperparameter optimization. It is designed for trajectory
+data inputs and handles multiple configurations to find the best-performing model.</p>
+<p>Check: help(AbstractClassifier)</p>
+<section id="id5">
+<h3>Parameters:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str, optional</span></dt><dd><p>Classifier name (default: ‘NN’).</p>
+</dd>
+<dt>save_results<span class="classifier">bool, optional</span></dt><dd><p>Flag to enable saving results to disk (default: False).</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional</span></dt><dd><p>Number of parallel jobs to run (default: -1 for using all processors).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Flag for verbosity (default: False).</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional</span></dt><dd><p>Random seed for reproducibility (default: 42).</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional</span></dt><dd><p>Warning filter level (default: ‘ignore’).</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Methods:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl>
+<dt>train(dir_validation=’.’):</dt><dd><p>Trains the model using a single hyperparameter configuration.
+If validation is enabled, it will evaluate on a validation set; otherwise,
+it evaluates on the test set. Results are optionally saved to a CSV file.</p>
+<dl class="simple">
+<dt>dir_validation<span class="classifier">str, optional</span></dt><dd><p>Directory where validation results will be saved (default: current directory).</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>A DataFrame containing the training report with evaluation metrics for the model.</p>
+</dd>
+</dl>
+</dd>
+<dt>test(rounds=1, dir_evaluation=’.’):</dt><dd><p>Tests the model over a specified number of rounds, each with a different random seed,
+to simulate multiple model evaluations.</p>
+<dl class="simple">
+<dt>rounds<span class="classifier">int, optional</span></dt><dd><p>The number of evaluation rounds (default: 1).</p>
+</dd>
+<dt>dir_evaluation<span class="classifier">str, optional</span></dt><dd><p>Directory where evaluation results will be saved (default: current directory).</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>pd.DataFrame, np.array</dt><dd><p>A DataFrame containing the evaluation report and the predicted labels for the test data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.HSClassifier.HSClassifier.test">
+<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_evaluation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/HSClassifier.html#HSClassifier.test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.HSClassifier.HSClassifier.test" title="Link to this definition"></a></dt>
+<dd><p>Tests the model in teh simgle best model trained, over a specified number of rounds,
+each with a different random seeds, to simulate multiple model evaluations.</p>
+<section id="id7">
+<h4>Parameters:<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>rounds<span class="classifier">int, optional</span></dt><dd><p>The number of evaluation rounds (default: 1).</p>
+</dd>
+<dt>dir_evaluation<span class="classifier">str, optional</span></dt><dd><p>Directory where evaluation results will be saved (default: current directory).</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h4>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>pd.DataFrame, np.array</dt><dd><p>A DataFrame containing the evaluation report and the predicted labels for the test data.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.HSClassifier.HSClassifier.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_validation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/HSClassifier.html#HSClassifier.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.HSClassifier.HSClassifier.train" title="Link to this definition"></a></dt>
+<dd><p>Trains the model using all hyperparameter configurations.</p>
+<p>If validation is enabled, it will evaluate on a validation set; otherwise,
+it evaluates on the test set. Results are optionally saved to a CSV file.</p>
+<section id="id8">
+<h4>Parameters:<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>dir_validation<span class="classifier">str, optional</span></dt><dd><p>Directory where validation results will be saved (default: current directory).</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h4>Returns:<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>A DataFrame containing the training report with evaluation metrics for the model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.core.MClassifier">
+<span id="matclassification-methods-core-mclassifier-module"></span><h2>matclassification.methods.core.MClassifier module<a class="headerlink" href="#module-matclassification.methods.core.MClassifier" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.core.MClassifier.MClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.MClassifier.</span></span><span class="sig-name descname"><span class="pre">MClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NN'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/MClassifier.html#MClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.MClassifier.MClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matclassification.methods.core.AbstractClassifier.AbstractClassifier" title="matclassification.methods.core.AbstractClassifier.AbstractClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractClassifier</span></code></a></p>
+<p>Generic Classifier for Movelet Input.</p>
+<p>This class extends <cite>AbstractClassifier</cite> to handle trajectory data in the form of movelets.</p>
+<p>Check: help(AbstractClassifier)</p>
+<section id="id10">
+<h3>Parameters:<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str, optional</span></dt><dd><p>Name of the classifier model (default: ‘NN’).</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional</span></dt><dd><p>Number of parallel jobs to run (default: -1 for using all processors).</p>
+</dd>
+<dt>verbose<span class="classifier">int, optional</span></dt><dd><p>Level of verbosity (default: 0 for no output).</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional</span></dt><dd><p>Random seed for reproducibility (default: 42).</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional</span></dt><dd><p>Warning filter level (default: ‘ignore’).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.MClassifier.MClassifier.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/MClassifier.html#MClassifier.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.MClassifier.MClassifier.prepare_input" title="Link to this definition"></a></dt>
+<dd><p>Prepares the input datasets (training, validation, and test) for the classifier by invoking
+the <cite>xy()</cite> method, storing the processed data, and setting the classifier configuration.</p>
+<section id="id11">
+<h4>Parameters:<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>train<span class="classifier">pd.DataFrame</span></dt><dd><p>The training dataset.</p>
+</dd>
+<dt>test<span class="classifier">pd.DataFrame</span></dt><dd><p>The test dataset.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>Column name representing the trajectory ID (default: ‘tid’).</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>Column name representing the class label (default: ‘label’).</p>
+</dd>
+<dt>validate<span class="classifier">bool, optional</span></dt><dd><p>If True, splits the training data into training and validation sets (default: False)&gt;&gt; #TODO Under Dev.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h4>Returns:<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>X_set<span class="classifier">list</span></dt><dd><p>List containing the feature matrices (training, validation, test).</p>
+</dd>
+<dt>y_set<span class="classifier">list</span></dt><dd><p>List containing the label vectors (training, validation, test).</p>
+</dd>
+<dt>num_features<span class="classifier">int</span></dt><dd><p>The number of features in the dataset, excluding the class label.</p>
+</dd>
+<dt>num_classes<span class="classifier">int</span></dt><dd><p>The number of unique classes in the dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.MClassifier.MClassifier.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encode_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/MClassifier.html#MClassifier.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.MClassifier.MClassifier.xy" title="Link to this definition"></a></dt>
+<dd><p>Prepares the feature and label data for the classifier by splitting the training set,
+encoding labels, and scaling the features.</p>
+<section id="id13">
+<h4>Parameters:<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>train<span class="classifier">pd.DataFrame</span></dt><dd><p>The training dataset.</p>
+</dd>
+<dt>test<span class="classifier">pd.DataFrame</span></dt><dd><p>The test dataset.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>Column name representing the trajectory ID (default: ‘tid’).</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>Column name representing the class label (default: ‘label’).</p>
+</dd>
+<dt>validate<span class="classifier">bool, optional</span></dt><dd><p>If True, splits the training data into training and validation sets (default: False) &gt;&gt; #TODO Under Dev.</p>
+</dd>
+<dt>encode_labels<span class="classifier">bool, optional</span></dt><dd><p>If True, encodes the labels using <cite>LabelEncoder</cite> and one-hot encoding (default: True).</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h4>Returns:<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>num_classes<span class="classifier">int</span></dt><dd><p>Number of unique class labels.</p>
+</dd>
+<dt>num_features<span class="classifier">int</span></dt><dd><p>Number of features in the dataset excluding the class label.</p>
+</dd>
+<dt>le<span class="classifier">LabelEncoder or None</span></dt><dd><p>LabelEncoder instance used to transform the class labels, if <cite>encode_labels</cite> is True.</p>
+</dd>
+<dt>X_set<span class="classifier">list</span></dt><dd><p>List containing the feature matrices (training, validation, test).</p>
+</dd>
+<dt>y_set<span class="classifier">list</span></dt><dd><p>List containing the encoded labels (training, validation, test).</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.core.MHSClassifier">
+<span id="matclassification-methods-core-mhsclassifier-module"></span><h2>matclassification.methods.core.MHSClassifier module<a class="headerlink" href="#module-matclassification.methods.core.MHSClassifier" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.core.MHSClassifier.MHSClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.MHSClassifier.</span></span><span class="sig-name descname"><span class="pre">MHSClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NN'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/MHSClassifier.html#MHSClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.MHSClassifier.MHSClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matclassification.methods.core.HSClassifier.HSClassifier" title="matclassification.methods.core.HSClassifier.HSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">HSClassifier</span></code></a>, <a class="reference internal" href="#matclassification.methods.core.MClassifier.MClassifier" title="matclassification.methods.core.MClassifier.MClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">MClassifier</span></code></a></p>
+<p>Movelet Hyperparameter Optimization Classifier.</p>
+<p>The MHSClassifier is a hybrid classifier that integrates hyperparameter optimization (inherited from HSClassifier)
+with data preprocessing and feature preparation (inherited from MClassifier) for movelet input.
+It is specifically designed to handle movelet-based or feature-based trajectory data input and supports
+hyperparameter tuning across different configurations.</p>
+<section id="id15">
+<h3>Attributes:<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>save_results<span class="classifier">bool</span></dt><dd><p>If True, saves the training and evaluation results (default: False).</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3>Parameters:<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str, optional</span></dt><dd><p>Name of the classifier model (default: ‘NN’).</p>
+</dd>
+<dt>save_results<span class="classifier">bool, optional</span></dt><dd><p>Flag to indicate whether results should be saved (default: False).</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional</span></dt><dd><p>Number of parallel jobs to run (default: -1 for using all processors).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Flag to control verbosity of the model output (default: False).</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional</span></dt><dd><p>Random seed for reproducibility (default: 42).</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional</span></dt><dd><p>Warning filter level (default: ‘ignore’).</p>
+</dd>
+</dl>
+</section>
+<section id="id17">
+<h3>Methods:<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<p>Inherits methods from both HSClassifier and MClassifier for training, testing, and handling data.</p>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.core.SimilarityClassifier">
+<span id="matclassification-methods-core-similarityclassifier-module"></span><h2>matclassification.methods.core.SimilarityClassifier module<a class="headerlink" href="#module-matclassification.methods.core.SimilarityClassifier" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.core.SimilarityClassifier.SimilarityClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.SimilarityClassifier.</span></span><span class="sig-name descname"><span class="pre">SimilarityClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/SimilarityClassifier.html#SimilarityClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matclassification.methods.core.THSClassifier.THSClassifier" title="matclassification.methods.core.THSClassifier.THSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">THSClassifier</span></code></a></p>
+<p>A similarity-based classifier for trajectory data, leveraging hyperparameter optimization and multiple similarity metrics.</p>
+<p>Check: help(AbstractClassifier) and help(THSClassifier)</p>
+<section id="id18">
+<h3>Parameters:<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>Name of the classifier model.</p>
+</dd>
+<dt>save_results<span class="classifier">bool, optional (default=False)</span></dt><dd><p>Whether to save the results of the classification.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation. -1 means using all processors.</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional (default=False)</span></dt><dd><p>Verbosity mode. If True, enables detailed output.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Random seed used for reproducibility.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Warning filter setting. Used to control warnings generated by the model.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.default_metric">
+<span class="sig-name descname"><span class="pre">default_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_descriptor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/SimilarityClassifier.html#SimilarityClassifier.default_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.default_metric" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/SimilarityClassifier.html#SimilarityClassifier.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/SimilarityClassifier.html#SimilarityClassifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_descriptor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/SimilarityClassifier.html#SimilarityClassifier.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.prepare_input" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_descriptor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/SimilarityClassifier.html#SimilarityClassifier.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.SimilarityClassifier.SimilarityClassifier.xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.core.SimilarityClassifier.similarity_matrix">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.SimilarityClassifier.</span></span><span class="sig-name descname"><span class="pre">similarity_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/SimilarityClassifier.html#similarity_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.SimilarityClassifier.similarity_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-matclassification.methods.core.THSClassifier">
+<span id="matclassification-methods-core-thsclassifier-module"></span><h2>matclassification.methods.core.THSClassifier module<a class="headerlink" href="#module-matclassification.methods.core.THSClassifier" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matclassification.methods.core.THSClassifier.</span></span><span class="sig-name descname"><span class="pre">THSClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NN'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filterwarnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ignore'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matclassification.methods.core.HSClassifier.HSClassifier" title="matclassification.methods.core.HSClassifier.HSClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">HSClassifier</span></code></a></p>
+<p>A hyperparameter optimization classifier for trajectory data, leveraging similarity measures and
+support for geospatial data encoding (Geohash or IndexGrid).</p>
+<p>#TODO Geohash and IndexGrid encoding and testing</p>
+<p>Check: help(AbstractClassifier) and help(HSClassifier)</p>
+<section id="id19">
+<h3>Parameters:<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>Name of the classifier model.</p>
+</dd>
+<dt>save_results<span class="classifier">bool, optional (default=False)</span></dt><dd><p>Whether to save the results of the classification.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional (default=-1)</span></dt><dd><p>The number of parallel jobs to run for computation. -1 means using all processors.</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional (default=False)</span></dt><dd><p>Verbosity mode. If True, enables detailed output.</p>
+</dd>
+<dt>random_state<span class="classifier">int, optional (default=42)</span></dt><dd><p>Random seed used for reproducibility.</p>
+</dd>
+<dt>filterwarnings<span class="classifier">str, optional (default=’ignore’)</span></dt><dd><p>Warning filter setting to control output warnings.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.message">
+<span class="sig-name descname"><span class="pre">message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pbar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.predict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.prepare_input">
+<span class="sig-name descname"><span class="pre">prepare_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.prepare_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.prepare_input" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.read_report">
+<span class="sig-name descname"><span class="pre">read_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.read_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.read_report" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.test">
+<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_evaluation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.test" title="Link to this definition"></a></dt>
+<dd><p>Tests the model in teh simgle best model trained, over a specified number of rounds,
+each with a different random seeds, to simulate multiple model evaluations.</p>
+<section id="id20">
+<h4>Parameters:<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>rounds<span class="classifier">int, optional</span></dt><dd><p>The number of evaluation rounds (default: 1).</p>
+</dd>
+<dt>dir_evaluation<span class="classifier">str, optional</span></dt><dd><p>Directory where evaluation results will be saved (default: current directory).</p>
+</dd>
+</dl>
+</section>
+<section id="id21">
+<h4>Returns:<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>pd.DataFrame, np.array</dt><dd><p>A DataFrame containing the evaluation report and the predicted labels for the test data.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_validation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.train" title="Link to this definition"></a></dt>
+<dd><p>Trains the model using all hyperparameter configurations.</p>
+<p>If validation is enabled, it will evaluate on a validation set; otherwise,
+it evaluates on the test set. Results are optionally saved to a CSV file.</p>
+<section id="id22">
+<h4>Parameters:<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>dir_validation<span class="classifier">str, optional</span></dt><dd><p>Directory where validation results will be saved (default: current directory).</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h4>Returns:<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>A DataFrame containing the training report with evaluation metrics for the model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matclassification.methods.core.THSClassifier.THSClassifier.xy">
+<span class="sig-name descname"><span class="pre">xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_geohash</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/core/THSClassifier.html#THSClassifier.xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.core.THSClassifier.THSClassifier.xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matclassification.methods.core" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="MAT-classification’s Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matclassification.methods.feature.html" class="btn btn-neutral float-right" title="matclassification.methods.feature package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

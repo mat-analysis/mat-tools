@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matdata.inc.ts_io &mdash; mat-data 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mat-data
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-data:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocess.html">Pre-process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../converter.html">Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../generator.html">Data Generator</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mat-data</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matdata.inc.ts_io</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matdata.inc.ts_io</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present application offers a tool, to support the user in the preprocessing of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2023</span>
+<span class="sd">Copyright (C) 2023, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">    - sktime package (adapted)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span> <span class="k">as</span> <span class="n">acc</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<div class="viewcode-block" id="TsFileParseException">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.TsFileParseException">[docs]</a>
+<span class="k">class</span> <span class="nc">TsFileParseException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Should be raised when parsing a .ts file and the format is incorrect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="LongFormatDataParseException">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.LongFormatDataParseException">[docs]</a>
+<span class="k">class</span> <span class="nc">LongFormatDataParseException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Should be raised when parsing a .csv file</span>
+<span class="sd">    with long-formatted date and the format is incorrect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="load_from_tsfile_to_dataframe">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.load_from_tsfile_to_dataframe">[docs]</a>
+<span class="k">def</span> <span class="nf">load_from_tsfile_to_dataframe</span><span class="p">(</span><span class="n">full_file_path_and_name</span><span class="p">,</span><span class="n">return_separate_X_and_y</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">replace_missing_vals_with</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">opLabel</span><span class="o">=</span><span class="s1">&#39;Processing TS&#39;</span><span class="p">):</span>
+    <span class="n">full_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">full_file_path_and_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">load_from_tsfile</span><span class="p">(</span><span class="n">full_file</span><span class="p">,</span><span class="n">return_separate_X_and_y</span><span class="p">,</span><span class="n">replace_missing_vals_with</span><span class="p">,</span> <span class="n">opLabel</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_from_tsfile">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.load_from_tsfile">[docs]</a>
+<span class="k">def</span> <span class="nf">load_from_tsfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="n">return_separate_X_and_y</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">replace_missing_vals_with</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">,</span> <span class="n">opLabel</span><span class="o">=</span><span class="s1">&#39;Processing TS&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads data from a .ts file into a Pandas DataFrame.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    full_file_path_and_name: str</span>
+<span class="sd">        The full pathname of the .ts file to read.</span>
+<span class="sd">    return_separate_X_and_y: bool</span>
+<span class="sd">        true if X and Y values should be returned as separate Data Frames (</span>
+<span class="sd">        X) and a numpy array (y), false otherwise.</span>
+<span class="sd">        This is only relevant for data that</span>
+<span class="sd">    replace_missing_vals_with: str</span>
+<span class="sd">       The value that missing values in the text file should be replaced</span>
+<span class="sd">       with prior to parsing.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataFrame, ndarray</span>
+<span class="sd">        If return_separate_X_and_y then a tuple containing a DataFrame and a</span>
+<span class="sd">        numpy array containing the relevant time-series and corresponding</span>
+<span class="sd">        class values.</span>
+<span class="sd">    DataFrame</span>
+<span class="sd">        If not return_separate_X_and_y then a single DataFrame containing</span>
+<span class="sd">        all time-series and (if relevant) a column &quot;class_vals&quot; the</span>
+<span class="sd">        associated class values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialize flags and variables used when parsing the file</span>
+    <span class="n">metadata_started</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">data_started</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">has_problem_name_tag</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">has_timestamps_tag</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">has_univariate_tag</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">has_class_labels_tag</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">has_data_tag</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">previous_timestamp_was_int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">prev_timestamp_was_timestamp</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_dimensions</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">is_first_case</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">instance_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">class_val_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">line_num</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="c1"># Fix use of parameter:</span>
+    <span class="n">replace_missing_vals_with</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">replace_missing_vals_with</span><span class="p">)</span>
+        
+    <span class="c1"># Parse the file</span>
+    <span class="c1"># print(full_file_path_and_name)</span>
+<span class="c1">#     with full_file as file:</span>
+    <span class="k">if</span> <span class="n">file</span><span class="p">:</span>
+<span class="c1">#         for line in file:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">opLabel</span><span class="p">):</span>
+<span class="c1">#         def readLine(line):</span>
+<span class="c1">#             global metadata_started, data_started, has_problem_name_tag, has_timestamps_tag, has_univariate_tag</span>
+<span class="c1">#             global has_class_labels_tag, has_data_tag, previous_timestamp_was_int, prev_timestamp_was_timestamp</span>
+<span class="c1">#             global num_dimensions, is_first_case, instance_list, class_val_list, line_num</span>
+            <span class="c1"># Strip white space from start/end of line and change to</span>
+            <span class="c1"># lowercase for use below</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="c1"># Empty lines are valid at any point in a file</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                <span class="c1"># Check if this line contains metadata</span>
+                <span class="c1"># Please note that even though metadata is stored in this</span>
+                <span class="c1"># function it is not currently published externally</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;@problemname&quot;</span><span class="p">):</span>
+                    <span class="c1"># Check that the data has not started</span>
+                    <span class="k">if</span> <span class="n">data_started</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;metadata must come before data&quot;</span><span class="p">)</span>
+                    <span class="c1"># Check that the associated value is valid</span>
+                    <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="n">token_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">token_len</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                            <span class="s2">&quot;problemname tag requires an associated value&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="c1"># problem_name = line[len(&quot;@problemname&quot;) + 1:]</span>
+                    <span class="n">has_problem_name_tag</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">metadata_started</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;@timestamps&quot;</span><span class="p">):</span>
+
+                    <span class="c1"># Check that the data has not started</span>
+
+                    <span class="k">if</span> <span class="n">data_started</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;metadata must come before data&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Check that the associated value is valid</span>
+
+                    <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="n">token_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">token_len</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                            <span class="s2">&quot;timestamps tag requires an associated Boolean &quot;</span> <span class="s2">&quot;value&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="k">elif</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+                        <span class="n">timestamps</span> <span class="o">=</span> <span class="kc">True</span>
+
+                    <span class="k">elif</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span><span class="p">:</span>
+                        <span class="n">timestamps</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;invalid timestamps value&quot;</span><span class="p">)</span>
+
+                    <span class="n">has_timestamps_tag</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">metadata_started</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;@univariate&quot;</span><span class="p">):</span>
+
+                    <span class="c1"># Check that the data has not started</span>
+
+                    <span class="k">if</span> <span class="n">data_started</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;metadata must come before data&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Check that the associated value is valid</span>
+
+                    <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="n">token_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">token_len</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                            <span class="s2">&quot;univariate tag requires an associated Boolean  &quot;</span> <span class="s2">&quot;value&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="k">elif</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+                        <span class="c1"># univariate = True</span>
+                        <span class="k">pass</span>
+
+                    <span class="k">elif</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span><span class="p">:</span>
+                        <span class="c1"># univariate = False</span>
+                        <span class="k">pass</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;invalid univariate value&quot;</span><span class="p">)</span>
+
+                    <span class="n">has_univariate_tag</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">metadata_started</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;@classlabel&quot;</span><span class="p">):</span>
+
+                    <span class="c1"># Check that the data has not started</span>
+
+                    <span class="k">if</span> <span class="n">data_started</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;metadata must come before data&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Check that the associated value is valid</span>
+
+                    <span class="n">tokens</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="n">token_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">token_len</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                            <span class="s2">&quot;classlabel tag requires an associated Boolean  &quot;</span> <span class="s2">&quot;value&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+                        <span class="n">class_labels</span> <span class="o">=</span> <span class="kc">True</span>
+
+                    <span class="k">elif</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span><span class="p">:</span>
+                        <span class="n">class_labels</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;invalid classLabel value&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Check if we have any associated class values</span>
+
+                    <span class="k">if</span> <span class="n">token_len</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">class_labels</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                            <span class="s2">&quot;if the classlabel tag is true then class values &quot;</span>
+                            <span class="s2">&quot;must be supplied&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="n">has_class_labels_tag</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">class_label_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span>
+                    <span class="n">metadata_started</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># Check if this line contains the start of data</span>
+
+                <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;@data&quot;</span><span class="p">):</span>
+
+                    <span class="k">if</span> <span class="n">line</span> <span class="o">!=</span> <span class="s2">&quot;@data&quot;</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                            <span class="s2">&quot;data tag should not have an associated value&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">data_started</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">metadata_started</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;metadata must come before data&quot;</span><span class="p">)</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">has_data_tag</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">data_started</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># If the &#39;data tag has been found then metadata has been</span>
+                <span class="c1"># parsed and data can be loaded</span>
+
+                <span class="k">elif</span> <span class="n">data_started</span><span class="p">:</span>
+
+                    <span class="c1"># Check that a full set of metadata has been provided</span>
+
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="ow">not</span> <span class="n">has_problem_name_tag</span>
+                        <span class="ow">or</span> <span class="ow">not</span> <span class="n">has_timestamps_tag</span>
+                        <span class="ow">or</span> <span class="ow">not</span> <span class="n">has_univariate_tag</span>
+                        <span class="ow">or</span> <span class="ow">not</span> <span class="n">has_class_labels_tag</span>
+                        <span class="ow">or</span> <span class="ow">not</span> <span class="n">has_data_tag</span>
+                    <span class="p">):</span>
+                        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                            <span class="s2">&quot;a full set of metadata has not been provided &quot;</span>
+                            <span class="s2">&quot;before the data&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="c1"># Replace any missing values with the value specified</span>
+
+                    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">replace_missing_vals_with</span><span class="p">)</span>
+
+                    <span class="c1"># Check if we dealing with data that has timestamps</span>
+
+                    <span class="k">if</span> <span class="n">timestamps</span><span class="p">:</span>
+
+                        <span class="c1"># We&#39;re dealing with timestamps so cannot just split</span>
+                        <span class="c1"># line on &#39;:&#39; as timestamps may contain one</span>
+
+                        <span class="n">has_another_value</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">has_another_dimension</span> <span class="o">=</span> <span class="kc">False</span>
+
+                        <span class="n">timestamp_for_dim</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="n">values_for_dimension</span> <span class="o">=</span> <span class="p">[]</span>
+
+                        <span class="n">this_line_num_dim</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">line_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                        <span class="n">char_num</span> <span class="o">=</span> <span class="mi">0</span>
+
+                        <span class="k">while</span> <span class="n">char_num</span> <span class="o">&lt;</span> <span class="n">line_len</span><span class="p">:</span>
+
+                            <span class="c1"># Move through any spaces</span>
+
+                            <span class="k">while</span> <span class="n">char_num</span> <span class="o">&lt;</span> <span class="n">line_len</span> <span class="ow">and</span> <span class="nb">str</span><span class="o">.</span><span class="n">isspace</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]):</span>
+                                <span class="n">char_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                            <span class="c1"># See if there is any more data to read in or if</span>
+                            <span class="c1"># we should validate that read thus far</span>
+
+                            <span class="k">if</span> <span class="n">char_num</span> <span class="o">&lt;</span> <span class="n">line_len</span><span class="p">:</span>
+
+                                <span class="c1"># See if we have an empty dimension (i.e. no</span>
+                                <span class="c1"># values)</span>
+
+                                <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                                        <span class="n">instance_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+                                    <span class="n">instance_list</span><span class="p">[</span><span class="n">this_line_num_dim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;object&quot;</span><span class="p">)</span>
+                                    <span class="p">)</span>
+                                    <span class="n">this_line_num_dim</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                    <span class="n">has_another_value</span> <span class="o">=</span> <span class="kc">False</span>
+                                    <span class="n">has_another_dimension</span> <span class="o">=</span> <span class="kc">True</span>
+
+                                    <span class="n">timestamp_for_dim</span> <span class="o">=</span> <span class="p">[]</span>
+                                    <span class="n">values_for_dimension</span> <span class="o">=</span> <span class="p">[]</span>
+
+                                    <span class="n">char_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                <span class="k">else</span><span class="p">:</span>
+
+                                    <span class="c1"># Check if we have reached a class label</span>
+
+                                    <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;(&quot;</span> <span class="ow">and</span> <span class="n">class_labels</span><span class="p">:</span>
+
+                                        <span class="n">class_val</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                                        <span class="k">if</span> <span class="n">class_val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">class_label_list</span><span class="p">:</span>
+                                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                                <span class="s2">&quot;the class value &#39;&quot;</span>
+                                                <span class="o">+</span> <span class="n">class_val</span>
+                                                <span class="o">+</span> <span class="s2">&quot;&#39; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; is not &quot;</span>
+                                                <span class="s2">&quot;valid&quot;</span>
+                                            <span class="p">)</span>
+
+                                        <span class="n">class_val_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_val</span><span class="p">)</span>
+                                        <span class="n">char_num</span> <span class="o">=</span> <span class="n">line_len</span>
+
+                                        <span class="n">has_another_value</span> <span class="o">=</span> <span class="kc">False</span>
+                                        <span class="n">has_another_dimension</span> <span class="o">=</span> <span class="kc">False</span>
+
+                                        <span class="n">timestamp_for_dim</span> <span class="o">=</span> <span class="p">[]</span>
+                                        <span class="n">values_for_dimension</span> <span class="o">=</span> <span class="p">[]</span>
+
+                                    <span class="k">else</span><span class="p">:</span>
+
+                                        <span class="c1"># Read in the data contained within</span>
+                                        <span class="c1"># the next tuple</span>
+
+                                        <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;(&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">class_labels</span><span class="p">:</span>
+                                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                                <span class="s2">&quot;dimension &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; does &quot;</span>
+                                                <span class="s2">&quot;not &quot;</span>
+                                                <span class="s2">&quot;start &quot;</span>
+                                                <span class="s2">&quot;with a &quot;</span>
+                                                <span class="s2">&quot;&#39;(&#39;&quot;</span>
+                                            <span class="p">)</span>
+
+                                        <span class="n">char_num</span> <span class="o">+=</span> <span class="mi">1</span>
+                                        <span class="n">tuple_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+                                        <span class="k">while</span> <span class="p">(</span>
+                                            <span class="n">char_num</span> <span class="o">&lt;</span> <span class="n">line_len</span>
+                                            <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;)&quot;</span>
+                                        <span class="p">):</span>
+                                            <span class="n">tuple_data</span> <span class="o">+=</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span>
+                                            <span class="n">char_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="n">char_num</span> <span class="o">&gt;=</span> <span class="n">line_len</span>
+                                            <span class="ow">or</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;)&quot;</span>
+                                        <span class="p">):</span>
+                                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                                <span class="s2">&quot;dimension &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; does &quot;</span>
+                                                <span class="s2">&quot;not end&quot;</span>
+                                                <span class="s2">&quot; with a &quot;</span>
+                                                <span class="s2">&quot;&#39;)&#39;&quot;</span>
+                                            <span class="p">)</span>
+
+                                        <span class="c1"># Read in any spaces immediately</span>
+                                        <span class="c1"># after the current tuple</span>
+
+                                        <span class="n">char_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                        <span class="k">while</span> <span class="n">char_num</span> <span class="o">&lt;</span> <span class="n">line_len</span> <span class="ow">and</span> <span class="nb">str</span><span class="o">.</span><span class="n">isspace</span><span class="p">(</span>
+                                            <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span>
+                                        <span class="p">):</span>
+                                            <span class="n">char_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                        <span class="c1"># Check if there is another value or</span>
+                                        <span class="c1"># dimension to process after this tuple</span>
+
+                                        <span class="k">if</span> <span class="n">char_num</span> <span class="o">&gt;=</span> <span class="n">line_len</span><span class="p">:</span>
+                                            <span class="n">has_another_value</span> <span class="o">=</span> <span class="kc">False</span>
+                                            <span class="n">has_another_dimension</span> <span class="o">=</span> <span class="kc">False</span>
+
+                                        <span class="k">elif</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;,&quot;</span><span class="p">:</span>
+                                            <span class="n">has_another_value</span> <span class="o">=</span> <span class="kc">True</span>
+                                            <span class="n">has_another_dimension</span> <span class="o">=</span> <span class="kc">False</span>
+
+                                        <span class="k">elif</span> <span class="n">line</span><span class="p">[</span><span class="n">char_num</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+                                            <span class="n">has_another_value</span> <span class="o">=</span> <span class="kc">False</span>
+                                            <span class="n">has_another_dimension</span> <span class="o">=</span> <span class="kc">True</span>
+
+                                        <span class="n">char_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                        <span class="c1"># Get the numeric value for the</span>
+                                        <span class="c1"># tuple by reading from the end of</span>
+                                        <span class="c1"># the tuple data backwards to the</span>
+                                        <span class="c1"># last comma</span>
+
+                                        <span class="n">last_comma_index</span> <span class="o">=</span> <span class="n">tuple_data</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+                                        <span class="k">if</span> <span class="n">last_comma_index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                                <span class="s2">&quot;dimension &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; contains a tuple that has &quot;</span>
+                                                <span class="s2">&quot;no comma inside of it&quot;</span>
+                                            <span class="p">)</span>
+
+                                        <span class="k">try</span><span class="p">:</span>
+                                            <span class="n">value</span> <span class="o">=</span> <span class="n">tuple_data</span><span class="p">[</span><span class="n">last_comma_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+                                            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+                                        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                                            <span class="c1"># By Tarlis:</span>
+                                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dimension &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; contains a tuple that does &quot;</span>
+                                                <span class="s2">&quot;not have a valid numeric &quot;</span>
+                                                <span class="s2">&quot;value, read &#39;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;&#39; as missing.&quot;</span><span class="p">)</span>
+                                            <span class="n">value</span> <span class="o">=</span> <span class="n">replace_missing_vals_with</span>
+                                            <span class="c1">#raise TsFileParseException(</span>
+                                            <span class="c1">#    &quot;dimension &quot;</span>
+                                            <span class="c1">#    + str(this_line_num_dim + 1)</span>
+                                            <span class="c1">#    + &quot; on line &quot;</span>
+                                            <span class="c1">#    + str(line_num + 1)</span>
+                                            <span class="c1">#    + &quot; contains a tuple that does &quot;</span>
+                                            <span class="c1">#    &quot;not have a valid numeric &quot;</span>
+                                            <span class="c1">#    &quot;value&quot;</span>
+                                            <span class="c1">#)</span>
+
+                                        <span class="c1"># Check the type of timestamp that</span>
+                                        <span class="c1"># we have</span>
+
+                                        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">tuple_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">last_comma_index</span><span class="p">]</span>
+
+                                        <span class="k">try</span><span class="p">:</span>
+                                            <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+                                            <span class="n">timestamp_is_int</span> <span class="o">=</span> <span class="kc">True</span>
+                                            <span class="n">timestamp_is_timestamp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                                        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                                            <span class="n">timestamp_is_int</span> <span class="o">=</span> <span class="kc">False</span>
+
+                                        <span class="k">if</span> <span class="ow">not</span> <span class="n">timestamp_is_int</span><span class="p">:</span>
+                                            <span class="k">try</span><span class="p">:</span>
+                                                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                                                <span class="n">timestamp_is_timestamp</span> <span class="o">=</span> <span class="kc">True</span>
+
+                                            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                                                <span class="n">timestamp_is_timestamp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                                        <span class="c1"># Make sure that the timestamps in</span>
+                                        <span class="c1"># the file (not just this dimension</span>
+                                        <span class="c1"># or case) are consistent</span>
+
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="ow">not</span> <span class="n">timestamp_is_timestamp</span>
+                                            <span class="ow">and</span> <span class="ow">not</span> <span class="n">timestamp_is_int</span>
+                                        <span class="p">):</span>
+                                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                                <span class="s2">&quot;dimension &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; contains a tuple that &quot;</span>
+                                                <span class="s2">&quot;has an invalid timestamp &#39;&quot;</span>
+                                                <span class="o">+</span> <span class="n">timestamp</span>
+                                                <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span>
+                                            <span class="p">)</span>
+
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="n">previous_timestamp_was_int</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                                            <span class="ow">and</span> <span class="n">previous_timestamp_was_int</span>
+                                            <span class="ow">and</span> <span class="ow">not</span> <span class="n">timestamp_is_int</span>
+                                        <span class="p">):</span>
+                                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                                <span class="s2">&quot;dimension &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; contains tuples where the &quot;</span>
+                                                <span class="s2">&quot;timestamp format is &quot;</span>
+                                                <span class="s2">&quot;inconsistent&quot;</span>
+                                            <span class="p">)</span>
+
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="n">prev_timestamp_was_timestamp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                                            <span class="ow">and</span> <span class="n">prev_timestamp_was_timestamp</span>
+                                            <span class="ow">and</span> <span class="ow">not</span> <span class="n">timestamp_is_timestamp</span>
+                                        <span class="p">):</span>
+                                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                                <span class="s2">&quot;dimension &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                                <span class="o">+</span> <span class="s2">&quot; contains tuples where the &quot;</span>
+                                                <span class="s2">&quot;timestamp format is &quot;</span>
+                                                <span class="s2">&quot;inconsistent&quot;</span>
+                                            <span class="p">)</span>
+
+                                        <span class="c1"># Store the values</span>
+
+                                        <span class="n">timestamp_for_dim</span> <span class="o">+=</span> <span class="p">[</span><span class="n">timestamp</span><span class="p">]</span>
+                                        <span class="n">values_for_dimension</span> <span class="o">+=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+
+                                        <span class="c1">#  If this was our first tuple then</span>
+                                        <span class="c1">#  we store the type of timestamp we</span>
+                                        <span class="c1">#  had</span>
+
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="n">prev_timestamp_was_timestamp</span> <span class="ow">is</span> <span class="kc">None</span>
+                                            <span class="ow">and</span> <span class="n">timestamp_is_timestamp</span>
+                                        <span class="p">):</span>
+                                            <span class="n">prev_timestamp_was_timestamp</span> <span class="o">=</span> <span class="kc">True</span>
+                                            <span class="n">previous_timestamp_was_int</span> <span class="o">=</span> <span class="kc">False</span>
+
+                                        <span class="k">if</span> <span class="p">(</span>
+                                            <span class="n">previous_timestamp_was_int</span> <span class="ow">is</span> <span class="kc">None</span>
+                                            <span class="ow">and</span> <span class="n">timestamp_is_int</span>
+                                        <span class="p">):</span>
+                                            <span class="n">prev_timestamp_was_timestamp</span> <span class="o">=</span> <span class="kc">False</span>
+                                            <span class="n">previous_timestamp_was_int</span> <span class="o">=</span> <span class="kc">True</span>
+
+                                        <span class="c1"># See if we should add the data for</span>
+                                        <span class="c1"># this dimension</span>
+
+                                        <span class="k">if</span> <span class="ow">not</span> <span class="n">has_another_value</span><span class="p">:</span>
+                                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span>
+                                                <span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span>
+                                            <span class="p">):</span>
+                                                <span class="n">instance_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+                                            <span class="k">if</span> <span class="n">timestamp_is_timestamp</span><span class="p">:</span>
+                                                <span class="n">timestamp_for_dim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span>
+                                                    <span class="n">timestamp_for_dim</span>
+                                                <span class="p">)</span>
+
+                                            <span class="n">instance_list</span><span class="p">[</span><span class="n">this_line_num_dim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                                                    <span class="n">index</span><span class="o">=</span><span class="n">timestamp_for_dim</span><span class="p">,</span>
+                                                    <span class="n">data</span><span class="o">=</span><span class="n">values_for_dimension</span><span class="p">,</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                            <span class="n">this_line_num_dim</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                            <span class="n">timestamp_for_dim</span> <span class="o">=</span> <span class="p">[]</span>
+                                            <span class="n">values_for_dimension</span> <span class="o">=</span> <span class="p">[]</span>
+
+                            <span class="k">elif</span> <span class="n">has_another_value</span><span class="p">:</span>
+                                <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                    <span class="s2">&quot;dimension &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; on &quot;</span>
+                                    <span class="s2">&quot;line &quot;</span>
+                                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                    <span class="o">+</span> <span class="s2">&quot; ends with a &#39;,&#39; that &quot;</span>
+                                    <span class="s2">&quot;is not followed by &quot;</span>
+                                    <span class="s2">&quot;another tuple&quot;</span>
+                                <span class="p">)</span>
+
+                            <span class="k">elif</span> <span class="n">has_another_dimension</span> <span class="ow">and</span> <span class="n">class_labels</span><span class="p">:</span>
+                                <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                    <span class="s2">&quot;dimension &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; on &quot;</span>
+                                    <span class="s2">&quot;line &quot;</span>
+                                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                    <span class="o">+</span> <span class="s2">&quot; ends with a &#39;:&#39; while &quot;</span>
+                                    <span class="s2">&quot;it should list a class &quot;</span>
+                                    <span class="s2">&quot;value&quot;</span>
+                                <span class="p">)</span>
+
+                            <span class="k">elif</span> <span class="n">has_another_dimension</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">class_labels</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                                    <span class="n">instance_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+                                <span class="n">instance_list</span><span class="p">[</span><span class="n">this_line_num_dim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                                <span class="p">)</span>
+                                <span class="n">this_line_num_dim</span> <span class="o">+=</span> <span class="mi">1</span>
+                                <span class="n">num_dimensions</span> <span class="o">=</span> <span class="n">this_line_num_dim</span>
+
+                            <span class="c1"># If this is the 1st line of data we have seen</span>
+                            <span class="c1"># then note the dimensions</span>
+
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">has_another_value</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">has_another_dimension</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">num_dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                                    <span class="n">num_dimensions</span> <span class="o">=</span> <span class="n">this_line_num_dim</span>
+
+                                <span class="k">if</span> <span class="n">num_dimensions</span> <span class="o">!=</span> <span class="n">this_line_num_dim</span><span class="p">:</span>
+                                    <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                        <span class="s2">&quot;line &quot;</span>
+                                        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                        <span class="o">+</span> <span class="s2">&quot; does not have the &quot;</span>
+                                        <span class="s2">&quot;same number of &quot;</span>
+                                        <span class="s2">&quot;dimensions as the &quot;</span>
+                                        <span class="s2">&quot;previous line of &quot;</span>
+                                        <span class="s2">&quot;data&quot;</span>
+                                    <span class="p">)</span>
+
+                        <span class="c1"># Check that we are not expecting some more data,</span>
+                        <span class="c1"># and if not, store that processed above</span>
+
+                        <span class="k">if</span> <span class="n">has_another_value</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                <span class="s2">&quot;dimension &quot;</span>
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="s2">&quot; ends with a &#39;,&#39; that is &quot;</span>
+                                <span class="s2">&quot;not followed by another &quot;</span>
+                                <span class="s2">&quot;tuple&quot;</span>
+                            <span class="p">)</span>
+
+                        <span class="k">elif</span> <span class="n">has_another_dimension</span> <span class="ow">and</span> <span class="n">class_labels</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                <span class="s2">&quot;dimension &quot;</span>
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="s2">&quot; on line &quot;</span>
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="s2">&quot; ends with a &#39;:&#39; while it &quot;</span>
+                                <span class="s2">&quot;should list a class value&quot;</span>
+                            <span class="p">)</span>
+
+                        <span class="k">elif</span> <span class="n">has_another_dimension</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">class_labels</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">this_line_num_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                                <span class="n">instance_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+                            <span class="n">instance_list</span><span class="p">[</span><span class="n">this_line_num_dim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;object&quot;</span><span class="p">)</span>
+                            <span class="p">)</span>
+                            <span class="n">this_line_num_dim</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="n">num_dimensions</span> <span class="o">=</span> <span class="n">this_line_num_dim</span>
+
+                        <span class="c1"># If this is the 1st line of data we have seen then</span>
+                        <span class="c1"># note the dimensions</span>
+
+                        <span class="k">if</span> <span class="p">(</span>
+                            <span class="ow">not</span> <span class="n">has_another_value</span>
+                            <span class="ow">and</span> <span class="n">num_dimensions</span> <span class="o">!=</span> <span class="n">this_line_num_dim</span>
+                        <span class="p">):</span>
+                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                <span class="s2">&quot;line &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; does not have the same &quot;</span>
+                                <span class="s2">&quot;number of dimensions as the &quot;</span>
+                                <span class="s2">&quot;previous line of data&quot;</span>
+                            <span class="p">)</span>
+
+                        <span class="c1"># Check if we should have class values, and if so</span>
+                        <span class="c1"># that they are contained in those listed in the</span>
+                        <span class="c1"># metadata</span>
+
+                        <span class="k">if</span> <span class="n">class_labels</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_val_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                <span class="s2">&quot;the cases have no associated class values&quot;</span>
+                            <span class="p">)</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">dimensions</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+
+                        <span class="c1"># If first row then note the number of dimensions (</span>
+                        <span class="c1"># that must be the same for all cases)</span>
+
+                        <span class="k">if</span> <span class="n">is_first_case</span><span class="p">:</span>
+                            <span class="n">num_dimensions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span>
+
+                            <span class="k">if</span> <span class="n">class_labels</span><span class="p">:</span>
+                                <span class="n">num_dimensions</span> <span class="o">-=</span> <span class="mi">1</span>
+
+                            <span class="k">for</span> <span class="n">_dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">):</span>
+                                <span class="n">instance_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+                            <span class="n">is_first_case</span> <span class="o">=</span> <span class="kc">False</span>
+
+                        <span class="c1"># See how many dimensions that the case whose data</span>
+                        <span class="c1"># in represented in this line has</span>
+
+                        <span class="n">this_line_num_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="n">class_labels</span><span class="p">:</span>
+                            <span class="n">this_line_num_dim</span> <span class="o">-=</span> <span class="mi">1</span>
+
+                        <span class="c1"># All dimensions should be included for all series,</span>
+                        <span class="c1"># even if they are empty</span>
+
+                        <span class="k">if</span> <span class="n">this_line_num_dim</span> <span class="o">!=</span> <span class="n">num_dimensions</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span>
+                                <span class="s2">&quot;inconsistent number of dimensions. &quot;</span>
+                                <span class="s2">&quot;Expecting &quot;</span>
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="s2">&quot; but have read &quot;</span>
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">this_line_num_dim</span><span class="p">)</span>
+                            <span class="p">)</span>
+
+                        <span class="c1"># Process the data for each dimension</span>
+
+                        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">):</span>
+                            <span class="n">dimension</span> <span class="o">=</span> <span class="n">dimensions</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                            <span class="k">if</span> <span class="n">dimension</span><span class="p">:</span>
+                                <span class="n">data_series</span> <span class="o">=</span> <span class="n">dimension</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                                <span class="c1">#data_series = [float(i) for i in data_series]</span>
+                                
+                                <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+                                    <span class="k">try</span><span class="p">:</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                                    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                                        <span class="c1"># By Tarlis:</span>
+                                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dimension &quot;</span>
+                                            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+                                            <span class="o">+</span> <span class="s2">&quot; contains a tuple that does &quot;</span>
+                                            <span class="s2">&quot;not have a valid numeric &quot;</span>
+                                            <span class="s2">&quot;value, read &#39;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;&#39; as missing.&quot;</span><span class="p">)</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="n">replace_missing_vals_with</span>
+                                    <span class="k">return</span> <span class="n">value</span>
+                                <span class="n">data_series</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">process</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">data_series</span><span class="p">))</span>
+                                
+                                <span class="n">instance_list</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data_series</span><span class="p">))</span>
+
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">instance_list</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;object&quot;</span><span class="p">))</span>
+
+                        <span class="k">if</span> <span class="n">class_labels</span><span class="p">:</span>
+                            <span class="n">class_val_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dimensions</span><span class="p">[</span><span class="n">num_dimensions</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+            <span class="n">line_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1">#         list(map(lambda line: readLine(line), tqdm(file, desc=opLabel)))</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># Check that the file was not empty</span>
+
+    <span class="k">if</span> <span class="n">line_num</span><span class="p">:</span>
+        <span class="c1"># Check that the file contained both metadata and data</span>
+
+        <span class="k">if</span> <span class="n">metadata_started</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="n">has_problem_name_tag</span>
+            <span class="ow">and</span> <span class="n">has_timestamps_tag</span>
+            <span class="ow">and</span> <span class="n">has_univariate_tag</span>
+            <span class="ow">and</span> <span class="n">has_class_labels_tag</span>
+            <span class="ow">and</span> <span class="n">has_data_tag</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;metadata incomplete&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">metadata_started</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">data_started</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;file contained metadata but no data&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">metadata_started</span> <span class="ow">and</span> <span class="n">data_started</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;file contained metadata but no data&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Create a DataFrame from the data parsed above</span>
+
+        <span class="n">x_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+            <span class="n">x_data_aux</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">)):</span>
+<span class="c1">#                 print(dim, x)</span>
+<span class="c1">#                x_data_aux[&quot;dim&quot; + str(dim)] = pd.Series(instance_list[dim][x])</span>
+                <span class="n">x_data_aux</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x_data_aux</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">instance_list</span><span class="p">[</span><span class="n">dim</span><span class="p">][</span><span class="n">x</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dim&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dim</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                
+
+            <span class="n">x_data_aux</span><span class="p">[</span><span class="s2">&quot;tid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">if</span> <span class="n">class_labels</span><span class="p">:</span>
+                <span class="n">x_data_aux</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_val_list</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+            <span class="n">x_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x_data</span><span class="p">,</span> <span class="n">x_data_aux</span><span class="p">])</span>
+        
+        <span class="n">x_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#         for dim in range(0, num_dimensions):</span>
+<span class="c1">#             data[&quot;dim_&quot; + str(dim)] = instance_list[dim]</span>
+
+        <span class="c1"># Check if we should return any associated class labels separately</span>
+
+        <span class="k">if</span> <span class="n">class_labels</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">return_separate_X_and_y</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">x_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">class_val_list</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+<span class="c1">#                 data[&quot;class_vals&quot;] = pd.Series(class_val_list)</span>
+                <span class="k">return</span> <span class="n">x_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x_data</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">TsFileParseException</span><span class="p">(</span><span class="s2">&quot;empty file&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_from_arff_to_dataframe">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.load_from_arff_to_dataframe">[docs]</a>
+<span class="k">def</span> <span class="nf">load_from_arff_to_dataframe</span><span class="p">(</span>
+    <span class="n">full_file_path_and_name</span><span class="p">,</span>
+    <span class="n">has_class_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_separate_X_and_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">replace_missing_vals_with</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads data from a .ts file into a Pandas DataFrame.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    full_file_path_and_name: str</span>
+<span class="sd">        The full pathname of the .ts file to read.</span>
+<span class="sd">    has_class_labels: bool</span>
+<span class="sd">        true then line contains separated strings and class value contains</span>
+<span class="sd">        list of separated strings, check for &#39;return_separate_X_and_y&#39;</span>
+<span class="sd">        false otherwise.</span>
+<span class="sd">    return_separate_X_and_y: bool</span>
+<span class="sd">        true then X and Y values should be returned as separate Data Frames (</span>
+<span class="sd">        X) and a numpy array (y), false otherwise.</span>
+<span class="sd">        This is only relevant for data.</span>
+<span class="sd">    replace_missing_vals_with: str</span>
+<span class="sd">       The value that missing values in the text file should be replaced</span>
+<span class="sd">       with prior to parsing.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataFrame, ndarray</span>
+<span class="sd">        If return_separate_X_and_y then a tuple containing a DataFrame and a</span>
+<span class="sd">        numpy array containing the relevant time-series and corresponding</span>
+<span class="sd">        class values.</span>
+<span class="sd">    DataFrame</span>
+<span class="sd">        If not return_separate_X_and_y then a single DataFrame containing</span>
+<span class="sd">        all time-series and (if relevant) a column &quot;class_vals&quot; the</span>
+<span class="sd">        associated class values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">instance_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">class_val_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">data_started</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">is_multi_variate</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">is_first_case</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Parse the file</span>
+    <span class="c1"># print(full_file_path_and_name)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">full_file_path_and_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">is_multi_variate</span> <span class="ow">is</span> <span class="kc">False</span>
+                    <span class="ow">and</span> <span class="s2">&quot;@attribute&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="ow">and</span> <span class="s2">&quot;relational&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="p">):</span>
+                    <span class="n">is_multi_variate</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">if</span> <span class="s2">&quot;@data&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">data_started</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># if the &#39;data tag has been found, the header information</span>
+                <span class="c1"># has been cleared and now data can be loaded</span>
+                <span class="k">if</span> <span class="n">data_started</span><span class="p">:</span>
+                    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">replace_missing_vals_with</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">is_multi_variate</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">has_class_labels</span><span class="p">:</span>
+                            <span class="n">line</span><span class="p">,</span> <span class="n">class_val</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&#39;,&quot;</span><span class="p">)</span>
+                            <span class="n">class_val_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_val</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                        <span class="n">dimensions</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">n&quot;</span><span class="p">)</span>
+                        <span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="n">is_first_case</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">_d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)):</span>
+                                <span class="n">instance_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+                            <span class="n">is_first_case</span> <span class="o">=</span> <span class="kc">False</span>
+
+                        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)):</span>
+                            <span class="n">instance_list</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                                    <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">is_first_case</span><span class="p">:</span>
+                            <span class="n">instance_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+                            <span class="n">is_first_case</span> <span class="o">=</span> <span class="kc">False</span>
+
+                        <span class="n">line_parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">has_class_labels</span><span class="p">:</span>
+                            <span class="n">instance_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                                    <span class="p">[</span>
+                                        <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line_parts</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_parts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                                    <span class="p">]</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                            <span class="n">class_val_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">instance_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                                    <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line_parts</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_parts</span><span class="p">)]]</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+
+    <span class="n">x_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  
+    
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+        <span class="n">x_data_aux</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instance_list</span><span class="p">)):</span>
+<span class="c1">#             print(dim, x)</span>
+            <span class="n">x_data_aux</span><span class="p">[</span><span class="s2">&quot;dim&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dim</span><span class="p">)]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">instance_list</span><span class="p">[</span><span class="n">dim</span><span class="p">][</span><span class="n">x</span><span class="p">])</span>
+
+        <span class="n">x_data_aux</span><span class="p">[</span><span class="s2">&quot;tid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">if</span> <span class="n">has_class_labels</span><span class="p">:</span>
+            <span class="n">x_data_aux</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_val_list</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="n">x_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x_data</span><span class="p">,</span> <span class="n">x_data_aux</span><span class="p">])</span>
+    
+    <span class="n">x_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#     for dim in range(len(instance_list)):</span>
+<span class="c1">#         x_data[&quot;dim_&quot; + str(dim)] = instance_list[dim]</span>
+
+    <span class="k">if</span> <span class="n">has_class_labels</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">return_separate_X_and_y</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">class_val_list</span><span class="p">)</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             x_data[&quot;class_vals&quot;] = pd.Series(class_val_list)</span>
+
+    <span class="k">return</span> <span class="n">x_data</span></div>
+
+
+
+<div class="viewcode-block" id="load_from_ucr_tsv_to_dataframe">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.load_from_ucr_tsv_to_dataframe">[docs]</a>
+<span class="k">def</span> <span class="nf">load_from_ucr_tsv_to_dataframe</span><span class="p">(</span>
+    <span class="n">full_file_path_and_name</span><span class="p">,</span> <span class="n">return_separate_X_and_y</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads data from a .tsv file into a Pandas DataFrame.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    full_file_path_and_name: str</span>
+<span class="sd">        The full pathname of the .tsv file to read.</span>
+<span class="sd">    return_separate_X_and_y: bool</span>
+<span class="sd">        true then X and Y values should be returned as separate Data Frames (</span>
+<span class="sd">        X) and a numpy array (y), false otherwise.</span>
+<span class="sd">        This is only relevant for data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataFrame, ndarray</span>
+<span class="sd">        If return_separate_X_and_y then a tuple containing a DataFrame and a</span>
+<span class="sd">        numpy array containing the relevant time-series and corresponding</span>
+<span class="sd">        class values.</span>
+<span class="sd">    DataFrame</span>
+<span class="sd">        If not return_separate_X_and_y then a single DataFrame containing</span>
+<span class="sd">        all time-series and (if relevant) a column &quot;class_vals&quot; the</span>
+<span class="sd">        associated class values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">full_file_path_and_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">X</span><span class="p">[</span><span class="s2">&quot;dim_0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="p">:])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))]</span>
+    <span class="k">if</span> <span class="n">return_separate_X_and_y</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+    <span class="n">X</span><span class="p">[</span><span class="s2">&quot;class_val&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">X</span></div>
+
+
+
+<span class="c1"># assumes data is in a long table format with the following structure:</span>
+<span class="c1">#      | case_id | dim_id | reading_id | value</span>
+<span class="c1"># ------------------------------------------------</span>
+<span class="c1">#   0  |   int   |  int   |    int     | double</span>
+<span class="c1">#   1  |   int   |  int   |    int     | double</span>
+<span class="c1">#   2  |   int   |  int   |    int     | double</span>
+<span class="c1">#   3  |   int   |  int   |    int     | double</span>
+<div class="viewcode-block" id="from_long_to_nested">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.from_long_to_nested">[docs]</a>
+<span class="k">def</span> <span class="nf">from_long_to_nested</span><span class="p">(</span><span class="n">long_dataframe</span><span class="p">):</span>
+    <span class="c1"># get distinct dimension ids</span>
+    <span class="n">unique_dim_ids</span> <span class="o">=</span> <span class="n">long_dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">num_dims</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_dim_ids</span><span class="p">)</span>
+
+    <span class="n">data_by_dim</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># get number of distinct cases (note: a case may have 1 or many dimensions)</span>
+    <span class="n">unique_case_ids</span> <span class="o">=</span> <span class="n">long_dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="c1"># assume series are indexed from 0 to m-1 (can map to non-linear indices</span>
+    <span class="c1"># later if needed)</span>
+
+    <span class="c1"># init a list of size m for each d - to store the series data for m</span>
+    <span class="c1"># cases over d dimensions</span>
+    <span class="c1"># also, data may not be in order in long format so store index data for</span>
+    <span class="c1"># aligning output later</span>
+    <span class="c1"># (i.e. two stores required: one for reading id/timestamp and one for</span>
+    <span class="c1"># value)</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_dims</span><span class="p">):</span>
+        <span class="n">data_by_dim</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_case_ids</span><span class="p">)):</span>
+            <span class="n">data_by_dim</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="n">indices</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+    <span class="c1"># go through every row in the dataframe</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">long_dataframe</span><span class="p">)):</span>
+        <span class="c1"># extract the relevant data, catch cases where the dim id is not an</span>
+        <span class="c1"># int as it must be the class</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">long_dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">case_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">dim_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">reading_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">data_by_dim</span><span class="p">[</span><span class="n">dim_id</span><span class="p">][</span><span class="n">case_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">indices</span><span class="p">[</span><span class="n">dim_id</span><span class="p">][</span><span class="n">case_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reading_id</span><span class="p">)</span>
+
+    <span class="n">x_data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_dims</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;dim_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">dim_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_case_ids</span><span class="p">)):</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data_by_dim</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">indices</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">dim_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        <span class="n">x_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dim_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_from_long_to_dataframe">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.load_from_long_to_dataframe">[docs]</a>
+<span class="k">def</span> <span class="nf">load_from_long_to_dataframe</span><span class="p">(</span><span class="n">full_file_path_and_name</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads data from a long format file into a Pandas DataFrame.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    full_file_path_and_name: str</span>
+<span class="sd">        The full pathname of the .csv file to read.</span>
+<span class="sd">    separator: str</span>
+<span class="sd">        The character that the csv uses as a delimiter</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataFrame</span>
+<span class="sd">        A dataframe with sktime-formatted data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">full_file_path_and_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">separator</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># ensure there are 4 columns in the long_format table</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">LongFormatDataParseException</span><span class="p">(</span><span class="s2">&quot;dataframe must contain 4 columns of data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ensure that all columns contain the correct data types</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int64&quot;</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int64&quot;</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int64&quot;</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;float64&quot;</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="n">LongFormatDataParseException</span><span class="p">(</span>
+            <span class="s2">&quot;one or more data columns contains data of an incorrect type&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">from_long_to_nested</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+
+<span class="c1"># left here for now, better elsewhere later perhaps</span>
+<div class="viewcode-block" id="generate_example_long_table">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.generate_example_long_table">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_example_long_table</span><span class="p">(</span><span class="n">num_cases</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">series_len</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_dims</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates example from long table format file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_cases: int</span>
+<span class="sd">        Number of cases.</span>
+<span class="sd">    series_len: int</span>
+<span class="sd">        Length of the series.</span>
+<span class="sd">    num_dims: int</span>
+<span class="sd">        Number of dimensions.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">rows_per_case</span> <span class="o">=</span> <span class="n">series_len</span> <span class="o">*</span> <span class="n">num_dims</span>
+    <span class="n">total_rows</span> <span class="o">=</span> <span class="n">num_cases</span> <span class="o">*</span> <span class="n">series_len</span> <span class="o">*</span> <span class="n">num_dims</span>
+
+    <span class="n">case_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">total_rows</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">total_rows</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="n">dims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">total_rows</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">total_rows</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_rows</span><span class="p">):</span>
+        <span class="n">case_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">rows_per_case</span><span class="p">)</span>
+        <span class="n">rem</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="n">rows_per_case</span>
+        <span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rem</span> <span class="o">/</span> <span class="n">series_len</span><span class="p">)</span>
+        <span class="n">idxs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rem</span> <span class="o">%</span> <span class="n">series_len</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;case_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">case_ids</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;dim_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;reading_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">idxs</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+
+<div class="viewcode-block" id="write_results_to_uea_format">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.write_results_to_uea_format">[docs]</a>
+<span class="k">def</span> <span class="nf">write_results_to_uea_format</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">,</span>
+    <span class="n">strategy_name</span><span class="p">,</span>
+    <span class="n">dataset_name</span><span class="p">,</span>
+    <span class="n">y_true</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;TEST&quot;</span><span class="p">,</span>
+    <span class="n">resample_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">y_proba</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">second_line</span><span class="o">=</span><span class="s2">&quot;N/A&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+            <span class="s2">&quot;The number of predicted class values is not the same as the &quot;</span>
+            <span class="s2">&quot;number of actual class values&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">strategy_name</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot;/Predictions/&quot;</span>
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">os</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># raises os.error if path already exists</span>
+
+    <span class="k">if</span> <span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;TRAIN&quot;</span> <span class="ow">or</span> <span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">train_or_test</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span>
+    <span class="k">elif</span> <span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;TEST&quot;</span> <span class="ow">or</span> <span class="n">split</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">train_or_test</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown &#39;split&#39; value - should be TRAIN/train or TEST/test&quot;</span><span class="p">)</span>
+
+    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">strategy_name</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;/Predictions/&quot;</span>
+        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_or_test</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;Fold&quot;</span>
+        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">resample_seed</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;w&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">correct</span> <span class="o">=</span> <span class="n">acc</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="c1"># the first line of the output file is in the form of:</span>
+    <span class="c1"># &lt;classifierName&gt;,&lt;datasetName&gt;,&lt;train/test&gt;</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">strategy_name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train_or_test</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># the second line of the output is free form and classifier-specific;</span>
+    <span class="c1"># usually this will record info</span>
+    <span class="c1"># such as build time, paramater options used, any constituent model</span>
+    <span class="c1"># names for ensembles, etc.</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">second_line</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># the third line of the file is the accuracy (should be between 0 and 1</span>
+    <span class="c1"># inclusive). If this is a train</span>
+    <span class="c1"># output file then it will be a training estimate of the classifier on</span>
+    <span class="c1"># the training data only (e.g.</span>
+    <span class="c1"># 10-fold cv, leave-one-out cv, etc.). If this is a test output file,</span>
+    <span class="c1"># it should be the output</span>
+    <span class="c1"># of the estimator on the test data (likely trained on the training data</span>
+    <span class="c1"># for a-priori parameter optimisation)</span>
+
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># from line 4 onwards each line should include the actual and predicted</span>
+    <span class="c1"># class labels (comma-separated). If</span>
+    <span class="c1"># present, for each case, the probabilities of predicting every class</span>
+    <span class="c1"># value for this case should also be</span>
+    <span class="c1"># appended to the line (a space is also included between the predicted</span>
+    <span class="c1"># value and the predict_proba). E.g.:</span>
+    <span class="c1">#</span>
+    <span class="c1"># if predict_proba data IS provided for case i:</span>
+    <span class="c1">#   actual_class_val[i], predicted_class_val[i],,prob_class_0[i],</span>
+    <span class="c1">#   prob_class_1[i],...,prob_class_c[i]</span>
+    <span class="c1">#</span>
+    <span class="c1"># if predict_proba data IS NOT provided for case i:</span>
+    <span class="c1">#   actual_class_val[i], predicted_class_val[i]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)):</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">y_true</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">y_proba</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">y_proba</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># TODO BUG new line is written only if the</span>
+            <span class="c1"># probas are provided!!!!</span>
+
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="write_dataframe_to_tsfile">
+<a class="viewcode-back" href="../../../matdata.inc.html#matdata.inc.ts_io.write_dataframe_to_tsfile">[docs]</a>
+<span class="k">def</span> <span class="nf">write_dataframe_to_tsfile</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">,</span>
+    <span class="n">problem_name</span><span class="o">=</span><span class="s2">&quot;sample_data&quot;</span><span class="p">,</span>
+    <span class="n">timestamp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">univariate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">class_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">class_value_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">equal_length</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">series_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">missing_values</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">,</span>
+    <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Output a dataset in dataframe format to .ts file</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: pandas dataframe</span>
+<span class="sd">        the dataset in a dataframe to be written as a ts file</span>
+<span class="sd">        which must be of the structure specified in the documentation</span>
+<span class="sd">        https://github.com/whackteachers/sktime/blob/master/examples/loading_data.ipynb</span>
+<span class="sd">        index |   dim_0   |   dim_1   |    ...    |  dim_c-1</span>
+<span class="sd">           0  | pd.Series | pd.Series | pd.Series | pd.Series</span>
+<span class="sd">           1  | pd.Series | pd.Series | pd.Series | pd.Series</span>
+<span class="sd">          ... |    ...    |    ...    |    ...    |    ...</span>
+<span class="sd">           n  | pd.Series | pd.Series | pd.Series | pd.Series</span>
+<span class="sd">    path: str</span>
+<span class="sd">        The full path to output the ts file</span>
+<span class="sd">    problem_name: str</span>
+<span class="sd">        The problemName to print in the header of the ts file</span>
+<span class="sd">        and also the name of the file.</span>
+<span class="sd">    timestamp: {False, bool}, optional</span>
+<span class="sd">        Indicate whether the data contains timestamps in the header.</span>
+<span class="sd">    univariate: {True, bool}, optional</span>
+<span class="sd">        Indicate whether the data is univariate or multivariate in the header.</span>
+<span class="sd">        If univariate, only the first dimension will be written to file</span>
+<span class="sd">    class_label: {list, None}, optional</span>
+<span class="sd">        Provide class label to show the possible class values</span>
+<span class="sd">        for classification problems in the header.</span>
+<span class="sd">    class_value_list: {list/ndarray, []}, optional</span>
+<span class="sd">        ndarray containing the class values for each case in classification problems</span>
+<span class="sd">    equal_length: {False, bool}, optional</span>
+<span class="sd">        Indicate whether each series has equal length. It only write to file if true.</span>
+<span class="sd">    series_length: {-1, int}, optional</span>
+<span class="sd">        Indicate each series length if they are of equal length.</span>
+<span class="sd">        It only write to file if true.</span>
+<span class="sd">    missing_values: {NaN, str}, optional</span>
+<span class="sd">        Representation for missing value, default is NaN.</span>
+<span class="sd">    comment: {None, str}, optional</span>
+<span class="sd">        Comment text to be inserted before the header in a block.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This version currently does not support writing timestamp data.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    The code for writing series data into file is adopted from</span>
+<span class="sd">    https://stackoverflow.com/questions/37877708/</span>
+<span class="sd">    how-to-turn-a-pandas-dataframe-row-into-a-comma-separated-string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">class_value_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">class_value_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># ensure data provided is a dataframe</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data provided must be a DataFrame&quot;</span><span class="p">)</span>
+    <span class="c1"># ensure number of cases is same as the class value list</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_value_list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_value_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+            <span class="s2">&quot;The number of cases is not the same as the number of given &quot;</span> <span class="s2">&quot;class values&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">equal_length</span> <span class="ow">and</span> <span class="n">series_length</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Please specify the series length for equal length time series data.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># create path if not exist</span>
+    <span class="n">dirt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">problem_name</span><span class="p">)</span><span class="si">}</span><span class="s2">/&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirt</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">os</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># raises os.error if path already exists</span>
+
+    <span class="c1"># create ts file in the path</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dirt</span><span class="si">}{</span><span class="nb">str</span><span class="p">(</span><span class="n">problem_name</span><span class="p">)</span><span class="si">}</span><span class="s2">_transform.ts&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+    <span class="c1"># write comment if any as a block at start of file</span>
+    <span class="k">if</span> <span class="n">comment</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"># &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="s2">&quot;# &quot;</span> <span class="o">+</span> <span class="n">comment</span><span class="p">)))</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># begin writing header information</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@problemName </span><span class="si">{</span><span class="n">problem_name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@timeStamps </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@univariate </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">univariate</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># write equal length or series length if provided</span>
+    <span class="k">if</span> <span class="n">equal_length</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@equalLength </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">equal_length</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">series_length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@seriesLength </span><span class="si">{</span><span class="n">series_length</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># write class label line</span>
+    <span class="k">if</span> <span class="n">class_label</span><span class="p">:</span>
+        <span class="n">space_separated_class_label</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">class_label</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@classLabel true </span><span class="si">{</span><span class="n">space_separated_class_label</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;@class_label false</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># begin writing the core data for each case</span>
+    <span class="c1"># which are the series and the class value list if there is any</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;@data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">case</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">zip_longest</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">(),</span> <span class="n">class_value_list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">dimension</span> <span class="ow">in</span> <span class="n">case</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>  <span class="c1"># start from the first dimension</span>
+            <span class="c1"># split the series observation into separate token</span>
+            <span class="c1"># ignoring the header and index</span>
+            <span class="n">series</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="n">missing_values</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="c1"># turn series into comma-separated row</span>
+            <span class="n">series</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">obsv</span> <span class="k">for</span> <span class="n">obsv</span> <span class="ow">in</span> <span class="n">series</span><span class="p">)</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">series</span><span class="p">))</span>
+            <span class="c1"># continue with another dimension for multivariate case</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">univariate</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;:</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># write the case value if any</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># open a new line</span>
+
+    <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

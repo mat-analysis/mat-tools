@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.feature.feature_extraction.pois &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.feature.feature_extraction.pois</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.feature.feature_extraction.pois</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">    - Francisco Vicenzi (adapted)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">matdata.preprocess</span> <span class="kn">import</span> <span class="n">readDataset</span><span class="p">,</span> <span class="n">dfVariance</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.geohash</span> <span class="kn">import</span> <span class="n">bin_geohash</span>
+
+<span class="c1">## POI-S: POI Sequence (POI-F extension) [By Tarlis]</span>
+<span class="c1">## --------------------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="pois_read">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.pois_read">[docs]</a>
+<span class="k">def</span> <span class="nf">pois_read</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;npoi&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;specific&#39;</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">save_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads datasets and applies the POI extraction methods to generate features based on specified sequences.</span>
+<span class="sd">    (Wrapper for &#39;pois&#39; method)</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    sequences : list of int</span>
+<span class="sd">        A list of sequence lengths to analyze for POI extraction.</span>
+
+<span class="sd">    features : list of str</span>
+<span class="sd">        The list of features to analyze from the dataset.</span>
+
+<span class="sd">    method : str, optional</span>
+<span class="sd">        The method to use for POI extraction (&#39;poi&#39;, &#39;npoi&#39;, or &#39;wnpoi&#39;). Defaults to &#39;npoi&#39;.</span>
+
+<span class="sd">    dataset : str, optional</span>
+<span class="sd">        The name of the dataset to process. Defaults to &#39;specific&#39;.</span>
+
+<span class="sd">    folder : str, optional</span>
+<span class="sd">        The folder path where the dataset files are located. Defaults to &#39;./data&#39;.</span>
+
+<span class="sd">    result_dir : str, optional</span>
+<span class="sd">        The directory path where results will be saved. Defaults to &#39;.&#39;.</span>
+
+<span class="sd">    save_all : bool, optional</span>
+<span class="sd">        If True, saves all possible sequences to the result directory. Defaults to False.</span>
+
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing the trajectory ID in the datasets. Defaults to &#39;tid&#39;.</span>
+
+<span class="sd">    class_col : str, optional</span>
+<span class="sd">        The name of the column representing the class label in the datasets. Defaults to &#39;label&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the aggregated training feature matrix, testing feature matrix, </span>
+<span class="sd">        training labels, testing labels, and the core name for the processed data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span> <span class="o">=</span> <span class="n">loadTrainTest</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">pois</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">result_dir</span><span class="p">,</span> <span class="n">save_all</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="pois">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.pois">[docs]</a>
+<span class="k">def</span> <span class="nf">pois</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;npoi&#39;</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">save_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts features from the training and testing datasets based on specified sequences and methods </span>
+<span class="sd">    (POI, NPOI, WNPOI) for trajectory classification.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df_train : pandas.DataFrame</span>
+<span class="sd">        The training dataset containing trajectory data, including time and location information.</span>
+
+<span class="sd">    df_test : pandas.DataFrame</span>
+<span class="sd">        The testing dataset containing trajectory data for evaluation.</span>
+
+<span class="sd">    sequences : list of int</span>
+<span class="sd">        List of integers specifying the sequence lengths to consider for feature extraction.</span>
+
+<span class="sd">    features : list of str</span>
+<span class="sd">        List of feature names from the datasets to be used for extraction. If None, the function will </span>
+<span class="sd">        automatically determine a feature based on variance.</span>
+
+<span class="sd">    method : str, optional</span>
+<span class="sd">        The method to use for feature extraction. Options include:</span>
+<span class="sd">        - &#39;poi&#39;: Point of Interest frequency.</span>
+<span class="sd">        - &#39;npoi&#39;: Normalized Point of Interest frequency.</span>
+<span class="sd">        - &#39;wnpoi&#39;: Weighted Normalized Point of Interest frequency.</span>
+<span class="sd">        Defaults to &#39;npoi&#39;.</span>
+
+<span class="sd">    result_dir : str, optional</span>
+<span class="sd">        Directory path where results should be saved. Defaults to the current directory.</span>
+
+<span class="sd">    save_all : bool, optional</span>
+<span class="sd">        If True, all intermediate results will be saved to the specified directory. Defaults to False.</span>
+
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        Name of the column representing the trajectory ID in the datasets. Defaults to &#39;tid&#39;.</span>
+
+<span class="sd">    class_col : str, optional</span>
+<span class="sd">        Name of the column representing the class label in the datasets. Defaults to &#39;label&#39;.</span>
+
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        If True, prints detailed information about the processing steps. Defaults to True.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    agg_x_train : pandas.DataFrame</span>
+<span class="sd">        A DataFrame containing aggregated features for the training dataset.</span>
+
+<span class="sd">    agg_x_test : pandas.DataFrame</span>
+<span class="sd">        A DataFrame containing aggregated features for the testing dataset.</span>
+
+<span class="sd">    y_train : numpy.ndarray</span>
+<span class="sd">        A numpy array containing the labels for the training dataset.</span>
+
+<span class="sd">    y_test : numpy.ndarray</span>
+<span class="sd">        A numpy array containing the labels for the testing dataset.</span>
+
+<span class="sd">    core_name : str</span>
+<span class="sd">        A string representing the core name for the generated feature files, based on the selected method </span>
+<span class="sd">        and features.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[POIS:] Starting feature extractor ... &quot;</span><span class="p">)</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">df_</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">dfVariance</span><span class="p">(</span><span class="n">df_</span><span class="p">[[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df_</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">]]])</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">stats</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    
+<span class="c1">#    if save_all:</span>
+<span class="c1">#        save_all = result_dir</span>
+        
+    <span class="n">agg_x_train</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">agg_x_test</span>  <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
+        <span class="n">aux_x_train</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">aux_x_test</span>  <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Feature: </span><span class="si">{}</span><span class="s1">, Sequence: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">sequence</span><span class="p">))</span>
+            <span class="n">unique_features</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+            <span class="n">points</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">possible_sequences</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+                <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                    <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">i</span><span class="p">])</span>
+                <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">aux</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">possible_sequences</span><span class="p">:</span>
+                    <span class="n">possible_sequences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+
+            <span class="n">seq2idx</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)]))</span>
+
+            <span class="k">if</span> <span class="n">save_all</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">result_dir</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">result_dir</span><span class="p">)</span>
+
+                <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_dir</span><span class="p">,</span> \
+                   <span class="n">feature</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-sequences.csv&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;poi&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting POI...&#39;</span><span class="p">)</span>
+                <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">poi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> \
+                                                       <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                                       <span class="n">tid_col</span><span class="o">=</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="n">class_col</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;npoi&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting NPOI...&#39;</span><span class="p">)</span>
+                <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">npoi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> \
+                                                       <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                                       <span class="n">tid_col</span><span class="o">=</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="n">class_col</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting WNPOI...&#39;</span><span class="p">)</span>
+                <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">wnpoi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> \
+                                                       <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                                       <span class="n">tid_col</span><span class="o">=</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="n">class_col</span><span class="p">)</span>
+
+            <span class="c1"># Concat columns:</span>
+            <span class="k">if</span> <span class="n">aux_x_train</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">aux_x_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">aux_x_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">aux_x_train</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_train</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   
+
+            <span class="k">if</span> <span class="n">aux_x_test</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">aux_x_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">aux_x_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">aux_x_test</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_test</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>    
+                
+        <span class="c1"># Write features concat:</span>
+        <span class="k">if</span> <span class="n">save_all</span><span class="p">:</span>
+            <span class="n">core_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_dir</span><span class="p">,</span> <span class="n">method</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">features</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">)]))</span> <span class="p">)</span> <span class="c1">#+&#39;_&#39;+dataset)</span>
+            <span class="n">to_file</span><span class="p">(</span><span class="n">core_name</span><span class="p">,</span> <span class="n">aux_x_train</span><span class="p">,</span> <span class="n">aux_x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">agg_x_train</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">agg_x_train</span> <span class="o">=</span> <span class="n">aux_x_train</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">agg_x_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">agg_x_train</span><span class="p">,</span> <span class="n">aux_x_train</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   
+
+        <span class="k">if</span> <span class="n">agg_x_test</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">agg_x_test</span> <span class="o">=</span> <span class="n">aux_x_test</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">agg_x_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">agg_x_test</span><span class="p">,</span> <span class="n">aux_x_test</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>    
+                
+    
+    <span class="k">del</span> <span class="n">df_train</span>
+    <span class="k">del</span> <span class="n">df_test</span> 
+    <span class="k">del</span> <span class="n">x_train</span>
+    <span class="k">del</span> <span class="n">x_test</span>   
+   
+    <span class="n">core_name</span> <span class="o">=</span> <span class="n">method</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">features</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">]))</span>  <span class="c1">#+&#39;_&#39;+dataset)</span>
+    <span class="k">if</span> <span class="n">save_all</span><span class="p">:</span>
+        <span class="n">to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_dir</span><span class="p">,</span> <span class="n">core_name</span><span class="p">),</span> <span class="n">agg_x_train</span><span class="p">,</span> <span class="n">agg_x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+    <span class="n">time_ext</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">-</span><span class="n">time</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[POIS:] Processing time: </span><span class="si">{}</span><span class="s1"> milliseconds. Done.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_ext</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;------------------------------------------------------------------------------------------------&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">agg_x_train</span><span class="p">,</span> <span class="n">agg_x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">core_name</span></div>
+
+    
+<span class="c1">## --------------------------------------------------------------------------------------------</span>
+<span class="c1">## POI-F: POI Frequency</span>
+<div class="viewcode-block" id="poi">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.poi">[docs]</a>
+<span class="k">def</span> <span class="nf">poi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes Point of Interest (POI) frequency features for training and testing datasets.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df_train : pandas.DataFrame</span>
+<span class="sd">        The training dataset containing trajectory data.</span>
+
+<span class="sd">    df_test : pandas.DataFrame</span>
+<span class="sd">        The testing dataset containing trajectory data.</span>
+
+<span class="sd">    possible_sequences : list of tuple</span>
+<span class="sd">        List of possible sequences to consider for feature extraction.</span>
+
+<span class="sd">    seq2idx : dict</span>
+<span class="sd">        A dictionary mapping sequences to their corresponding indices.</span>
+
+<span class="sd">    sequence : int</span>
+<span class="sd">        The length of the sequences to be considered.</span>
+
+<span class="sd">    feature : str</span>
+<span class="sd">        The name of the feature to be analyzed in the datasets.</span>
+
+<span class="sd">    result_dir : str, optional</span>
+<span class="sd">        Directory path to save the results. If None, results will not be saved.</span>
+
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing the trajectory ID in the datasets. Defaults to &#39;tid&#39;.</span>
+
+<span class="sd">    class_col : str, optional</span>
+<span class="sd">        The name of the column representing the class label in the datasets. Defaults to &#39;label&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    x_train : numpy.ndarray</span>
+<span class="sd">        A 2D array of shape (number of trajectories, number of possible sequences) containing the POI frequencies for the training set.</span>
+
+<span class="sd">    x_test : numpy.ndarray</span>
+<span class="sd">        A 2D array of shape (number of trajectories, number of possible sequences) containing the POI frequencies for the testing set.</span>
+
+<span class="sd">    y_train : numpy.ndarray</span>
+<span class="sd">        A 1D array of class labels for the training dataset.</span>
+
+<span class="sd">    y_test : numpy.ndarray</span>
+<span class="sd">        A 1D array of class labels for the testing dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1">#    print(&#39;Starting POI...&#39;)</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;poi&#39;</span>
+    
+    <span class="c1"># Train</span>
+    <span class="n">train_tids</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_tids</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)))</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">],</span>
+                                       <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_tids</span><span class="p">):</span>
+        <span class="n">traj_pois</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">tid</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">seq2idx</span><span class="p">[</span><span class="n">aux</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Test</span>
+    <span class="n">test_tids</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">test_unique_features</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_tids</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)))</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">],</span>
+                                       <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_tids</span><span class="p">):</span>
+        <span class="n">traj_pois</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">df_test</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">tid</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">aux</span> <span class="ow">in</span> <span class="n">possible_sequences</span><span class="p">:</span>
+                <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">seq2idx</span><span class="p">[</span><span class="n">aux</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">if</span> <span class="n">result_dir</span><span class="p">:</span>
+        <span class="n">core_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_dir</span><span class="p">,</span> <span class="n">method</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">feature</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
+        <span class="n">to_file</span><span class="p">(</span><span class="n">core_name</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span></div>
+
+    
+<span class="c1">### NPOI-F: Normalized POI Frequency</span>
+<div class="viewcode-block" id="npoi">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.npoi">[docs]</a>
+<span class="k">def</span> <span class="nf">npoi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes Normalized Point of Interest (NPOI) frequency features for training and testing datasets.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df_train : pandas.DataFrame</span>
+<span class="sd">        The training dataset containing trajectory data.</span>
+
+<span class="sd">    df_test : pandas.DataFrame</span>
+<span class="sd">        The testing dataset containing trajectory data.</span>
+
+<span class="sd">    possible_sequences : list of tuple</span>
+<span class="sd">        List of possible sequences to consider for feature extraction.</span>
+
+<span class="sd">    seq2idx : dict</span>
+<span class="sd">        A dictionary mapping sequences to their corresponding indices.</span>
+
+<span class="sd">    sequence : int</span>
+<span class="sd">        The length of the sequences to be considered.</span>
+
+<span class="sd">    feature : str</span>
+<span class="sd">        The name of the feature to be analyzed in the datasets.</span>
+
+<span class="sd">    result_dir : str, optional</span>
+<span class="sd">        Directory path to save the results. If None, results will not be saved.</span>
+
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing the trajectory ID in the datasets. Defaults to &#39;tid&#39;.</span>
+
+<span class="sd">    class_col : str, optional</span>
+<span class="sd">        The name of the column representing the class label in the datasets. Defaults to &#39;label&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    x_train : numpy.ndarray</span>
+<span class="sd">        A 2D array of shape (number of trajectories, number of possible sequences) containing the normalized POI frequencies for the training set.</span>
+
+<span class="sd">    x_test : numpy.ndarray</span>
+<span class="sd">        A 2D array of shape (number of trajectories, number of possible sequences) containing the normalized POI frequencies for the testing set.</span>
+
+<span class="sd">    y_train : numpy.ndarray</span>
+<span class="sd">        A 1D array of class labels for the training dataset.</span>
+
+<span class="sd">    y_test : numpy.ndarray</span>
+<span class="sd">        A 1D array of class labels for the testing dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1">#    print(&#39;Starting NPOI...&#39;)</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;npoi&#39;</span>
+    
+    <span class="c1"># Train</span>
+    <span class="n">train_tids</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_tids</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)))</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">],</span>
+                                       <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_tids</span><span class="p">):</span>
+        <span class="n">traj_pois</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">tid</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">seq2idx</span><span class="p">[</span><span class="n">aux</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span>
+
+    <span class="c1"># Test</span>
+    <span class="n">test_tids</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">test_unique_features</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_tids</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)))</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">],</span>
+                                       <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_tids</span><span class="p">):</span>
+        <span class="n">traj_pois</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">df_test</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">tid</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">aux</span> <span class="ow">in</span> <span class="n">possible_sequences</span><span class="p">:</span>
+                <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">seq2idx</span><span class="p">[</span><span class="n">aux</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">result_dir</span><span class="p">:</span>
+        <span class="n">core_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_dir</span><span class="p">,</span> <span class="n">method</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">feature</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
+        <span class="n">to_file</span><span class="p">(</span><span class="n">core_name</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span></div>
+
+    
+<span class="c1">### WNPOI-F: Weighted Normalized POI Frequency.</span>
+<div class="viewcode-block" id="wnpoi">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.wnpoi">[docs]</a>
+<span class="k">def</span> <span class="nf">wnpoi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes Weighted Normalized Point of Interest (WNPOI) frequency features for training and testing datasets.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df_train : pandas.DataFrame</span>
+<span class="sd">        The training dataset containing trajectory data.</span>
+
+<span class="sd">    df_test : pandas.DataFrame</span>
+<span class="sd">        The testing dataset containing trajectory data.</span>
+
+<span class="sd">    possible_sequences : list of tuple</span>
+<span class="sd">        List of possible sequences to consider for feature extraction.</span>
+
+<span class="sd">    seq2idx : dict</span>
+<span class="sd">        A dictionary mapping sequences to their corresponding indices.</span>
+
+<span class="sd">    sequence : int</span>
+<span class="sd">        The length of the sequences to be considered.</span>
+
+<span class="sd">    feature : str</span>
+<span class="sd">        The name of the feature to be analyzed in the datasets.</span>
+
+<span class="sd">    result_dir : str, optional</span>
+<span class="sd">        Directory path to save the results. If None, results will not be saved.</span>
+
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing the trajectory ID in the datasets. Defaults to &#39;tid&#39;.</span>
+
+<span class="sd">    class_col : str, optional</span>
+<span class="sd">        The name of the column representing the class label in the datasets. Defaults to &#39;label&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    x_train : numpy.ndarray</span>
+<span class="sd">        A 2D array of shape (number of trajectories, number of possible sequences) containing the weighted normalized POI frequencies for the training set.</span>
+
+<span class="sd">    x_test : numpy.ndarray</span>
+<span class="sd">        A 2D array of shape (number of trajectories, number of possible sequences) containing the weighted normalized POI frequencies for the testing set.</span>
+
+<span class="sd">    y_train : numpy.ndarray</span>
+<span class="sd">        A 1D array of class labels for the training dataset.</span>
+
+<span class="sd">    y_test : numpy.ndarray</span>
+<span class="sd">        A 1D array of class labels for the testing dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<span class="c1">#    print(&#39;Starting WNPOI...&#39;)    </span>
+    <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;wnpoi&#39;</span>
+    
+    <span class="n">train_labels</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">train_labels</span><span class="p">:</span>
+        <span class="n">aux_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">))</span>
+        <span class="n">class_pois</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="n">class_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">label</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">class_pois</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_pois</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="n">seqidx</span> <span class="o">=</span> <span class="n">seq2idx</span><span class="p">[</span><span class="n">aux</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">aux_w</span><span class="p">[</span><span class="n">seqidx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">weights</span><span class="p">[</span><span class="n">seqidx</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">aux_w</span><span class="p">[</span><span class="n">seqidx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span><span class="o">/</span><span class="n">weights</span><span class="p">)</span>
+    <span class="c1"># Train</span>
+    <span class="n">train_tids</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_tids</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)))</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">],</span>
+                                       <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_tids</span><span class="p">):</span>
+        <span class="n">traj_pois</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">tid</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">seq2idx</span><span class="p">[</span><span class="n">aux</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)):</span>
+            <span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">w</span><span class="p">]</span> <span class="o">*=</span> <span class="n">weights</span><span class="p">[</span><span class="n">w</span><span class="p">]</span>
+
+    <span class="c1"># Test</span>
+    <span class="n">test_tids</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">test_unique_features</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_tids</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)))</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">],</span>
+                                       <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+                      <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="n">class_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_tids</span><span class="p">):</span>
+        <span class="n">traj_pois</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">df_test</span><span class="p">[</span><span class="n">tid_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">tid</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">aux</span> <span class="ow">in</span> <span class="n">possible_sequences</span><span class="p">:</span>
+                <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">seq2idx</span><span class="p">[</span><span class="n">aux</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">traj_pois</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)):</span>
+            <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">w</span><span class="p">]</span> <span class="o">*=</span> <span class="n">weights</span><span class="p">[</span><span class="n">w</span><span class="p">]</span>
+            
+    <span class="k">if</span> <span class="n">result_dir</span><span class="p">:</span>
+        <span class="n">core_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_dir</span><span class="p">,</span> <span class="n">method</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">feature</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
+        <span class="n">to_file</span><span class="p">(</span><span class="n">core_name</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span></div>
+
+    
+<span class="c1">## --------------------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="poifreq_all">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.poifreq_all">[docs]</a>
+<span class="k">def</span> <span class="nf">poifreq_all</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">result_dir</span><span class="p">,</span> <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts Point of Interest (POI) frequency features for a given dataset and saves the results. </span>
+<span class="sd">    For command line use.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    sequence : int</span>
+<span class="sd">        The length of the sequences to be considered for POI frequency extraction.</span>
+
+<span class="sd">    dataset : str</span>
+<span class="sd">        The name of the dataset to process (without extension).</span>
+
+<span class="sd">    feature : str</span>
+<span class="sd">        The name of the feature to analyze in the dataset.</span>
+
+<span class="sd">    folder : str</span>
+<span class="sd">        The folder path where the dataset files are located.</span>
+
+<span class="sd">    result_dir : str</span>
+<span class="sd">        The directory path where results will be saved.</span>
+
+<span class="sd">    tid_col : str, optional</span>
+<span class="sd">        The name of the column representing the trajectory ID in the datasets. Defaults to &#39;tid&#39;.</span>
+
+<span class="sd">    class_col : str, optional</span>
+<span class="sd">        The name of the column representing the class label in the datasets. Defaults to &#39;label&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Dataset: </span><span class="si">{}</span><span class="s1">, Feature: </span><span class="si">{}</span><span class="s1">, Sequence: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">sequence</span><span class="p">))</span>
+<span class="c1">#     df_train = pd.read_csv(folder+dataset+&#39;_train.csv&#39;)</span>
+<span class="c1">#     df_test = pd.read_csv(folder+dataset+&#39;_test.csv&#39;)</span>
+    
+    <span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span> <span class="o">=</span> <span class="n">loadTrainTest</span><span class="p">([</span><span class="n">feature</span><span class="p">],</span> <span class="n">folder</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+    
+    <span class="n">unique_features</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    
+    <span class="n">points</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">possible_sequences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">sequence</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+        <span class="n">aux</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+            <span class="n">aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="n">i</span><span class="p">])</span>
+        <span class="n">aux</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">aux</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">possible_sequences</span><span class="p">:</span>
+            <span class="n">possible_sequences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+
+    <span class="n">seq2idx</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)]))</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">result_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">result_dir</span><span class="p">)</span>
+        
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">possible_sequences</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_dir</span><span class="p">,</span> <span class="n">feature</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-sequences.csv&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    
+    <span class="n">poi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
+    <span class="n">npoi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span>
+    <span class="n">wnpoi</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">possible_sequences</span><span class="p">,</span> <span class="n">seq2idx</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">result_dir</span><span class="p">,</span> <span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">)</span></div>
+
+   
+    
+<span class="c1">## --------------------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="to_file">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.to_file">[docs]</a>
+<span class="k">def</span> <span class="nf">to_file</span><span class="p">(</span><span class="n">core_name</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves the training and testing feature matrices and labels to CSV files.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    core_name : str</span>
+<span class="sd">        The base name for the output files.</span>
+
+<span class="sd">    x_train : numpy.ndarray</span>
+<span class="sd">        The training feature matrix.</span>
+
+<span class="sd">    x_test : numpy.ndarray</span>
+<span class="sd">        The testing feature matrix.</span>
+
+<span class="sd">    y_train : numpy.ndarray</span>
+<span class="sd">        The training labels.</span>
+
+<span class="sd">    y_test : numpy.ndarray</span>
+<span class="sd">        The testing labels.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">df_x_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">core_name</span><span class="o">+</span><span class="s1">&#39;-x_train.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="c1">#, header=None)</span>
+    <span class="n">df_x_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">core_name</span><span class="o">+</span><span class="s1">&#39;-x_test.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="c1">#, header=None)</span>
+    <span class="n">df_y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">core_name</span><span class="o">+</span><span class="s1">&#39;-y_train.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">df_y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">core_name</span><span class="o">+</span><span class="s1">&#39;-y_test.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="geoHasTransform">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.geoHasTransform">[docs]</a>
+<span class="k">def</span> <span class="nf">geoHasTransform</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geo_precision</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transforms latitude and longitude values into geohash representations.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        The DataFrame containing &#39;lat&#39; and &#39;lon&#39; columns.</span>
+
+<span class="sd">    geo_precision : int, optional</span>
+<span class="sd">        The precision for the geohash transformation. Defaults to 8.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of geohash values corresponding to the latitude and longitude pairs in the DataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">geohash</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">geo_precision</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))]</span></div>
+
+
+<div class="viewcode-block" id="loadTrainTest">
+<a class="viewcode-back" href="../../../../../matclassification.methods.feature.feature_extraction.html#matclassification.methods.feature.feature_extraction.pois.loadTrainTest">[docs]</a>
+<span class="k">def</span> <span class="nf">loadTrainTest</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads the training and testing datasets from CSV files, applying necessary transformations.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    features : list of str</span>
+<span class="sd">        The features to load from the datasets.</span>
+
+<span class="sd">    folder : str</span>
+<span class="sd">        The folder path where the dataset files are located.</span>
+
+<span class="sd">    dataset : str, optional</span>
+<span class="sd">        The name of the dataset to process (without extension). If empty, default &#39;train&#39; and &#39;test&#39; files are loaded.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the training DataFrame and the testing DataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1">#     if dataset == &#39;&#39;:</span>
+<span class="c1">#        df_train = pd.read_csv(os.path.join(folder, &#39;train.csv&#39;))</span>
+<span class="c1">#        df_test = pd.read_csv(os.path.join(folder, &#39;test.csv&#39;))</span>
+<span class="c1">#    else:</span>
+<span class="c1">#        df_train = pd.read_csv(os.path.join(folder, dataset+&#39;_train.csv&#39;))</span>
+<span class="c1">#        df_test = pd.read_csv(os.path.join(folder, dataset+&#39;_test.csv&#39;))</span>
+    
+    <span class="n">na_values</span> <span class="o">=</span> <span class="o">-</span><span class="mi">999</span>
+    <span class="k">if</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">df_train</span> <span class="o">=</span> <span class="n">readDataset</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;train.csv&#39;</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">na_values</span><span class="p">)</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">readDataset</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;test.csv&#39;</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">na_values</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_train</span> <span class="o">=</span> <span class="n">readDataset</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">dataset</span><span class="o">+</span><span class="s1">&#39;_train.csv&#39;</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">na_values</span><span class="p">)</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">readDataset</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">dataset</span><span class="o">+</span><span class="s1">&#39;_test.csv&#39;</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">na_values</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="s1">&#39;lat_lon&#39;</span> <span class="ow">in</span> <span class="n">features</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;lat&#39;</span> <span class="ow">in</span> <span class="n">df_train</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">&#39;lon&#39;</span> <span class="ow">in</span> <span class="n">df_test</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;lat_lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">geoHasTransform</span><span class="p">(</span><span class="n">df_train</span><span class="p">)</span>
+        <span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;lat_lon&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">geoHasTransform</span><span class="p">(</span><span class="n">df_test</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matmodel.base package &mdash; mat-model 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matmodel.comparator package" href="matmodel.comparator.html" />
+    <link rel="prev" title="MAT-model’s Documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-model:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.base.Aspect">matmodel.base.Aspect module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Aspect"><code class="docutils literal notranslate"><span class="pre">Aspect</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.Aspect.match"><code class="docutils literal notranslate"><span class="pre">Aspect.match()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.Aspect.value"><code class="docutils literal notranslate"><span class="pre">Aspect.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Boolean"><code class="docutils literal notranslate"><span class="pre">Boolean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Categoric"><code class="docutils literal notranslate"><span class="pre">Categoric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.DateTime"><code class="docutils literal notranslate"><span class="pre">DateTime</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.convert"><code class="docutils literal notranslate"><span class="pre">DateTime.convert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.convertMinToDate"><code class="docutils literal notranslate"><span class="pre">DateTime.convertMinToDate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.day"><code class="docutils literal notranslate"><span class="pre">DateTime.day()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.get"><code class="docutils literal notranslate"><span class="pre">DateTime.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.hours"><code class="docutils literal notranslate"><span class="pre">DateTime.hours()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.isweekday"><code class="docutils literal notranslate"><span class="pre">DateTime.isweekday()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.isweekend"><code class="docutils literal notranslate"><span class="pre">DateTime.isweekend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.microseconds"><code class="docutils literal notranslate"><span class="pre">DateTime.microseconds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.minutes"><code class="docutils literal notranslate"><span class="pre">DateTime.minutes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.month"><code class="docutils literal notranslate"><span class="pre">DateTime.month()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.seconds"><code class="docutils literal notranslate"><span class="pre">DateTime.seconds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.start"><code class="docutils literal notranslate"><span class="pre">DateTime.start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.weekday"><code class="docutils literal notranslate"><span class="pre">DateTime.weekday()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.DateTime.year"><code class="docutils literal notranslate"><span class="pre">DateTime.year()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Interval"><code class="docutils literal notranslate"><span class="pre">Interval</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Numeric"><code class="docutils literal notranslate"><span class="pre">Numeric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Rank"><code class="docutils literal notranslate"><span class="pre">Rank</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.Rank.add"><code class="docutils literal notranslate"><span class="pre">Rank.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.Rank.descriptor"><code class="docutils literal notranslate"><span class="pre">Rank.descriptor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.RankValue"><code class="docutils literal notranslate"><span class="pre">RankValue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Space2D"><code class="docutils literal notranslate"><span class="pre">Space2D</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.Space2D.value"><code class="docutils literal notranslate"><span class="pre">Space2D.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.Space3D"><code class="docutils literal notranslate"><span class="pre">Space3D</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.Aspect.Space3D.value"><code class="docutils literal notranslate"><span class="pre">Space3D.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.Aspect.instantiateAspect"><code class="docutils literal notranslate"><span class="pre">instantiateAspect()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.base.MultipleAspectSequence">matmodel.base.MultipleAspectSequence module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.tid"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.tid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.points"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.data_desc"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.data_desc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.size"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.addPoint"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.addPoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.attribute_names"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.attribute_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.attributes"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.attributes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.l"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.l</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.pointValue"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.pointValue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.readSequence"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.readSequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.subsequence"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.subsequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.valuesOf"><code class="docutils literal notranslate"><span class="pre">MultipleAspectSequence.valuesOf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point.seq"><code class="docutils literal notranslate"><span class="pre">Point.seq</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point.aspects"><code class="docutils literal notranslate"><span class="pre">Point.aspects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point.asString"><code class="docutils literal notranslate"><span class="pre">Point.asString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point.fromRecord"><code class="docutils literal notranslate"><span class="pre">Point.fromRecord()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point.l"><code class="docutils literal notranslate"><span class="pre">Point.l</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point.p"><code class="docutils literal notranslate"><span class="pre">Point.p</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Point.valuesOf"><code class="docutils literal notranslate"><span class="pre">Point.valuesOf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory"><code class="docutils literal notranslate"><span class="pre">Subtrajectory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.attributes_index"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.attributes_index</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.s"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.s</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.S"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.S</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.attribute"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.attribute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.attributes"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.attributes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.attributes_index</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.s</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.values"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.valuesOf"><code class="docutils literal notranslate"><span class="pre">Subtrajectory.valuesOf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Trajectory"><code class="docutils literal notranslate"><span class="pre">Trajectory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Trajectory.T"><code class="docutils literal notranslate"><span class="pre">Trajectory.T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Trajectory.label"><code class="docutils literal notranslate"><span class="pre">Trajectory.label</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">Trajectory.T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Trajectory.display"><code class="docutils literal notranslate"><span class="pre">Trajectory.display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Trajectory.subtrajectory"><code class="docutils literal notranslate"><span class="pre">Trajectory.subtrajectory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.base">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.comparator.html"> Comparator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.descriptor.html"> Dataset Descriptor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.feature.html"> Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.representative.html"> Representative</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.util.html"> Util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matmodel.base package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matmodel.base.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matmodel-base-package">
+<h1>matmodel.base package<a class="headerlink" href="#matmodel-base-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matmodel.base.Aspect">
+<span id="matmodel-base-aspect-module"></span><h2>matmodel.base.Aspect module<a class="headerlink" href="#module-matmodel.base.Aspect" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present application offers a tool, to support the user in the modeling of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Apr, 2024
+Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Vanessa Lago Machado</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Aspect">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Aspect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Aspect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Aspect" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a generic attribute or ‘aspect’ of a point, such as a spatial, temporal, or categorical aspect.</p>
+<section id="attributes">
+<h3>Attributes:<a class="headerlink" href="#attributes" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>_value:</dt><dd><p>The actual value of the aspect.</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h3>Methods:<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>value(units=None):</dt><dd><p>Property to get the value of the aspect.</p>
+</dd>
+<dt>__repr__():</dt><dd><p>Returns a string representation of the aspect.</p>
+</dd>
+<dt>match(asp1, asp2):</dt><dd><p>Checks if two aspects are equal.</p>
+</dd>
+<dt>__eq__(other):</dt><dd><p>Checks if this aspect is equal to another aspect based on its value.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Aspect.match">
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asp1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asp2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Aspect.match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Aspect.match" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Aspect.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#matmodel.base.Aspect.Aspect.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Boolean">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Boolean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Boolean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Boolean" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.Aspect" title="matmodel.base.Aspect.Aspect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Aspect</span></code></a></p>
+<p>Represents a boolean aspect. The value can be a boolean or strings that can be interpreted as boolean.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Categoric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Categoric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Categoric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Categoric" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.Aspect" title="matmodel.base.Aspect.Aspect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Aspect</span></code></a></p>
+<p>Represents a categorical aspect. The value is treated as a string variable.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">DateTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%H:%M'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.Aspect" title="matmodel.base.Aspect.Aspect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Aspect</span></code></a></p>
+<p>Represents a temporal aspect, storing date and time information.</p>
+<p>Uni</p>
+<section id="id1">
+<h3>Attributes:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>start or value (datetime):</dt><dd><p>The start time of the interval.</p>
+</dd>
+<dt>mask (str):</dt><dd><p>The format in which the date and time is provided.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Methods:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>day():</dt><dd><p>Returns the day of the month.</p>
+</dd>
+<dt>month():</dt><dd><p>Returns the month.</p>
+</dd>
+<dt>year():</dt><dd><p>Returns the year.</p>
+</dd>
+<dt>weekday():</dt><dd><p>Returns the day of the week (0 for Monday, 6 for Sunday).</p>
+</dd>
+<dt>isweekend(): C</dt><dd><p>hecks if the date falls on a weekend.</p>
+</dd>
+<dt>isweekday():</dt><dd><p>Checks if the date falls on a weekday.</p>
+</dd>
+<dt>hours():</dt><dd><p>Returns the hour of the day.</p>
+</dd>
+<dt>minutes():</dt><dd><p>Returns the total minutes since the start of the day.</p>
+</dd>
+<dt>seconds():</dt><dd><p>Returns the total seconds since the start of the day.</p>
+</dd>
+<dt>microseconds():</dt><dd><p>Returns the total microseconds since the start of the day.</p>
+</dd>
+<dt>get(units=None):</dt><dd><p>Returns the value in a specified unit (e.g., D, M, Y, etc.).</p>
+</dd>
+<dt>convertMinToDate(minutes):</dt><dd><p>Converts minutes to a datetime object.</p>
+</dd>
+<dt>convert(value, mask=None):</dt><dd><p>Converts a string value to a datetime object.</p>
+</dd>
+</dl>
+</section>
+<section id="notes">
+<h3>Notes:<a class="headerlink" href="#notes" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>units: The available unit codes are:</dt><dd><ul class="simple">
+<li><p>D: days</p></li>
+<li><p>M: months</p></li>
+<li><p>Y: years</p></li>
+<li><p>w: weekday</p></li>
+<li><p>h: hours</p></li>
+<li><p>m: minutes</p></li>
+<li><p>s: seconds</p></li>
+<li><p>ms: microseconds</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.convert" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.convertMinToDate">
+<span class="sig-name descname"><span class="pre">convertMinToDate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minutes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.convertMinToDate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.convertMinToDate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.day">
+<span class="sig-name descname"><span class="pre">day</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.day"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.day" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.get" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.hours">
+<span class="sig-name descname"><span class="pre">hours</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.hours"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.hours" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.isweekday">
+<span class="sig-name descname"><span class="pre">isweekday</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.isweekday"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.isweekday" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.isweekend">
+<span class="sig-name descname"><span class="pre">isweekend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.isweekend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.isweekend" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.microseconds">
+<span class="sig-name descname"><span class="pre">microseconds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.microseconds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.microseconds" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.minutes">
+<span class="sig-name descname"><span class="pre">minutes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.minutes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.minutes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.month">
+<span class="sig-name descname"><span class="pre">month</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.month" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.seconds">
+<span class="sig-name descname"><span class="pre">seconds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.seconds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.seconds" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.start">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start</span></span><a class="headerlink" href="#matmodel.base.Aspect.DateTime.start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.weekday">
+<span class="sig-name descname"><span class="pre">weekday</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.weekday"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.weekday" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.DateTime.year">
+<span class="sig-name descname"><span class="pre">year</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#DateTime.year"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.DateTime.year" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Interval">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%H:%M'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Interval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Interval" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.DateTime" title="matmodel.base.Aspect.DateTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTime</span></code></a></p>
+<p>Represents a temporal interval between two DateTime points.</p>
+<section id="id3">
+<h3>Attributes:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>start or value (datetime):</dt><dd><p>The start time of the interval.</p>
+</dd>
+<dt>end (datetime):</dt><dd><p>The end time of the interval.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Numeric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Numeric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Numeric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Numeric" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.Aspect" title="matmodel.base.Aspect.Aspect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Aspect</span></code></a></p>
+<p>Represents a numeric aspect, where the value is instantiated as a float.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Rank">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descriptor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Rank" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.Aspect" title="matmodel.base.Aspect.Aspect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Aspect</span></code></a></p>
+<p>Represents a ranked aspect, containing ranked values.</p>
+<section id="id4">
+<h3>Attributes:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>rank_values (list):</dt><dd><p>A list of RankValue objects, each containing an aspect and its proportion.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Methods:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>add(aspect, proportion):</dt><dd><p>Adds a ranked value to the rank with its proportion.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Rank.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aspect</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Rank.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Rank.add" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Rank.descriptor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">descriptor</span></span><a class="headerlink" href="#matmodel.base.Aspect.Rank.descriptor" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.RankValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">RankValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#RankValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.RankValue" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a value in a Rank, with its corresponding proportion.</p>
+<section id="id6">
+<h3>Attributes:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>value (Aspect):</dt><dd><p>The aspect associated with this rank value.</p>
+</dd>
+<dt>proportion (float):</dt><dd><p>The proportion associated with this rank value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Space2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Space2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Space2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Space2D" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.Aspect" title="matmodel.base.Aspect.Aspect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Aspect</span></code></a></p>
+<p>Represents a 2D spatial aspect, storing x and y coordinates.</p>
+<section id="id7">
+<h3>Attributes:<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>x (float):</dt><dd><p>The x-coordinate (latitude).</p>
+</dd>
+<dt>y (float):</dt><dd><p>The y-coordinate (longitude).</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Space2D.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#matmodel.base.Aspect.Space2D.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Space3D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">Space3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#Space3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.Space3D" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.Aspect.Space2D" title="matmodel.base.Aspect.Space2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Space2D</span></code></a></p>
+<p>Represents a 3D spatial aspect, extending the 2D space with an additional z-coordinate.</p>
+<section id="id8">
+<h3>Attributes:<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>x (float):</dt><dd><p>The x-coordinate.</p>
+</dd>
+<dt>y (float):</dt><dd><p>The y-coordinate.</p>
+</dd>
+<dt>z (float):</dt><dd><p>The z-coordinate.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.Space3D.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#matmodel.base.Aspect.Space3D.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matmodel.base.Aspect.instantiateAspect">
+<span class="sig-prename descclassname"><span class="pre">matmodel.base.Aspect.</span></span><span class="sig-name descname"><span class="pre">instantiateAspect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/Aspect.html#instantiateAspect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.Aspect.instantiateAspect" title="Link to this definition"></a></dt>
+<dd><p>Instantiates an Aspect object based on the data type specified in the DataDescriptor.</p>
+<section id="args">
+<h3>Args:<a class="headerlink" href="#args" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>k:</dt><dd><p>DataDescriptor object that contains metadata about the attribute.</p>
+</dd>
+<dt>v:</dt><dd><p>The raw value to be converted into an Aspect.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<blockquote>
+<div><p>An instantiated Aspect object (e.g., Boolean, Numeric, Space2D, DateTime, etc.).</p>
+</div></blockquote>
+</section>
+<section id="raises">
+<h3>Raises:<a class="headerlink" href="#raises" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Exception:</dt><dd><p>If the instantiation fails for any reason.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matmodel.base.MultipleAspectSequence">
+<span id="matmodel-base-multipleaspectsequence-module"></span><h2>matmodel.base.MultipleAspectSequence module<a class="headerlink" href="#module-matmodel.base.MultipleAspectSequence" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present application offers a tool, to support the user in the modeling of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Apr, 2024
+Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Vanessa Lago Machado</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.MultipleAspectSequence.</span></span><span class="sig-name descname"><span class="pre">MultipleAspectSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#MultipleAspectSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a sequence of points with multiple aspects.</p>
+<p>This class is designed to handle sequences of points, where each point may have multiple attributes or aspects associated with it.
+It provides functionalities to manipulate and analyze these sequences, including the addition of points and extraction of subsequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq_id</strong> (<em>int</em><em> or </em><em>str</em>) – The identifier for the sequence (or TID - Trajectory ID).</p></li>
+<li><p><strong>new_points</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of new points to initialize the sequence with. Default is None.</p></li>
+<li><p><strong>data_desc</strong> (<a class="reference internal" href="matmodel.descriptor.html#matmodel.descriptor.descriptor.DataDescriptor" title="matmodel.descriptor.descriptor.DataDescriptor"><em>DataDescriptor</em></a><em>, </em><em>optional</em>) – An instance of DataDescriptor that describes the attributes of the points in the sequence. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.tid">
+<span class="sig-name descname"><span class="pre">tid</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.tid" title="Link to this definition"></a></dt>
+<dd><p>The sequence identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.points" title="Link to this definition"></a></dt>
+<dd><p>A list of Point instances representing the points in the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.data_desc">
+<span class="sig-name descname"><span class="pre">data_desc</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.data_desc" title="Link to this definition"></a></dt>
+<dd><p>The DataDescriptor instance associated with the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="matmodel.descriptor.html#matmodel.descriptor.descriptor.DataDescriptor" title="matmodel.descriptor.descriptor.DataDescriptor">DataDescriptor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.size" title="Link to this definition"></a></dt>
+<dd><p>The number of points in the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">readSequence(new_points,</span> <span class="pre">data_desc):</span></span></dt>
+<dd><p>Reads a list of new points and populates the sequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">addPoint(aspects,</span> <span class="pre">data_desc):</span></span></dt>
+<dd><p>Adds a new point with specified aspects to the sequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">subsequence(start,</span> <span class="pre">size=1,</span> <span class="pre">attributes_index=None):</span></span></dt>
+<dd><p>Returns a MultipleAspectSequence subsequence of points from the sequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">valuesOf(attributes_index,</span> <span class="pre">start=0,</span> <span class="pre">size=1):</span></span></dt>
+<dd><p>Returns the values of the specified attributes from the subsequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">pointValue(idx,</span> <span class="pre">attribute_name):</span></span></dt>
+<dd><p>Retrieves the value of a specific attribute from a given point in the sequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.addPoint">
+<span class="sig-name descname"><span class="pre">addPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aspects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_desc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#MultipleAspectSequence.addPoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.addPoint" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.attribute_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attribute_names</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.attribute_names" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.l">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">l</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.l" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.pointValue">
+<span class="sig-name descname"><span class="pre">pointValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#MultipleAspectSequence.pointValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.pointValue" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.readSequence">
+<span class="sig-name descname"><span class="pre">readSequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_desc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#MultipleAspectSequence.readSequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.readSequence" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.subsequence">
+<span class="sig-name descname"><span class="pre">subsequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#MultipleAspectSequence.subsequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.subsequence" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.MultipleAspectSequence.valuesOf">
+<span class="sig-name descname"><span class="pre">valuesOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#MultipleAspectSequence.valuesOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence.valuesOf" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.MultipleAspectSequence.</span></span><span class="sig-name descname"><span class="pre">Point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspects</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a point in a multiple-aspect sequence.</p>
+<p>Each point is characterized by its index in the sequence and a set of aspects associated with it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq</strong> (<em>int</em>) – The index of the point in the sequence.</p></li>
+<li><p><strong>aspects</strong> (<em>list</em>) – A list of Aspect (or derrived types) representing the attributes or aspects of the point.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point.seq">
+<span class="sig-name descname"><span class="pre">seq</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point.seq" title="Link to this definition"></a></dt>
+<dd><p>The index of the point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point.aspects">
+<span class="sig-name descname"><span class="pre">aspects</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point.aspects" title="Link to this definition"></a></dt>
+<dd><p>The aspects associated with the point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">valuesOf(attributes_index):</span></span></dt>
+<dd><p>Retrieves the values of specified attributes from the aspects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">asString(attributes_index):</span></span></dt>
+<dd><p>Returns a string representation of the point’s aspects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point.asString">
+<span class="sig-name descname"><span class="pre">asString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Point.asString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point.asString" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point.fromRecord">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_desc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Point.fromRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point.fromRecord" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point.l">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">l</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point.l" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point.p">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">p</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point.p" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Point.valuesOf">
+<span class="sig-name descname"><span class="pre">valuesOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Point.valuesOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Point.valuesOf" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.MultipleAspectSequence.</span></span><span class="sig-name descname"><span class="pre">Subtrajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Subtrajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence" title="matmodel.base.MultipleAspectSequence.MultipleAspectSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleAspectSequence</span></code></a></p>
+<p>Represents a subsequence of a trajectory.</p>
+<p>A Subtrajectory is derived from a Trajectory and contains a subset of points
+along with information about the attributes being analyzed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajectory</strong> (<a class="reference internal" href="#matmodel.base.MultipleAspectSequence.Trajectory" title="matmodel.base.MultipleAspectSequence.Trajectory"><em>Trajectory</em></a>) – The original trajectory from which this subsequence is derived.</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – The starting index of the point of the subsequence in the original trajectory.</p></li>
+<li><p><strong>points</strong> (<em>list</em>) – A list of points that constitute the subsequence.</p></li>
+<li><p><strong>attributes_index</strong> (<em>list</em>) – The indices of attributes being analyzed in this subsequence.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory.attributes_index">
+<span class="sig-name descname"><span class="pre">attributes_index</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.attributes_index" title="Link to this definition"></a></dt>
+<dd><p>The indices of attributes that belong to the analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory.s">
+<span class="sig-name descname"><span class="pre">s</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.s" title="Link to this definition"></a></dt>
+<dd><p>A formatted string representation of the subsequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">attribute(index):</span></span></dt>
+<dd><p>Retrieves an attribute by its index.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">values():</span></span></dt>
+<dd><p>Returns the values of the specified attributes from the subsequence.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory.S">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">S</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.S" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory.attribute">
+<span class="sig-name descname"><span class="pre">attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Subtrajectory.attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id9">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes_index</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">s</span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Subtrajectory.values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Subtrajectory.valuesOf">
+<span class="sig-name descname"><span class="pre">valuesOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Subtrajectory.valuesOf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Subtrajectory.valuesOf" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Trajectory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.base.MultipleAspectSequence.</span></span><span class="sig-name descname"><span class="pre">Trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_desc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Trajectory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matmodel.base.MultipleAspectSequence.MultipleAspectSequence" title="matmodel.base.MultipleAspectSequence.MultipleAspectSequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleAspectSequence</span></code></a></p>
+<p>Represents a trajectory composed of multiple points.</p>
+<p>A trajectory is a special type of MultipleAspectSequence that includes a label
+for identification purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tid</strong> (<em>int</em><em> or </em><em>str</em>) – The identifier for the trajectory (ID).</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – A label associated with the trajectory.</p></li>
+<li><p><strong>new_points</strong> (<em>list</em>) – A list of initial points for the trajectory.</p></li>
+<li><p><strong>data_desc</strong> (<a class="reference internal" href="matmodel.descriptor.html#matmodel.descriptor.descriptor.DataDescriptor" title="matmodel.descriptor.descriptor.DataDescriptor"><em>DataDescriptor</em></a>) – An instance describing the attributes of the points in the trajectory.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Trajectory.T">
+<span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Trajectory.T" title="Link to this definition"></a></dt>
+<dd><p>A formatted string representation of the trajectory identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Trajectory.label">
+<span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Trajectory.label" title="Link to this definition"></a></dt>
+<dd><p>The label of the trajectory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">display():</span></span></dt>
+<dd><p>Prints a detailed representation of the trajectory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">subtrajectory(start,</span> <span class="pre">size=1,</span> <span class="pre">attributes_index=None):</span></span></dt>
+<dd><p>Returns a Subtrajectory object representing a subsequence of the trajectory.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id11">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Trajectory.display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Trajectory.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Trajectory.display" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.base.MultipleAspectSequence.Trajectory.subtrajectory">
+<span class="sig-name descname"><span class="pre">subtrajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/base/MultipleAspectSequence.html#Trajectory.subtrajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.base.MultipleAspectSequence.Trajectory.subtrajectory" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matmodel.base">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matmodel.base" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="MAT-model’s Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matmodel.comparator.html" class="btn btn-neutral float-right" title="matmodel.comparator package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela and Vanessa Lago Machado.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

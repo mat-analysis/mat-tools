@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.feature.MoveletDT &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.feature.MoveletDT</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.feature.MoveletDT</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">    - Carlos Andrés Ferrero (adapted)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">argmax</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+<span class="c1">## This class have inner imports</span>
+<span class="c1">#from tensorflow.keras.utils import to_categorical</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="n">compute_acc_acc5_f1_prec_rec</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">matclassification.methods.core</span> <span class="kn">import</span> <span class="n">MHSClassifier</span>
+
+<div class="viewcode-block" id="MDT">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletDT.MDT">[docs]</a>
+<span class="k">class</span> <span class="nc">MDT</span><span class="p">(</span><span class="n">MHSClassifier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Movelet Decision Tree (MDT) Classifier, extending MHSClassifier, designed for movelet-based </span>
+<span class="sd">    classification using decision trees. Provides tools for decision tree visualization and manipulation.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    n_jobs : int, optional (default=-1)</span>
+<span class="sd">        The number of parallel jobs to run for computation. -1 means using all processors.</span>
+
+<span class="sd">    verbose : int, optional (default=2)</span>
+<span class="sd">        Verbosity level. Higher values enable more detailed output during training and model creation.</span>
+
+<span class="sd">    random_state : int, optional (default=42)</span>
+<span class="sd">        Random seed used for reproducibility.</span>
+
+<span class="sd">    filterwarnings : str, optional (default=&#39;ignore&#39;)</span>
+<span class="sd">        Controls the filter for output warnings.</span>
+<span class="sd">    </span>
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+<span class="sd">    prepare_input(train, test, tid_col=&#39;tid&#39;, class_col=&#39;label&#39;, geo_precision=30, validate=False):</span>
+<span class="sd">        Prepares the input data by extracting the features and labels, and configures the trajectory classification process.</span>
+
+<span class="sd">    create():</span>
+<span class="sd">        Initializes and returns a new instance of the decision tree classifier.</span>
+<span class="sd">    </span>
+<span class="sd">    fit(X_train, y_train, X_val, y_val):</span>
+<span class="sd">        Trains the decision tree classifier on the training data and evaluates it on the validation data. </span>
+<span class="sd">        Returns a report on the validation performance.</span>
+
+<span class="sd">    plot_tree(figsize=(20, 10)):</span>
+<span class="sd">        Visualizes the trained decision tree using matplotlib, showing features and tree structure in a user-defined size.</span>
+
+<span class="sd">    graph_tree():</span>
+<span class="sd">        Generates a visual graph of the decision tree using Graphviz, returning the tree structure as a graph.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                 <span class="n">filterwarnings</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;MDT&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">filterwarnings</span><span class="o">=</span><span class="n">filterwarnings</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="MDT.prepare_input">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletDT.MDT.prepare_input">[docs]</a>
+    <span class="k">def</span> <span class="nf">prepare_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span>
+                      
+                      <span class="n">tid_col</span><span class="o">=</span><span class="s1">&#39;tid&#39;</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span>
+<span class="c1">#                      space_geohash=False, # For future implementation</span>
+                      <span class="n">geo_precision</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                      <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">nattr</span><span class="p">,</span> <span class="n">num_classes</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">prepare_input</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span>
+                                                         <span class="n">tid_col</span><span class="o">=</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="n">class_col</span><span class="p">,</span> 
+<span class="c1">#                                                         geo_precision=geo_precision,</span>
+                                                         <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">tid_col</span><span class="p">,</span> <span class="n">class_col</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">],</span> <span class="n">train</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">nattr</span><span class="p">,</span> <span class="n">num_classes</span></div>
+
+        
+<div class="viewcode-block" id="MDT.create">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletDT.MDT.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="MDT.fit">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletDT.MDT.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+            <span class="n">X_train</span><span class="p">,</span> 
+            <span class="n">y_train</span><span class="p">,</span> 
+            <span class="n">X_val</span><span class="p">,</span>
+            <span class="n">y_val</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+        
+        <span class="n">y_val1</span> <span class="o">=</span> <span class="n">argmax</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">report</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">y_val1</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">report</span></div>
+
+    
+<div class="viewcode-block" id="MDT.training_report">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletDT.MDT.training_report">[docs]</a>
+    <span class="k">def</span> <span class="nf">training_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span> <span class="c1"># Disables saving model history file</span></div>
+
+    
+<div class="viewcode-block" id="MDT.plot_tree">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletDT.MDT.plot_tree">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span>
+        
+        <span class="n">X_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span> <span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+        
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">plot_tree</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+                  <span class="n">feature_names</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>
+<span class="c1">#                  class_names=y_train,#classes,</span>
+                  <span class="n">rounded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+        
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+    
+<div class="viewcode-block" id="MDT.graph_tree">
+<a class="viewcode-back" href="../../../../matclassification.methods.feature.html#matclassification.methods.feature.MoveletDT.MDT.graph_tree">[docs]</a>
+    <span class="k">def</span> <span class="nf">graph_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">graphviz</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span>
+    
+        <span class="n">X_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span> <span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+        
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        
+        <span class="c1"># DOT data</span>
+        <span class="n">dot_data</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                                        <span class="n">feature_names</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>  
+<span class="c1">#                                        class_names=classes,</span>
+                                        <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Draw graph</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="n">dot_data</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="n">graph</span></div>
+</div>
+
+
+<span class="c1"># For Future implementation</span>
+<span class="c1">#    def dtreeviz_tree(self):</span>
+<span class="c1">#        import dtreeviz</span>
+<span class="c1">#        </span>
+<span class="c1">#        features = self.config[&#39;features&#39;]</span>
+<span class="c1">#        classes  = list(map(lambda l: str(l), set(self.y_train)))</span>
+<span class="c1">#        </span>
+<span class="c1">#        y_test = list(map(lambda x: self.y_test.index(x), self.y_test))</span>
+<span class="c1">#</span>
+<span class="c1">#        viz = dtreeviz.model(self.model, self.X_test, y_test,</span>
+<span class="c1">#                        target_name=&quot;target&quot;,</span>
+<span class="c1">#                        feature_names=features,</span>
+<span class="c1">#                        class_names=classes)</span>
+<span class="c1">#</span>
+<span class="c1">#        return viz</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

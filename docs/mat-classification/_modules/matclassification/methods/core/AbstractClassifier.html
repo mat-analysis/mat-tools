@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.core.AbstractClassifier &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.core.AbstractClassifier</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.core.AbstractClassifier</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">os</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">argmax</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">from</span> <span class="nn">matdata.preprocess</span> <span class="kn">import</span> <span class="n">trainTestSplit</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.datahandler</span> <span class="kn">import</span> <span class="n">prepareTrajectories</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c1">#from matclassification.methods._lib.pymove.models import metrics</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="c1"># TODO implement rounds</span>
+
+<span class="c1"># Replicated in matview.result:</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<div class="viewcode-block" id="Approach">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.Approach">[docs]</a>
+<span class="k">class</span> <span class="nc">Approach</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">NN</span>   <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RF</span>   <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DT</span>   <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SVM</span>  <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">XGB</span>  <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+<span class="c1"># Simple Abstract Classifier Model</span>
+<div class="viewcode-block" id="AbstractClassifier">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier">[docs]</a>
+<span class="k">class</span> <span class="nc">AbstractClassifier</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple Abstract Classifier Model.</span>
+
+<span class="sd">    This abstract class defines the core structure for a machine learning classifier model. </span>
+<span class="sd">    It provides common methods such as model creation, and evaluation, </span>
+<span class="sd">    while specific implementations of the model must be defined in derived classes by overriding </span>
+<span class="sd">    the `create()` method.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Name of the classifier implementation (default: &#39;NN&#39;).</span>
+<span class="sd">    model : object</span>
+<span class="sd">        The actual machine learning model to be defined in the subclass.</span>
+<span class="sd">    le : object</span>
+<span class="sd">        Label encoder (optional).</span>
+<span class="sd">    approach : Enum</span>
+<span class="sd">        The category of approach used (default: Approach.NN).</span>
+<span class="sd">    isverbose : bool</span>
+<span class="sd">        Flag to control verbosity of model&#39;s output (default: based on `verbose` parameter).</span>
+<span class="sd">    save_results : bool</span>
+<span class="sd">        Indicates whether to save results (default: False).</span>
+<span class="sd">    validate : bool</span>
+<span class="sd">        Indicates whether validation should be performed (default: False).</span>
+<span class="sd">    config : dict</span>
+<span class="sd">        Dictionary of configuration parameters.</span>
+<span class="sd">        </span>
+<span class="sd">    y_test_true : array-like</span>
+<span class="sd">        True labels for the test dataset (available after call to predict).</span>
+<span class="sd">    y_test_pred : array-like</span>
+<span class="sd">        Predicted labels for the test dataset (available after call to predict).</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        Classifier name (default: &#39;NN&#39;).</span>
+<span class="sd">    n_jobs : int, optional</span>
+<span class="sd">        Number of parallel jobs to run (default: -1 for using all processors).</span>
+<span class="sd">    verbose : int, optional</span>
+<span class="sd">        Verbosity level (default: 0).</span>
+<span class="sd">    random_state : int, optional</span>
+<span class="sd">        Random seed for reproducibility (default: 42).</span>
+<span class="sd">    filterwarnings : str, optional</span>
+<span class="sd">        Warning filter level (default: &#39;ignore&#39;).</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+<span class="sd">    add_config(**kwargs):</span>
+<span class="sd">        Updates the configuration with additional parameters.</span>
+<span class="sd">    </span>
+<span class="sd">    grid_search(*args):</span>
+<span class="sd">        Defines the grid of hyperparameters to search over.</span>
+<span class="sd">    </span>
+<span class="sd">    duration():</span>
+<span class="sd">        Returns the duration in milliseconds since the start of model execution.</span>
+<span class="sd">    </span>
+<span class="sd">    message(pbar, text):</span>
+<span class="sd">        Logs a message if verbosity is enabled.</span>
+
+<span class="sd">    labels:</span>
+<span class="sd">        Returns the unique labels in the test data.</span>
+
+<span class="sd">    create():</span>
+<span class="sd">        Abstract method to be overridden in subclasses to define the model.</span>
+<span class="sd">    </span>
+<span class="sd">    clear():</span>
+<span class="sd">        Clears the model from memory.</span>
+
+<span class="sd">    fit(X_train, y_train, X_val, y_val):</span>
+<span class="sd">        Trains the model on the training data and evaluates it on validation data.</span>
+<span class="sd">    </span>
+<span class="sd">    predict(X_test, y_test):</span>
+<span class="sd">        Generates predictions on the test data and returns a performance summary.</span>
+
+<span class="sd">    score(y_test, y_pred):</span>
+<span class="sd">        Computes various evaluation metrics (accuracy, precision, recall, F1, etc.) from </span>
+<span class="sd">        the true and predicted labels.</span>
+
+<span class="sd">    summary():</span>
+<span class="sd">        Returns a summary of the test performance.</span>
+
+<span class="sd">    cm():</span>
+<span class="sd">        Plots the confusion matrix for the test results.</span>
+
+<span class="sd">    save_model(dir_path=&#39;.&#39;, modelfolder=&#39;model&#39;, model_name=&#39;&#39;):</span>
+<span class="sd">        Saves the trained model to the specified directory.</span>
+
+<span class="sd">    save(dir_path=&#39;.&#39;, modelfolder=&#39;model&#39;):</span>
+<span class="sd">        Saves the prediction, classification report, and performance metrics to files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;NN&#39;</span><span class="p">,</span>
+                 
+                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                 <span class="n">filterwarnings</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">le</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># When creating new methods, choose an approach category</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">approach</span> <span class="o">=</span> <span class="n">Approach</span><span class="o">.</span><span class="n">NN</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span> <span class="o">=</span> <span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_results</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># TODO</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">topK</span> <span class="o">=</span> <span class="mi">5</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">topK</span><span class="o">=</span><span class="n">topK</span><span class="p">,</span>
+                        <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+                        <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                        <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        
+        
+        <span class="k">if</span> <span class="n">filterwarnings</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">filterwarnings</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] Building model&#39;</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="AbstractClassifier.add_config">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.add_config">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="AbstractClassifier.grid_search">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.grid_search">[docs]</a>
+    <span class="k">def</span> <span class="nf">grid_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">arg</span> <span class="o">=</span> <span class="p">[</span><span class="n">arg</span><span class="p">]</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">))</span></div>
+
+        
+<div class="viewcode-block" id="AbstractClassifier.duration">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.duration">[docs]</a>
+    <span class="k">def</span> <span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span></div>
+
+    
+<div class="viewcode-block" id="AbstractClassifier.message">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.message">[docs]</a>
+    <span class="k">def</span> <span class="nf">message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbar</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pbar</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isverbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix_str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="c1">#        return set(self.y_test_true)</span>
+
+<div class="viewcode-block" id="AbstractClassifier.create">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.create">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="c1"># **** Method to overrite ****</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] Warning! you must overwrite the create() method.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span></div>
+
+    
+<div class="viewcode-block" id="AbstractClassifier.clear">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.clear">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> </div>
+
+
+<div class="viewcode-block" id="AbstractClassifier.fit">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+            <span class="n">X_train</span><span class="p">,</span> 
+            <span class="n">y_train</span><span class="p">,</span> 
+            <span class="n">X_val</span><span class="p">,</span>
+            <span class="n">y_val</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">report</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">report</span></div>
+
+    
+<div class="viewcode-block" id="AbstractClassifier.predict">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>                 
+                <span class="n">X_test</span><span class="p">,</span>
+                <span class="n">y_test</span><span class="p">):</span>
+        
+<span class="c1">#        y_pred = self.model.predict_proba(X_test)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    
+        <span class="k">if</span> <span class="n">y_test</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">y_test</span> <span class="o">=</span> <span class="n">argmax</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="c1">#self.y_test_pred)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span> <span class="o">=</span> <span class="n">y_test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span> <span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span><span class="p">,</span> <span class="n">y_pred</span> </div>
+
+
+    
+<div class="viewcode-block" id="AbstractClassifier.score">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.score">[docs]</a>
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="n">acc</span><span class="p">,</span> <span class="n">acc_top5</span><span class="p">,</span> <span class="n">_f1_macro</span><span class="p">,</span> <span class="n">_prec_macro</span><span class="p">,</span> <span class="n">_rec_macro</span><span class="p">,</span> <span class="n">bal_acc</span> <span class="o">=</span> <span class="n">compute_acc_acc5_f1_prec_rec</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">),</span> <span class="n">print_metrics</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        
+        <span class="n">dic_model</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span>
+            <span class="s1">&#39;accuracyTopK5&#39;</span><span class="p">:</span> <span class="n">acc_top5</span><span class="p">,</span>
+            <span class="s1">&#39;balanced_accuracy&#39;</span><span class="p">:</span> <span class="n">bal_acc</span><span class="p">,</span>
+            <span class="s1">&#39;precision_macro&#39;</span><span class="p">:</span> <span class="n">_f1_macro</span><span class="p">,</span>
+            <span class="s1">&#39;recall_macro&#39;</span><span class="p">:</span> <span class="n">_prec_macro</span><span class="p">,</span>
+            <span class="s1">&#39;f1_macro&#39;</span><span class="p">:</span> <span class="n">_rec_macro</span><span class="p">,</span>
+        <span class="p">}</span> 
+        
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dic_model</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="AbstractClassifier.summary">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.summary">[docs]</a>
+    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_report</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">.</span><span class="n">T</span></div>
+
+    
+<div class="viewcode-block" id="AbstractClassifier.cm">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.cm">[docs]</a>
+    <span class="k">def</span> <span class="nf">cm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># Confusion Matrix Plot</span>
+        <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">ConfusionMatrixDisplay</span>
+        
+        <span class="n">cfm</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span>
+            <span class="n">confusion_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span><span class="p">),</span> 
+            <span class="n">display_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cfm</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span></div>
+
+        
+<div class="viewcode-block" id="AbstractClassifier.save_model">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.save_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">modelfolder</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">)):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">,</span> <span class="s1">&#39;model_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.h5&#39;</span><span class="p">))</span></div>
+
+        
+<div class="viewcode-block" id="AbstractClassifier.save">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">modelfolder</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">)):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">))</span>
+
+        <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prediction_report</span><span class="p">()</span> 
+        <span class="k">if</span> <span class="n">prediction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">prediction</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">,</span> <span class="s1">&#39;model_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;_prediction.csv&#39;</span><span class="p">))</span> 
+        
+        <span class="n">report</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classification_report</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">report</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">,</span> <span class="s1">&#39;model_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;_report.csv&#39;</span><span class="p">),</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+            
+        <span class="n">train_report</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_report</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">train_report</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">train_report</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">,</span> <span class="s1">&#39;model_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;_history.csv&#39;</span><span class="p">))</span>
+            
+        <span class="n">test_report</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">testing_report</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">test_report</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">test_report</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">modelfolder</span><span class="p">,</span> <span class="s1">&#39;model_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;_summary.csv&#39;</span><span class="p">))</span></div>
+
+    
+<div class="viewcode-block" id="AbstractClassifier.prediction_report">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.prediction_report">[docs]</a>
+    <span class="k">def</span> <span class="nf">prediction_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;true_label&#39;</span><span class="p">])</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;prediction&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+<div class="viewcode-block" id="AbstractClassifier.classification_report">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.classification_report">[docs]</a>
+    <span class="k">def</span> <span class="nf">classification_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">classification_report_dict2df</span><span class="p">(</span><span class="n">report</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">approach</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="AbstractClassifier.training_report">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.training_report">[docs]</a>
+    <span class="k">def</span> <span class="nf">training_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">report</span></div>
+
+<div class="viewcode-block" id="AbstractClassifier.testing_report">
+<a class="viewcode-back" href="../../../../matclassification.methods.core.html#matclassification.methods.core.AbstractClassifier.AbstractClassifier.testing_report">[docs]</a>
+    <span class="k">def</span> <span class="nf">testing_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_report</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

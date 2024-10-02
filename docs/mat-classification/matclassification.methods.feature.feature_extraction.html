@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.feature.feature_extraction package &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matclassification.methods.mat package" href="matclassification.methods.mat.html" />
+    <link rel="prev" title="matclassification.methods.feature package" href="matclassification.methods.feature.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="matclassification.methods.feature.html">Feature-based</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="matclassification.methods.feature.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">matclassification.methods.feature.feature_extraction package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-matclassification.methods.feature.feature_extraction.pois">matclassification.methods.feature.feature_extraction.pois module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-matclassification.methods.feature.feature_extraction">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#module-matclassification.methods.feature.MoveletDT">matclassification.methods.feature.MoveletDT module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#module-matclassification.methods.feature.MoveletMLP">matclassification.methods.feature.MoveletMLP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#module-matclassification.methods.feature.MoveletRF">matclassification.methods.feature.MoveletRF module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#module-matclassification.methods.feature.MoveletRFHP">matclassification.methods.feature.MoveletRFHP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#module-matclassification.methods.feature.MoveletSVC">matclassification.methods.feature.MoveletSVC module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#module-matclassification.methods.feature.POIS">matclassification.methods.feature.POIS module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matclassification.methods.feature.html#module-matclassification.methods.feature">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="matclassification.methods.feature.html">matclassification.methods.feature package</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.feature.feature_extraction package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matclassification.methods.feature.feature_extraction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matclassification-methods-feature-feature-extraction-package">
+<h1>matclassification.methods.feature.feature_extraction package<a class="headerlink" href="#matclassification-methods-feature-feature-extraction-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matclassification.methods.feature.feature_extraction.pois">
+<span id="matclassification-methods-feature-feature-extraction-pois-module"></span><h2>matclassification.methods.feature.feature_extraction.pois module<a class="headerlink" href="#module-matclassification.methods.feature.feature_extraction.pois" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Dec, 2021
+Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Francisco Vicenzi (adapted)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.geoHasTransform">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">geoHasTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geo_precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#geoHasTransform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.geoHasTransform" title="Link to this definition"></a></dt>
+<dd><p>Transforms latitude and longitude values into geohash representations.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>df<span class="classifier">pandas.DataFrame</span></dt><dd><p>The DataFrame containing ‘lat’ and ‘lon’ columns.</p>
+</dd>
+<dt>geo_precision<span class="classifier">int, optional</span></dt><dd><p>The precision for the geohash transformation. Defaults to 8.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>list</dt><dd><p>A list of geohash values corresponding to the latitude and longitude pairs in the DataFrame.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.loadTrainTest">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">loadTrainTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#loadTrainTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.loadTrainTest" title="Link to this definition"></a></dt>
+<dd><p>Loads the training and testing datasets from CSV files, applying necessary transformations.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>features<span class="classifier">list of str</span></dt><dd><p>The features to load from the datasets.</p>
+</dd>
+<dt>folder<span class="classifier">str</span></dt><dd><p>The folder path where the dataset files are located.</p>
+</dd>
+<dt>dataset<span class="classifier">str, optional</span></dt><dd><p>The name of the dataset to process (without extension). If empty, default ‘train’ and ‘test’ files are loaded.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing the training DataFrame and the testing DataFrame.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.npoi">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">npoi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq2idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#npoi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.npoi" title="Link to this definition"></a></dt>
+<dd><p>Computes Normalized Point of Interest (NPOI) frequency features for training and testing datasets.</p>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>df_train<span class="classifier">pandas.DataFrame</span></dt><dd><p>The training dataset containing trajectory data.</p>
+</dd>
+<dt>df_test<span class="classifier">pandas.DataFrame</span></dt><dd><p>The testing dataset containing trajectory data.</p>
+</dd>
+<dt>possible_sequences<span class="classifier">list of tuple</span></dt><dd><p>List of possible sequences to consider for feature extraction.</p>
+</dd>
+<dt>seq2idx<span class="classifier">dict</span></dt><dd><p>A dictionary mapping sequences to their corresponding indices.</p>
+</dd>
+<dt>sequence<span class="classifier">int</span></dt><dd><p>The length of the sequences to be considered.</p>
+</dd>
+<dt>feature<span class="classifier">str</span></dt><dd><p>The name of the feature to be analyzed in the datasets.</p>
+</dd>
+<dt>result_dir<span class="classifier">str, optional</span></dt><dd><p>Directory path to save the results. If None, results will not be saved.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the trajectory ID in the datasets. Defaults to ‘tid’.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the class label in the datasets. Defaults to ‘label’.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>x_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A 2D array of shape (number of trajectories, number of possible sequences) containing the normalized POI frequencies for the training set.</p>
+</dd>
+<dt>x_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A 2D array of shape (number of trajectories, number of possible sequences) containing the normalized POI frequencies for the testing set.</p>
+</dd>
+<dt>y_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A 1D array of class labels for the training dataset.</p>
+</dd>
+<dt>y_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A 1D array of class labels for the testing dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.poi">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">poi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq2idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#poi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.poi" title="Link to this definition"></a></dt>
+<dd><p>Computes Point of Interest (POI) frequency features for training and testing datasets.</p>
+<section id="id5">
+<h3>Parameters:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>df_train<span class="classifier">pandas.DataFrame</span></dt><dd><p>The training dataset containing trajectory data.</p>
+</dd>
+<dt>df_test<span class="classifier">pandas.DataFrame</span></dt><dd><p>The testing dataset containing trajectory data.</p>
+</dd>
+<dt>possible_sequences<span class="classifier">list of tuple</span></dt><dd><p>List of possible sequences to consider for feature extraction.</p>
+</dd>
+<dt>seq2idx<span class="classifier">dict</span></dt><dd><p>A dictionary mapping sequences to their corresponding indices.</p>
+</dd>
+<dt>sequence<span class="classifier">int</span></dt><dd><p>The length of the sequences to be considered.</p>
+</dd>
+<dt>feature<span class="classifier">str</span></dt><dd><p>The name of the feature to be analyzed in the datasets.</p>
+</dd>
+<dt>result_dir<span class="classifier">str, optional</span></dt><dd><p>Directory path to save the results. If None, results will not be saved.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the trajectory ID in the datasets. Defaults to ‘tid’.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the class label in the datasets. Defaults to ‘label’.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Returns:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>x_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A 2D array of shape (number of trajectories, number of possible sequences) containing the POI frequencies for the training set.</p>
+</dd>
+<dt>x_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A 2D array of shape (number of trajectories, number of possible sequences) containing the POI frequencies for the testing set.</p>
+</dd>
+<dt>y_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A 1D array of class labels for the training dataset.</p>
+</dd>
+<dt>y_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A 1D array of class labels for the testing dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.poifreq_all">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">poifreq_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#poifreq_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.poifreq_all" title="Link to this definition"></a></dt>
+<dd><p>Extracts Point of Interest (POI) frequency features for a given dataset and saves the results.
+For command line use.</p>
+<section id="id7">
+<h3>Parameters:<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>sequence<span class="classifier">int</span></dt><dd><p>The length of the sequences to be considered for POI frequency extraction.</p>
+</dd>
+<dt>dataset<span class="classifier">str</span></dt><dd><p>The name of the dataset to process (without extension).</p>
+</dd>
+<dt>feature<span class="classifier">str</span></dt><dd><p>The name of the feature to analyze in the dataset.</p>
+</dd>
+<dt>folder<span class="classifier">str</span></dt><dd><p>The folder path where the dataset files are located.</p>
+</dd>
+<dt>result_dir<span class="classifier">str</span></dt><dd><p>The directory path where results will be saved.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the trajectory ID in the datasets. Defaults to ‘tid’.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the class label in the datasets. Defaults to ‘label’.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>Returns:<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.pois">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">pois</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'npoi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#pois"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.pois" title="Link to this definition"></a></dt>
+<dd><p>Extracts features from the training and testing datasets based on specified sequences and methods
+(POI, NPOI, WNPOI) for trajectory classification.</p>
+<section id="id9">
+<h3>Parameters:<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>df_train<span class="classifier">pandas.DataFrame</span></dt><dd><p>The training dataset containing trajectory data, including time and location information.</p>
+</dd>
+<dt>df_test<span class="classifier">pandas.DataFrame</span></dt><dd><p>The testing dataset containing trajectory data for evaluation.</p>
+</dd>
+<dt>sequences<span class="classifier">list of int</span></dt><dd><p>List of integers specifying the sequence lengths to consider for feature extraction.</p>
+</dd>
+<dt>features<span class="classifier">list of str</span></dt><dd><p>List of feature names from the datasets to be used for extraction. If None, the function will
+automatically determine a feature based on variance.</p>
+</dd>
+<dt>method<span class="classifier">str, optional</span></dt><dd><p>The method to use for feature extraction. Options include:
+- ‘poi’: Point of Interest frequency.
+- ‘npoi’: Normalized Point of Interest frequency.
+- ‘wnpoi’: Weighted Normalized Point of Interest frequency.
+Defaults to ‘npoi’.</p>
+</dd>
+<dt>result_dir<span class="classifier">str, optional</span></dt><dd><p>Directory path where results should be saved. Defaults to the current directory.</p>
+</dd>
+<dt>save_all<span class="classifier">bool, optional</span></dt><dd><p>If True, all intermediate results will be saved to the specified directory. Defaults to False.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>Name of the column representing the trajectory ID in the datasets. Defaults to ‘tid’.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>Name of the column representing the class label in the datasets. Defaults to ‘label’.</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>If True, prints detailed information about the processing steps. Defaults to True.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h3>Returns:<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>agg_x_train<span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame containing aggregated features for the training dataset.</p>
+</dd>
+<dt>agg_x_test<span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame containing aggregated features for the testing dataset.</p>
+</dd>
+<dt>y_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A numpy array containing the labels for the training dataset.</p>
+</dd>
+<dt>y_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A numpy array containing the labels for the testing dataset.</p>
+</dd>
+<dt>core_name<span class="classifier">str</span></dt><dd><p>A string representing the core name for the generated feature files, based on the selected method
+and features.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.pois_read">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">pois_read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'npoi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'specific'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#pois_read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.pois_read" title="Link to this definition"></a></dt>
+<dd><p>Reads datasets and applies the POI extraction methods to generate features based on specified sequences.
+(Wrapper for ‘pois’ method)</p>
+<section id="id11">
+<h3>Parameters:<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>sequences<span class="classifier">list of int</span></dt><dd><p>A list of sequence lengths to analyze for POI extraction.</p>
+</dd>
+<dt>features<span class="classifier">list of str</span></dt><dd><p>The list of features to analyze from the dataset.</p>
+</dd>
+<dt>method<span class="classifier">str, optional</span></dt><dd><p>The method to use for POI extraction (‘poi’, ‘npoi’, or ‘wnpoi’). Defaults to ‘npoi’.</p>
+</dd>
+<dt>dataset<span class="classifier">str, optional</span></dt><dd><p>The name of the dataset to process. Defaults to ‘specific’.</p>
+</dd>
+<dt>folder<span class="classifier">str, optional</span></dt><dd><p>The folder path where the dataset files are located. Defaults to ‘./data’.</p>
+</dd>
+<dt>result_dir<span class="classifier">str, optional</span></dt><dd><p>The directory path where results will be saved. Defaults to ‘.’.</p>
+</dd>
+<dt>save_all<span class="classifier">bool, optional</span></dt><dd><p>If True, saves all possible sequences to the result directory. Defaults to False.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the trajectory ID in the datasets. Defaults to ‘tid’.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the class label in the datasets. Defaults to ‘label’.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h3>Returns:<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing the aggregated training feature matrix, testing feature matrix,
+training labels, testing labels, and the core name for the processed data.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.to_file">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">core_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.to_file" title="Link to this definition"></a></dt>
+<dd><p>Saves the training and testing feature matrices and labels to CSV files.</p>
+<section id="id13">
+<h3>Parameters:<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>core_name<span class="classifier">str</span></dt><dd><p>The base name for the output files.</p>
+</dd>
+<dt>x_train<span class="classifier">numpy.ndarray</span></dt><dd><p>The training feature matrix.</p>
+</dd>
+<dt>x_test<span class="classifier">numpy.ndarray</span></dt><dd><p>The testing feature matrix.</p>
+</dd>
+<dt>y_train<span class="classifier">numpy.ndarray</span></dt><dd><p>The training labels.</p>
+</dd>
+<dt>y_test<span class="classifier">numpy.ndarray</span></dt><dd><p>The testing labels.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h3>Returns:<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matclassification.methods.feature.feature_extraction.pois.wnpoi">
+<span class="sig-prename descclassname"><span class="pre">matclassification.methods.feature.feature_extraction.pois.</span></span><span class="sig-name descname"><span class="pre">wnpoi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq2idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matclassification/methods/feature/feature_extraction/pois.html#wnpoi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matclassification.methods.feature.feature_extraction.pois.wnpoi" title="Link to this definition"></a></dt>
+<dd><p>Computes Weighted Normalized Point of Interest (WNPOI) frequency features for training and testing datasets.</p>
+<section id="id15">
+<h3>Parameters:<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>df_train<span class="classifier">pandas.DataFrame</span></dt><dd><p>The training dataset containing trajectory data.</p>
+</dd>
+<dt>df_test<span class="classifier">pandas.DataFrame</span></dt><dd><p>The testing dataset containing trajectory data.</p>
+</dd>
+<dt>possible_sequences<span class="classifier">list of tuple</span></dt><dd><p>List of possible sequences to consider for feature extraction.</p>
+</dd>
+<dt>seq2idx<span class="classifier">dict</span></dt><dd><p>A dictionary mapping sequences to their corresponding indices.</p>
+</dd>
+<dt>sequence<span class="classifier">int</span></dt><dd><p>The length of the sequences to be considered.</p>
+</dd>
+<dt>feature<span class="classifier">str</span></dt><dd><p>The name of the feature to be analyzed in the datasets.</p>
+</dd>
+<dt>result_dir<span class="classifier">str, optional</span></dt><dd><p>Directory path to save the results. If None, results will not be saved.</p>
+</dd>
+<dt>tid_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the trajectory ID in the datasets. Defaults to ‘tid’.</p>
+</dd>
+<dt>class_col<span class="classifier">str, optional</span></dt><dd><p>The name of the column representing the class label in the datasets. Defaults to ‘label’.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3>Returns:<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>x_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A 2D array of shape (number of trajectories, number of possible sequences) containing the weighted normalized POI frequencies for the training set.</p>
+</dd>
+<dt>x_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A 2D array of shape (number of trajectories, number of possible sequences) containing the weighted normalized POI frequencies for the testing set.</p>
+</dd>
+<dt>y_train<span class="classifier">numpy.ndarray</span></dt><dd><p>A 1D array of class labels for the training dataset.</p>
+</dd>
+<dt>y_test<span class="classifier">numpy.ndarray</span></dt><dd><p>A 1D array of class labels for the testing dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matclassification.methods.feature.feature_extraction">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matclassification.methods.feature.feature_extraction" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matclassification.methods.feature.html" class="btn btn-neutral float-left" title="matclassification.methods.feature package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matclassification.methods.mat.html" class="btn btn-neutral float-right" title="matclassification.methods.mat package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matmodel.descriptor package &mdash; mat-model 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matmodel.feature package" href="matmodel.feature.html" />
+    <link rel="prev" title="matmodel.comparator package" href="matmodel.comparator.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-model:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="matmodel.base.html"> Base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.comparator.html"> Comparator</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Dataset Descriptor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.descriptor.descriptor">matmodel.descriptor.descriptor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.descriptor.descriptor.DataDescriptor"><code class="docutils literal notranslate"><span class="pre">DataDescriptor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.descriptor.descriptor.DataDescriptor.feature_names"><code class="docutils literal notranslate"><span class="pre">DataDescriptor.feature_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.descriptor.descriptor.DataDescriptor.instantiate"><code class="docutils literal notranslate"><span class="pre">DataDescriptor.instantiate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.descriptor.descriptor.FeatureDescriptor"><code class="docutils literal notranslate"><span class="pre">FeatureDescriptor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.descriptor.descriptor.FeatureDescriptor.instantiate"><code class="docutils literal notranslate"><span class="pre">FeatureDescriptor.instantiate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matmodel.descriptor.descriptor.FeatureDescriptor.name"><code class="docutils literal notranslate"><span class="pre">FeatureDescriptor.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.descriptor.descriptor.descriptor2json"><code class="docutils literal notranslate"><span class="pre">descriptor2json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.descriptor.descriptor.df2descriptor"><code class="docutils literal notranslate"><span class="pre">df2descriptor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matmodel.descriptor.descriptor.readDescriptor"><code class="docutils literal notranslate"><span class="pre">readDescriptor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matmodel.descriptor">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.feature.html"> Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.representative.html"> Representative</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matmodel.util.html"> Util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matmodel.descriptor package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matmodel.descriptor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matmodel-descriptor-package">
+<h1>matmodel.descriptor package<a class="headerlink" href="#matmodel-descriptor-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matmodel.descriptor.descriptor">
+<span id="matmodel-descriptor-descriptor-module"></span><h2>matmodel.descriptor.descriptor module<a class="headerlink" href="#module-matmodel.descriptor.descriptor" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present application offers a tool, to support the user in the modeling of multiple aspect trajectory data. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created on Apr, 2024
+Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Tarlis Portela</p></li>
+<li><p>Vanessa Lago Machado</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.DataDescriptor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.descriptor.descriptor.</span></span><span class="sig-name descname"><span class="pre">DataDescriptor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idDesc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelDesc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/descriptor/descriptor.html#DataDescriptor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.descriptor.descriptor.DataDescriptor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a data descriptor that describes the structure of data, including the ID, label, and attributes.</p>
+<section id="attributes">
+<h3>Attributes:<a class="headerlink" href="#attributes" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>idDesc (FeatureDescriptor):</dt><dd><p>Descriptor for the ID feature.</p>
+</dd>
+<dt>labelDesc (FeatureDescriptor):</dt><dd><p>Descriptor for the label feature.</p>
+</dd>
+<dt>attributes (list):</dt><dd><p>List of feature descriptors for the attributes.</p>
+</dd>
+<dt>dependencies (dict):</dt><dd><p>A dictionary mapping dependency groups to the associated attributes (optional).</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h3>Methods:<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>__iter__():</dt><dd><p>Initializes the iterator for the attributes.</p>
+</dd>
+<dt>__next__():</dt><dd><p>Iterates through the attributes.</p>
+</dd>
+<dt>feature_names():</dt><dd><p>Returns a list of names (text) for all the attributes.</p>
+</dd>
+<dt>instantiate(json_obj):</dt><dd><p>Static method to instantiate a DataDescriptor from a JSON object.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.DataDescriptor.feature_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_names</span></span><a class="headerlink" href="#matmodel.descriptor.descriptor.DataDescriptor.feature_names" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.DataDescriptor.instantiate">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/descriptor/descriptor.html#DataDescriptor.instantiate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.descriptor.descriptor.DataDescriptor.instantiate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.FeatureDescriptor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matmodel.descriptor.descriptor.</span></span><span class="sig-name descname"><span class="pre">FeatureDescriptor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nominal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comparator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/descriptor/descriptor.html#FeatureDescriptor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.descriptor.descriptor.FeatureDescriptor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a descriptor for a single feature (attribute) in the dataset.</p>
+<section id="id1">
+<h3>Attributes:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>order (int):</dt><dd><p>The order of the feature in the dataset.</p>
+</dd>
+<dt>dtype (str):</dt><dd><p>The data type of the feature (e.g., ‘nominal’, ‘numeric’, ‘boolean’).</p>
+</dd>
+<dt>text (str):</dt><dd><p>The textual description or name of the feature.</p>
+</dd>
+<dt>weight (float):</dt><dd><p>The weight associated with this feature for comparisons (optional).</p>
+</dd>
+<dt>comparator (str):</dt><dd><p>The instance of the class comparator used to compare feature values (optional).</p>
+</dd>
+<dt>dependency_group (str):</dt><dd><p>The dependency group name for this feature (optional).</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Methods:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name():</dt><dd><p>Property to return the name (text) of the feature.</p>
+</dd>
+<dt>__repr__():</dt><dd><p>Returns a string representation of the feature descriptor.</p>
+</dd>
+<dt>instantiate(json_obj):</dt><dd><p>Static method to instantiate a FeatureDescriptor from a JSON object.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.FeatureDescriptor.instantiate">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/descriptor/descriptor.html#FeatureDescriptor.instantiate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.descriptor.descriptor.FeatureDescriptor.instantiate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.FeatureDescriptor.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#matmodel.descriptor.descriptor.FeatureDescriptor.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.descriptor2json">
+<span class="sig-prename descclassname"><span class="pre">matmodel.descriptor.descriptor.</span></span><span class="sig-name descname"><span class="pre">descriptor2json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataDescriptor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/descriptor/descriptor.html#descriptor2json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.descriptor.descriptor.descriptor2json" title="Link to this definition"></a></dt>
+<dd><p>Converts a DataDescriptor object into a JSON-like dictionary.</p>
+<section id="args">
+<h3>Args:<a class="headerlink" href="#args" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>dataDescriptor (DataDescriptor):</dt><dd><p>The DataDescriptor object to convert.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>dict:</dt><dd><p>A JSON-like dictionary representation of the DataDescriptor.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.df2descriptor">
+<span class="sig-prename descclassname"><span class="pre">matmodel.descriptor.descriptor.</span></span><span class="sig-name descname"><span class="pre">df2descriptor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/descriptor/descriptor.html#df2descriptor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.descriptor.descriptor.df2descriptor" title="Link to this definition"></a></dt>
+<dd><p>Converts a pandas DataFrame into a DataDescriptor based on the column types and names.</p>
+<section id="id3">
+<h3>Args:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>df (DataFrame):</dt><dd><p>The pandas DataFrame of trajectory data to be described.</p>
+</dd>
+<dt>tid_col (str):</dt><dd><p>The name of the column used as the TID feature.</p>
+</dd>
+<dt>label_col (str):</dt><dd><p>The name of the column used as the label feature.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>DataDescriptor:</dt><dd><p>A descriptor that represents the structure of the DataFrame.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matmodel.descriptor.descriptor.readDescriptor">
+<span class="sig-prename descclassname"><span class="pre">matmodel.descriptor.descriptor.</span></span><span class="sig-name descname"><span class="pre">readDescriptor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matmodel/descriptor/descriptor.html#readDescriptor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matmodel.descriptor.descriptor.readDescriptor" title="Link to this definition"></a></dt>
+<dd><p>Reads a descriptor file and returns a DataDescriptor instance.</p>
+<section id="id5">
+<h3>Args:<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>file_path (str):</dt><dd><p>The path to the descriptor file.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Returns:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>DataDescriptor:</dt><dd><p>The instantiated DataDescriptor object from the file.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matmodel.descriptor">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matmodel.descriptor" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="matmodel.comparator.html" class="btn btn-neutral float-left" title="matmodel.comparator package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matmodel.feature.html" class="btn btn-neutral float-right" title="matmodel.feature package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela and Vanessa Lago Machado.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

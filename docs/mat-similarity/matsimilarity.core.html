@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matsimilarity.core package &mdash; mat-similarity 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="matsimilarity.methods.mat package" href="matsimilarity.methods.mat.html" />
+    <link rel="prev" title="Welcome to mat-similarity’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mat-similarity
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-similarity:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matsimilarity.core.SimilarityMeasure">matsimilarity.core.SimilarityMeasure module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matsimilarity.core.SimilarityMeasure.SimilarityMeasure"><code class="docutils literal notranslate"><span class="pre">SimilarityMeasure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#matsimilarity.core.SimilarityMeasure.SimilarityMeasure.attributes"><code class="docutils literal notranslate"><span class="pre">SimilarityMeasure.attributes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#matsimilarity.core.SimilarityMeasure.SimilarityMeasure.similarity"><code class="docutils literal notranslate"><span class="pre">SimilarityMeasure.similarity()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matsimilarity.core.utils">matsimilarity.core.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matsimilarity.core.utils.similarity_matrix"><code class="docutils literal notranslate"><span class="pre">similarity_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matsimilarity.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matsimilarity.methods.mat.html">For MAT</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mat-similarity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">matsimilarity.core package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/matsimilarity.core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="matsimilarity-core-package">
+<h1>matsimilarity.core package<a class="headerlink" href="#matsimilarity-core-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-matsimilarity.core.SimilarityMeasure">
+<span id="matsimilarity-core-similaritymeasure-module"></span><h2>matsimilarity.core.SimilarityMeasure module<a class="headerlink" href="#module-matsimilarity.core.SimilarityMeasure" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created in Dec, 2021
+Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</p>
+<p>Authors:
+- Vanessa Lago Machado
+- Tarlis Portela</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matsimilarity.core.SimilarityMeasure.SimilarityMeasure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matsimilarity.core.SimilarityMeasure.</span></span><span class="sig-name descname"><span class="pre">SimilarityMeasure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataDescriptor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matsimilarity/core/SimilarityMeasure.html#SimilarityMeasure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matsimilarity.core.SimilarityMeasure.SimilarityMeasure" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="matsimilarity.core.SimilarityMeasure.SimilarityMeasure.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#matsimilarity.core.SimilarityMeasure.SimilarityMeasure.attributes" title="Link to this definition"></a></dt>
+<dd><p>Getter for attributes from the data descriptor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of attributes from the data descriptor.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[FeatureDescriptor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matsimilarity.core.SimilarityMeasure.SimilarityMeasure.similarity">
+<span class="sig-name descname"><span class="pre">similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MultipleAspectSequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MultipleAspectSequence</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/matsimilarity/core/SimilarityMeasure.html#SimilarityMeasure.similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matsimilarity.core.SimilarityMeasure.SimilarityMeasure.similarity" title="Link to this definition"></a></dt>
+<dd><p>Computes the similarity score of the given MAT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t1</strong> (<em>MultipleAspectSequence instance</em><em> of </em><em>the trajectory 1.</em>)</p></li>
+<li><p><strong>t2</strong> (<em>MultipleAspectSequence instance</em><em> of </em><em>the trajectory 2.</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>score</strong> – Similarity score (between 0 and 1).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matsimilarity.core.utils">
+<span id="matsimilarity-core-utils-module"></span><h2>matsimilarity.core.utils module<a class="headerlink" href="#module-matsimilarity.core.utils" title="Link to this heading"></a></h2>
+<p>MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining</p>
+<p>The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.
+Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</p>
+<p>Created in Dec, 2021
+Copyright (C) 2024, License GPL Version 3 or superior (see LICENSE file)</p>
+<p>Authors:
+- Vanessa Lago Machado
+- Tarlis Portela</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matsimilarity.core.utils.similarity_matrix">
+<span class="sig-prename descclassname"><span class="pre">matsimilarity.core.utils.</span></span><span class="sig-name descname"><span class="pre">similarity_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matsimilarity/core/utils.html#similarity_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matsimilarity.core.utils.similarity_matrix" title="Link to this definition"></a></dt>
+<dd><p>Computes the similarity matrix from a list of trajectories Ta x Ta, or Ta x Tb (if provided).</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>A<span class="classifier">list of MultipleAspectSequence</span></dt><dd><p>List of Trajectory objects to compute similarity from. Each trajectory should be a MultipleAspectSequence.</p>
+</dd>
+<dt>B<span class="classifier">list of MultipleAspectSequence (optional)</span></dt><dd><p>List of Trajectory objects to compute similarity to <cite>A</cite>. Each trajectory should be a MultipleAspectSequence.</p>
+</dd>
+<dt>measure<span class="classifier">SimilarityMeasure instance</span></dt><dd><p>A class with a similarity function that takes two trajectories and returns a similarity score.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional</span></dt><dd><p>The number of parallel jobs to use for computation (default is 1).</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>np.ndarray<span class="classifier">similarity array with shape (len(A), len(B)).</span></dt><dd><p>A 2D numpy array containing similarity scores between trajectories.
+The element at [i, j] represents the similarity between trajectory A[i] and B[j].</p>
+</dd>
+</dl>
+</section>
+<section id="example">
+<h3>Example:<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="n">Trajectory1</span><span class="p">,</span> <span class="n">Trajectory2</span><span class="p">,</span> <span class="n">Trajectory3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">similarity_matrix</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">measure</span><span class="o">=</span><span class="n">MUITAS</span><span class="p">(),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sim_matrix</span><span class="p">)</span>
+<span class="go">[[1.0, 0.8, 0.3],</span>
+<span class="go"> [0.8, 1.0, 0.5],</span>
+<span class="go"> [0.3, 0.5, 1.0]]</span>
+</pre></div>
+</div>
+</section>
+<section id="source">
+<h3>Source:<a class="headerlink" href="#source" title="Link to this heading"></a></h3>
+<p>From trajminer with MIT License:
+<a class="reference external" href="https://github.com/trajminer/trajminer/blob/master/trajminer/similarity/pairwise.py">https://github.com/trajminer/trajminer/blob/master/trajminer/similarity/pairwise.py</a></p>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-matsimilarity.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-matsimilarity.core" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to mat-similarity’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matsimilarity.methods.mat.html" class="btn btn-neutral float-right" title="matsimilarity.methods.mat package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Vanessa Lago Machado and Tarlis Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

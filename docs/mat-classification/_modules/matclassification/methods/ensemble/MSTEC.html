@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matclassification.methods.ensemble.MSTEC &mdash; mat-classification 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mat-classification
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules in MAT-classification:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.core.html">Core Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.feature.html">Feature-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.mat.html">MAT-based</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../matclassification.methods.similarity.html">Similarity-based</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mat-classification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matclassification.methods.ensemble.MSTEC</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matclassification.methods.ensemble.MSTEC</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">MAT-analysis: Analisys and Classification methods for Multiple Aspect Trajectory Data Mining</span>
+
+<span class="sd">The present package offers a tool, to support the user in the task of data analysis of multiple aspect trajectories. It integrates into a unique framework for multiple aspects trajectories and in general for multidimensional sequence data mining methods.</span>
+<span class="sd">Copyright (C) 2022, MIT license (this portion of code is subject to licensing from source project distribution)</span>
+
+<span class="sd">Created on Dec, 2021</span>
+<span class="sd">Copyright (C) 2022, License GPL Version 3 or superior (see LICENSE file)</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">    - Tarlis Portela</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">argmax</span>
+
+<span class="c1">#import logging</span>
+<span class="c1">#logging.disable()</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods._lib.metrics</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">matclassification.methods.ensemble.TEC</span> <span class="kn">import</span> <span class="n">TEC</span>
+
+<span class="c1">#from matanalysis.methods import *</span>
+
+<div class="viewcode-block" id="MSTEC">
+<a class="viewcode-back" href="../../../../matclassification.methods.ensemble.html#matclassification.methods.ensemble.MSTEC.MSTEC">[docs]</a>
+<span class="k">class</span> <span class="nc">MSTEC</span><span class="p">(</span><span class="n">TEC</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">ensembles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MARC&#39;</span><span class="p">,</span> <span class="s1">&#39;POIS&#39;</span><span class="p">,</span> <span class="s1">&#39;MMLP&#39;</span><span class="p">],</span>
+                 
+                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                 <span class="n">filterwarnings</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;MSTEC&#39;</span><span class="p">,</span> <span class="n">ensembles</span><span class="o">=</span><span class="n">ensembles</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">filterwarnings</span><span class="o">=</span><span class="n">filterwarnings</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="MSTEC.fit">
+<a class="viewcode-back" href="../../../../matclassification.methods.ensemble.html#matclassification.methods.ensemble.MSTEC.MSTEC.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="c1">#TODO data from T and M</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;models&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] first imput the data, calling &quot;prepare_models&quot;.&#39;</span><span class="p">)</span>
+        
+        <span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">estimators</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] Model Training&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">method</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix_str</span><span class="p">(</span><span class="s1">&#39;- training sub-model </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+            
+            <span class="n">X_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X_train</span>
+            <span class="n">y_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">y_train</span>
+
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">validate</span><span class="p">:</span>
+                <span class="n">X_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X_val</span>
+                <span class="n">y_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">y_val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">X_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X_test</span>
+                <span class="n">y_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">y_test</span>  
+            
+            <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+            
+            <span class="n">summ</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+
+            <span class="n">estimators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+            
+<span class="c1">#            summ = model.summary()</span>
+            <span class="n">summ</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">method</span>
+            <span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">report</span><span class="p">,</span> <span class="n">summ</span><span class="p">])</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] </span><span class="se">\t</span><span class="s1"> - Combining models.&#39;</span><span class="p">)</span>
+        <span class="n">final_pred</span> <span class="o">=</span> <span class="n">estimators</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">estimators</span><span class="p">)):</span>
+            <span class="n">final_pred</span> <span class="o">=</span> <span class="n">final_pred</span> <span class="o">+</span> <span class="n">estimators</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">final_pred</span><span class="p">]</span>
+    
+        <span class="n">summ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">final_pred</span><span class="p">))</span>
+        <span class="n">summ</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">report</span><span class="p">,</span> <span class="n">summ</span><span class="p">])</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">report</span></div>
+
+    
+<div class="viewcode-block" id="MSTEC.predict">
+<a class="viewcode-back" href="../../../../matclassification.methods.ensemble.html#matclassification.methods.ensemble.MSTEC.MSTEC.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">estimators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">method</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] </span><span class="se">\t</span><span class="s1"> - Predicting sub-model </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+            <span class="n">X_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X_train</span>
+            <span class="n">y_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">y_train</span>
+
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">validate</span><span class="p">:</span>
+                <span class="n">X_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X_val</span>
+                <span class="n">y_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">y_val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">X_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X_test</span>
+                <span class="n">y_val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">y_test</span> 
+            
+            <span class="n">X_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">X_test</span>
+            <span class="n">y_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">y_test</span>
+        
+            <span class="n">summ</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+            
+            <span class="n">estimators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+            
+<span class="c1">#            summ = model.summary()</span>
+            <span class="n">summ</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">method</span>
+            <span class="n">report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">report</span><span class="p">,</span> <span class="n">summ</span><span class="p">])</span>
+        
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;:] </span><span class="se">\t</span><span class="s1"> - Final prediction.&#39;</span><span class="p">)</span>
+        <span class="n">final_pred</span> <span class="o">=</span> <span class="n">estimators</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">estimators</span><span class="p">)):</span>
+            <span class="n">final_pred</span> <span class="o">=</span> <span class="n">final_pred</span> <span class="o">+</span> <span class="n">estimators</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">final_pred</span><span class="p">]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_true</span> <span class="o">=</span> <span class="n">y_test</span> <span class="c1">#argmax(y_test, axis=1)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">y_pred</span>
+        
+<span class="c1">#        return y_test, final_pred</span>
+        
+        <span class="n">summ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">final_pred</span><span class="p">))</span>
+        <span class="n">summ</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">report</span><span class="p">,</span> <span class="n">summ</span><span class="p">])</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span><span class="p">,</span> <span class="n">final_pred</span></div>
+</div>
+
+    
+<span class="c1">#    def score(self, X_test, y_test, y_pred):</span>
+<span class="c1">#        acc = accuracy_score(y_test, y_pred, normalize=True)</span>
+<span class="c1">#        acc_top5 = -1 #accuracy_top_k(y_test, y_pred, K=5) #calculateAccTop5(self.model, X_test, y_test, self.config[&#39;topK&#39;])</span>
+<span class="c1">#        bal_acc = balanced_accuracy(y_test, y_pred)</span>
+<span class="c1">#        _f1_macro = f1_score(y_test, y_pred, average=&#39;macro&#39;)</span>
+<span class="c1">#        _prec_macro = precision_score(y_test, y_pred, average=&#39;macro&#39;, zero_division=1)</span>
+<span class="c1">#        _rec_macro = recall_score(y_test, y_pred, average=&#39;macro&#39;)</span>
+<span class="c1">#        </span>
+<span class="c1">#        dic_model = {</span>
+<span class="c1">#            &#39;acc&#39;: acc,</span>
+<span class="c1">#            &#39;acc_top_K5&#39;: acc_top5,</span>
+<span class="c1">#            &#39;balanced_accuracy&#39;: bal_acc,</span>
+<span class="c1">#            &#39;precision_macro&#39;: _f1_macro,</span>
+<span class="c1">#            &#39;recall_macro&#39;: _prec_macro,</span>
+<span class="c1">#            &#39;f1_macro&#39;: _rec_macro,</span>
+<span class="c1">#        } </span>
+<span class="c1">#        </span>
+<span class="c1">#        return pd.DataFrame(dic_model, index=[0])</span>
+<span class="c1"># --------------------------------------------------------------------------------</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Tarlis Tortelli Portela.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
