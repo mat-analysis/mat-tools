@@ -31,6 +31,13 @@ Module contents
    Converter <converter>
    Data Generator <generator>
    
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+   :caption: Framework Documentation:
+
+   MAT-Tools <https://mat-analysis.github.io/mat-tools/>
+   
 ----
 
 .. include:: ../../CHANGELOG.md

@@ -31,6 +31,13 @@ Module contents
    MAT-based <matclassification.methods.mat>
    Similarity-based <matclassification.methods.similarity>
    
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+   :caption: Framework Documentation:
+
+   MAT-Tools <https://mat-analysis.github.io/mat-tools/>
+   
 ----
 
 .. include:: ../../CHANGELOG.md

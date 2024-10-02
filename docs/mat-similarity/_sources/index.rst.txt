@@ -27,7 +27,14 @@ Module contents
    :caption: Modules in MAT-similarity:
 
    Core Classes <matsimilarity.core>
-   For MAT <matsimilarity.methods.mat>
+   For MAT <matsimilarity.methods.mat>   
+   
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+   :caption: Framework Documentation:
+
+   MAT-Tools <https://mat-analysis.github.io/mat-tools/>
    
 ----
 

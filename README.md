@@ -4,7 +4,9 @@
 
 The present project is an umbrella project for MAT-tools Framework. The following projects are created as tools to support the user in the data mining of multiple aspect trajectories, specifically for classification, summarization, clustering, extracting and visualizing the movelets (the parts of the trajectory that better discriminate a class label). It integrates into a unique platform the fragmented approaches available for multiple aspects trajectories and in general for multidimensional sequence classification into a unique web-based and python library system.
 
-![MAT-Tools Diagram](MAT-Tools.png) 
+- Short [Demonstration Video](https://youtu.be/HMymPh66Anc)
+
+![MAT-Tools Diagram](https://github.com/mat-analysis/mat-tools/blob/main/MAT-Tools.png?raw=true) 
 
 # Core Package Dependencies
 

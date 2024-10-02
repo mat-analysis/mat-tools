@@ -31,6 +31,13 @@ Module contents
    CoClustering (Under Development) <matclustering.methods.coclustering>
    Hierarchical (Under Development) <matclustering.methods.hierarchical>
    
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+   :caption: Framework Documentation:
+
+   MAT-Tools <https://mat-analysis.github.io/mat-tools/>
+   
 ----
 
 .. include:: ../../CHANGELOG.md
