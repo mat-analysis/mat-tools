@@ -6,6 +6,9 @@ The present project is an umbrella project for MAT-tools Framework. The followin
 
 - Short [Demonstration Video](https://youtu.be/HMymPh66Anc)
 
+- [Documentation](https://github.com/mat-analysis/mat-tools)
+
+
 ![MAT-Tools Diagram](https://github.com/mat-analysis/mat-tools/blob/main/MAT-Tools.png?raw=true) 
 
 # Datasets Repository
