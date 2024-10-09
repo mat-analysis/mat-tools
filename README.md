@@ -1,6 +1,6 @@
-# mat-tools
+# MAT-Tools
 
-**MAT-tools: Python Framework for Multiple Aspect Trajectory Data Mining**
+**MAT-Tools: Python Framework for Multiple Aspect Trajectory Data Mining**
 
 The present project is an umbrella project for MAT-tools Framework. The following projects are created as tools to support the user in the data mining of multiple aspect trajectories, specifically for classification, summarization, clustering, extracting and visualizing the movelets (the parts of the trajectory that better discriminate a class label). It integrates into a unique platform the fragmented approaches available for multiple aspects trajectories and in general for multidimensional sequence classification into a unique web-based and python library system.
 
@@ -32,3 +32,9 @@ A pre-processed repository of multiple aspect [datasets](https://github.com/mat-
 | [mat-clustering](https://github.com/mat-analysis/mat-clustering) | MAT clustering methods (similarity-based and others).                                     |
 | [automatize](https://github.com/ttportela/automatize)     | Older package for MAT classification and Web-interface for MAT analysis  |
 <!---# | [movelets](https://github.com/mat-analysis/movelets)         | MAT feature extraction methods (NEW methods based on movelets)                               |--->
+
+# Citing
+
+If you use **MAT-Tools** please cite the following paper [[Bibtex](https://github.com/mat-analysis/mat-tools/blob/main/references/mat-tools.bib)\]:
+
+ - Portela, T. T.; Machado, V. L.; Renso, C. Unified Approach to Trajectory Data Mining and Multi-Aspect Trajectory Analysis with MAT-Tools Framework. In: SIMPÓSIO BRASILEIRO DE BANCO DE DADOS (SBBD), 39. 2024, Florianópolis/SC.
